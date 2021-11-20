@@ -17,7 +17,9 @@ instruction_list = {'add' : [2, "0000", "RR"],
                      'str' : [1, "0011", "R"],
                      'out' : [1, "0100", "R"],
                      'mov' : [2, "0101", "R?"],
-                     'in' : [1, "0110", "?"]} # in needs only the port name hence port name can be anything :  We can also check for this later(Fix number of ports)
+                     'in' : [1, "0110", "?"],
+                     'mul' : [2, "0111", "RR"],
+                     'muli' : [1, "1000", "R"]} # in needs only the port name hence port name can be anything :  We can also check for this later(Fix number of ports)
 
 
 instructionList = []
@@ -73,7 +75,7 @@ class RAM(Memory):
     def __init__(self):
         Memory.__init__(self)
         self.__accumulatorReg = 0                                               # ! Abstraction (Something OOPS)
-        self.__R1 = 0 # These can be shifter to RAM class later (child of memory)
+        self.__R1 = 10 # These can be shifter to RAM class later (child of memory)
         self.__R2 = 0
         self.__R3 = 0
         self.__R4 = 0
@@ -213,6 +215,9 @@ class InstructionDecoder:
         # if opcode.lower() == "add" or "ada":
         if opcode.lower() == "add" or opcode.lower() == "ada":
             addObject = Add(instructionString) # Object once created by itself performs all the validation and execution
+            instructionList.append(addObject)
+        if opcode.lower() == "mul" or opcode.lower() == "muli":
+            addObject = MUL(instructionString) # Object once created by itself performs all the validation and execution
             instructionList.append(addObject)
         if opcode.lower() == "sub":
             print( "SUB instruction identified" )
@@ -414,6 +419,55 @@ class IN(IO):
 
     def performAction(self):
         self.readFromPort(self.port)
+
+class MUL(ALU): # All ADD ADA (Add to acc ) can create a single object 
+    # this defines the type of operation
+    def __init__(self, insString):
+        ALU.__init__(self)
+        # self.opcode = "0000"
+        opcode = insString.split()[0]
+        opcode = opcode.lower()
+        if opcode == "mul":
+            print("MUL class object created")
+            self.opcode = "0111" # ! This needs to be removed since this is already hard coded
+            self.numOperands = 2
+            self.reg1 = insString.split()[1] # String 
+            self.reg2 = insString.split()[2]
+        elif opcode == "muli":
+            print("MULI class object created")
+            self.opcode = "1000"
+            self.numOperands = 1
+            self.reg1 = insString.split()[1]  # String 
+            self.reg2 = "ONE"
+        self.performOperation()
+    @dispatch(object, object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
+    def multiplication(self, reg1, reg2):
+        # reg1Val = getValueOfRegister(self.reg1) # now I will pass the integer value rather than the string (I can get the register in the last function that I call)
+        # reg2Val = getValueOfRegister(self.reg2)
+        # sum = reg1Val + reg2Val
+        prod = reg1 * reg2
+        RAMObjectGlobal.setAccumulator(prod)
+        print("Executing MUL command")
+        print("Product of ", reg1, " and ", reg2, "Was calculated to be :", prod)
+        return prod
+    @dispatch(object)
+    def multiplication(self, reg1):
+        RAMObjectGlobal.addToAccumulator(reg1)
+        prod = RAMObjectGlobal.getAccumulator()
+        print("Executing MULI command")
+        print("Product of ", reg1, " and Accumulator reg", "Was calculated to be :", prod)
+        return prod
+    def performOperation(self):
+        reg1Val = getValueOfRegister(self.reg1)
+        reg2Val = getValueOfRegister(self.reg2)
+        if self.numOperands == 1:
+            prod = self.multiplication(reg1Val)
+        else:
+            prod = self.multiplication(reg1Val, reg2Val)
+        # if self.opcode == "0001": #ada command
+            # RAMObjectGlobal.addToAccumulator(sum)
+            # print("Value ", sum, " was added to the acc || Accumulator Status : ",RAMObjectGlobal.getAccumulator() )
+        return prod    
 
 '''
 Ideo of IO:-
