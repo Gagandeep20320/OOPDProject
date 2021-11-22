@@ -76,7 +76,7 @@ class RAM(Memory):
         Memory.__init__(self)
         self.__accumulatorReg = 0                                               # ! Abstraction (Something OOPS)
         self.__R1 = 10 # These can be shifter to RAM class later (child of memory)
-        self.__R2 = 0
+        self.__R2 = 5
         self.__R3 = 0
         self.__R4 = 0
         self.__R5 = 0
@@ -128,8 +128,12 @@ class RAM(Memory):
         self.__accumulatorReg = value
     def addToAccumulator(self,value): 
         self.__accumulatorReg += value
+        print("Value stored in Accumulator: ", self.__accumulatorReg)
     def getAccumulator(self): # Accumulator Getter
         return self.__accumulatorReg
+    def multiplyToAccumulator(self,value): 
+        print("Value stored in Accumulator: ", self.__accumulatorReg)
+        self.__accumulatorReg *= value
 
     def setRegA(self, value):
         self.__A = value
@@ -452,7 +456,7 @@ class MUL(ALU): # All ADD ADA (Add to acc ) can create a single object
         return prod
     @dispatch(object)
     def multiplication(self, reg1):
-        RAMObjectGlobal.addToAccumulator(reg1)
+        RAMObjectGlobal.multiplyToAccumulator(reg1)
         prod = RAMObjectGlobal.getAccumulator()
         print("Executing MULI command")
         print("Product of ", reg1, " and Accumulator reg", "Was calculated to be :", prod)

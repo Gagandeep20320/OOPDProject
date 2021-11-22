@@ -1,4 +1,5 @@
 ld R1
+add R1 R2
 mul R1 R2
 //str R2
 add R1 R2
