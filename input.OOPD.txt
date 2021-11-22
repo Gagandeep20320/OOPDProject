@@ -3,10 +3,11 @@ ld R1
 //ada R2
 mul R1 R2
 muli R1
+mov R2 100
 //str R2
 //add R1 R2
 //ada R2
-//out R2
+out R2
 //mov R1 #11
 //out R1
 //IN P1

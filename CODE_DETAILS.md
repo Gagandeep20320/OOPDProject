@@ -41,13 +41,14 @@ IMPORTANT : Instruction Validation
 ! With addition of each new command in the program, we would also need to update this one
 
 
-ONE VERY IMPORTANT TASK IS TO BREAK THE CODE INTO LOGICAL FILES BEFORE THE CODE HETS TOO LARGE TO HANDLE AND DIFFICULT TO READ.
 
 Features to be added later.
 1. Program counter 
 2. We can also implement a very simple stack with Stack pointer in picture.
 
 PARTITION FOR CHANGES TO BE MADE IN THE CODE:-
+{
+                     
 
 RAJAT :
 
@@ -55,18 +56,41 @@ ADD2 <Reg1> <Reg2> <Reg3> : Add Reg1 and Reg2, and store value in Reg1
 SUB2 <Reg1> <Reg2> <Reg3> : Subtract Reg3 from Reg2 and store value in Reg1
 SUB <RegisterName> <RegisterName> : Subtract first register from second and put into the accumulator
 SUBA <RegisterName> : Subtract register value from Acc and store into the accumulator
-
+'mul' : [2, "0111", "RR"],
+                     'muli' : [1, "1000", "R"],
+                     'div' : [2, "1001", "RR"],
+                     'divi' : [1, "1010", "R"]} 
 SOUMYA :
-
 
 MUL  : All three types same as SUB/ADD --- Implemented This. Need some more here. Will do so----required changes done
 DIV : All three types same as SUB/ADD  ----Implemented This. Need to handle case of zero. Will do so
-
+#################### Exception handling (Using try catch block)###################
+'ld' : [1, "0010", "R"],
+'str' : [1, "0011", "R"],
 
 SINDHU :
+OR 
+AND 
+NOT
+We would need bits for this.
+We acan assume 8 bit register -> internally dec - 8 bit binary (predefined function to be used)
+'add' : [2, "0000", "RR"],
+'ada' : [1, "0001", "R"],        
+'mov' : [2, "0101", "R?"],
+'in' : [1, "0110", "?"],
+
 
 Doxygen? -> Comments 
 
 GAGANDEEP : 
 
-Implement some more commands
+* Demo ? 
+Input file ?
+Logical program : Loop
+
+- Loop Implementation
+JZ -> Pre req: PC, Memory
+JZ LABEL
+Debug MOV
+See that the parent classes should have some significant role(Not just dummies)
+
