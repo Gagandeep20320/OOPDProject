@@ -54,12 +54,13 @@ RAJAT :
 ADD2 <Reg1> <Reg2> <Reg3> : Add Reg1 and Reg2, and store value in Reg1
 SUB2 <Reg1> <Reg2> <Reg3> : Subtract Reg3 from Reg2 and store value in Reg1
 SUB <RegisterName> <RegisterName> : Subtract first register from second and put into the accumulator
+SUBA <RegisterName> : Subtract register value from Acc and store into the accumulator
 
 SOUMYA :
 
-SUBA <RegisterName> : Subtract register value from Acc and store into the accumulator
-MUL  : All three types same as SUB/ADD
-DIV : All three types same as SUB/ADD
+
+MUL  : All three types same as SUB/ADD --- Implemented This. Need some more here. Will do so----required changes done
+DIV : All three types same as SUB/ADD  ----Implemented This. Need to handle case of zero. Will do so
 
 
 SINDHU :

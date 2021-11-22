@@ -1,11 +1,14 @@
 ld R1
-add R1 R2
+//add R1 R2
+//ada R2
 mul R1 R2
-//str R2
-add R1 R2
-ada R2
-out R2
-mov R1 #11
-out R1
-IN P1
 muli R1
+//str R2
+//add R1 R2
+//ada R2
+//out R2
+//mov R1 #11
+//out R1
+//IN P1
+div R2 R1
+divI R2

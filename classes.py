@@ -19,7 +19,9 @@ instruction_list = {'add' : [2, "0000", "RR"],
                      'mov' : [2, "0101", "R?"],
                      'in' : [1, "0110", "?"],
                      'mul' : [2, "0111", "RR"],
-                     'muli' : [1, "1000", "R"]} # in needs only the port name hence port name can be anything :  We can also check for this later(Fix number of ports)
+                     'muli' : [1, "1000", "R"],
+                     'div' : [2, "1001", "RR"],
+                     'divi' : [1, "1010", "R"]} # in needs only the port name hence port name can be anything :  We can also check for this later(Fix number of ports)
 
 
 instructionList = []
@@ -127,13 +129,16 @@ class RAM(Memory):
     def setAccumulator(self, value):
         self.__accumulatorReg = value
     def addToAccumulator(self,value): 
-        self.__accumulatorReg += value
         print("Value stored in Accumulator: ", self.__accumulatorReg)
+        self.__accumulatorReg += value
     def getAccumulator(self): # Accumulator Getter
         return self.__accumulatorReg
     def multiplyToAccumulator(self,value): 
         print("Value stored in Accumulator: ", self.__accumulatorReg)
         self.__accumulatorReg *= value
+    def divideToAccumulator(self,value): 
+        print("Value stored in Accumulator: ", self.__accumulatorReg)
+        self.__accumulatorReg /= value
 
     def setRegA(self, value):
         self.__A = value
@@ -222,6 +227,9 @@ class InstructionDecoder:
             instructionList.append(addObject)
         if opcode.lower() == "mul" or opcode.lower() == "muli":
             addObject = MUL(instructionString) # Object once created by itself performs all the validation and execution
+            instructionList.append(addObject)
+        if opcode.lower() == "div" or opcode.lower() == "divi":
+            addObject = DIV(instructionString) # Object once created by itself performs all the validation and execution
             instructionList.append(addObject)
         if opcode.lower() == "sub":
             print( "SUB instruction identified" )
@@ -473,6 +481,55 @@ class MUL(ALU): # All ADD ADA (Add to acc ) can create a single object
             # print("Value ", sum, " was added to the acc || Accumulator Status : ",RAMObjectGlobal.getAccumulator() )
         return prod    
 
+
+class DIV(ALU): # All ADD ADA (Add to acc ) can create a single object 
+    # this defines the type of operation
+    def __init__(self, insString):
+        ALU.__init__(self)
+        # self.opcode = "0000"
+        opcode = insString.split()[0]
+        opcode = opcode.lower()
+        if opcode == "div":
+            print("DIV class object created")
+            self.opcode = "1001" # ! This needs to be removed since this is already hard coded
+            self.numOperands = 2
+            self.reg1 = insString.split()[1] # String 
+            self.reg2 = insString.split()[2]
+        elif opcode == "divi":
+            print("MULI class object created")
+            self.opcode = "1010"
+            self.numOperands = 1
+            self.reg1 = insString.split()[1]  # String 
+            self.reg2 = "ONE"
+        self.performOperation()
+    @dispatch(object, object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
+    def division(self, reg1, reg2):
+        # reg1Val = getValueOfRegister(self.reg1) # now I will pass the integer value rather than the string (I can get the register in the last function that I call)
+        # reg2Val = getValueOfRegister(self.reg2)
+        # sum = reg1Val + reg2Val
+        quot = reg1 / reg2
+        RAMObjectGlobal.setAccumulator(quot)
+        print("Executing DIV command")
+        print("Product of ", reg1, " and ", reg2, "Was calculated to be :", quot)
+        return quot
+    @dispatch(object)
+    def division(self, reg1):
+        RAMObjectGlobal.divideToAccumulator(reg1)
+        quot = RAMObjectGlobal.getAccumulator()
+        print("Executing DIVI command")
+        print("Quotient of ", reg1, " and Accumulator reg", "Was calculated to be :", quot)
+        return quot
+    def performOperation(self):
+        reg1Val = getValueOfRegister(self.reg1)
+        reg2Val = getValueOfRegister(self.reg2)
+        if self.numOperands == 1:
+            quot = self.division(reg1Val)
+        else:
+            quot = self.division(reg1Val, reg2Val)
+        # if self.opcode == "0001": #ada command
+            # RAMObjectGlobal.addToAccumulator(sum)
+            # print("Value ", sum, " was added to the acc || Accumulator Status : ",RAMObjectGlobal.getAccumulator() )
+        return quot
 '''
 Ideo of IO:-
 1. Output : output has to be printed using this. This should pront the operation that is happening.
