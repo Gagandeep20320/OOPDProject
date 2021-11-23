@@ -89,8 +89,7 @@ Input file ?
 Logical program : Loop
 
 - Loop Implementation
-JZ -> Pre req: PC, Memory
-JZ LABEL
-Debug MOV
-See that the parent classes should have some significant role(Not just dummies)
-
+JZ -> Pre req: PC, Memory -> DONE
+JNZ also implemented
+Debug MOV -> DONE 
+LD and STR commands should not be individual class since they re-initiate the complete memory which means that we may lose data (Check if it does that or not)

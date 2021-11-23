@@ -1,15 +1,23 @@
-ld R1
+mov r1 #515
+mov r2 #10
+mov a #5
+mov r3 #1
+sub a r3
+out a
+jnz a r1 
+hlt
+//ld R1
 //add R1 R2
 //ada R2
-mul R1 R2
-muli R1
-mov R2 100
+//mul R1 R2
+//muli R1
+//mov R2 100
 //str R2
 //add R1 R2
 //ada R2
-out R2
+//out R2
 //mov R1 #11
 //out R1
 //IN P1
-div R2 R1
-divI R2
+//div R2 R1
+//divI R2

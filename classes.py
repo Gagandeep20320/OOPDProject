@@ -1,7 +1,9 @@
 
+from io import open_code
 from multipledispatch import dispatch 
 RAM_LOCATION_ONE = 11
-MEMORY_SIZE = 100
+MEMORY_SIZE = 1000
+CODE_STORAGE_LOCATION_ONE = 511
 outputFile = open("OutputFile.txt", "w")
 # inputPort  = open("inputPort.txt", "r")
 # outputPort = open("outputPort.txt", "w")
@@ -9,7 +11,7 @@ outputFile = open("OutputFile.txt", "w")
 Memory can also store the instructions and this way we can very easily acheive looping. With PC tracking, looping can be done easily.
 We can also make PC tracking consistent with complete execution.
 '''
-register_list =['r1', 'r2', 'r3', 'r4', 'r5', 'r6']
+register_list =['r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'a']
 
 instruction_list = {'add' : [2, "0000", "RR"],
                      'ada' : [1, "0001", "R"],
@@ -21,24 +23,32 @@ instruction_list = {'add' : [2, "0000", "RR"],
                      'mul' : [2, "0111", "RR"],
                      'muli' : [1, "1000", "R"],
                      'div' : [2, "1001", "RR"],
-                     'divi' : [1, "1010", "R"]} # in needs only the port name hence port name can be anything :  We can also check for this later(Fix number of ports)
+                     'divi' : [1, "1010", "R"],
+                     'hlt' : [0, "1011", "?"],
+                     'jz' : [2, "1110", "RR"],
+                     'jnz' : [2, "10000", "RR"],
+                     'sub' : [2, "1111", "RR"]} # Jump to the location stored in the Register 2 if Register 1 is zero in value
 
 
 instructionList = []
 
+def getValueOfRegister(regString): # We will be keeping track of the register vaues separately
+    # ! this has to be be defined under the class memory
+    registerValue = RAMObjectGlobal.returnRegisterValue(regString)
+    return registerValue
 
 class Memory:
     def __init__(self):
         print("Memory initialized")
         self.__Memory = [0]*MEMORY_SIZE
-      
+        print("Program counter initialized to ", CODE_STORAGE_LOCATION_ONE)
+        self.__programCounter = CODE_STORAGE_LOCATION_ONE
         self.ROMContent = ["Group","Members","are","Gagandeep","Rajat","Sindhu","Soumya","All","the","Best"]
         self.memoryBooting()
         # ROM can have error messages that can be accesed later 
     def memoryBooting(self):
         for i in range (0,RAM_LOCATION_ONE - 1):
             self.__Memory[i] = self.ROMContent[i] 
-
             '''For inplementing SQL database you just need to implement some queries'''
     def getDataAtLocation(self,loc):
         if(loc > MEMORY_SIZE or loc < 0):
@@ -50,7 +60,6 @@ class Memory:
             exit()
         return self.__Memory[loc]
     def writeAtLocation(self,loc,data): # Can write any data, No constraint on writing specific data type
-
         if(loc < 11):
             # Error logs can be created (IO class can be used)
             print("Wrong memory location: ", loc," writing tried (writing to ROM) : Exiting")
@@ -59,24 +68,26 @@ class Memory:
             # Error logs can be created (IO class can be used)
             print("Wrong memory location: ", loc," writing tried : Exiting")
             exit()
-        
         self.__Memory[loc] = data
     def printMemoryStatus(self):
         for i in range (0, MEMORY_SIZE):
             print("Loc ", i, ": ", self.__Memory[i])
+    def setProgramCounterTo(self, val):
+        print("PC value set to :", val,"(Line number: ",val - CODE_STORAGE_LOCATION_ONE ,")")
+        self.__programCounter = val
+    def getProgramCounter(self):
+        return self.__programCounter
 
         # First 10 locations are ROM location  
         # We can store all the data in memory 
         # RAM has setters and getters bot h
         # ROM has getters only
-
         # Two functions
         # Read and writeAtLocation
         #! Read can be common to ROM and RAM . But only RAM should beb able to write at any location
 class RAM(Memory):
     def __init__(self):
         Memory.__init__(self)
-        self.__accumulatorReg = 0                                               # ! Abstraction (Something OOPS)
         self.__R1 = 10 # These can be shifter to RAM class later (child of memory)
         self.__R2 = 5
         self.__R3 = 0
@@ -87,7 +98,6 @@ class RAM(Memory):
         # IN P -> this instruction means that any value at this port P should be stored into register A
         # OUT P -> Any value in register A should be outputted at the port P
         # We can realize a port by a file.
-        
         self.initialLocation = RAM_LOCATION_ONE 
     def setR1(self,val):
         self.__R1 = val
@@ -106,7 +116,8 @@ class RAM(Memory):
             self.__R5 = val
         elif(regString.lower() == "r6"):
             self.__R6 = val
-        # elif(regString.lower() == )
+        elif(regString.lower() == "a"):
+            self.__A = val
     def returnRegisterValue(self,regString): # common getter
         if(regString.lower() == "r1"):
             return self.__R1
@@ -122,29 +133,37 @@ class RAM(Memory):
             return self.__R6
         elif(regString.lower() == "zero"):
             return 0
+        elif (regString.lower() == 'a'):
+            return self.__A
     
     def printRegisterStatus(self):
-        print("R1,R2,R3,R4,R5,R6 = ", self.__R1,",",self.__R2,",", self.__R3,",", self.__R4, ",", self.__R5, ",", self.__R6)
+        print("R1,R2,R3,R4,R5,R6,A = ", self.__R1,",",self.__R2,",", self.__R3,",", self.__R4, ",", self.__R5, ",", self.__R6, ",", self.__A)
 
     def setAccumulator(self, value):
-        self.__accumulatorReg = value
+        self.__A = value
     def addToAccumulator(self,value): 
-        print("Value stored in Accumulator: ", self.__accumulatorReg)
-        self.__accumulatorReg += value
+        print("Value stored in Accumulator: ", self.__A)
+        self.__A += value
     def getAccumulator(self): # Accumulator Getter
-        return self.__accumulatorReg
+        return self.__A
     def multiplyToAccumulator(self,value): 
-        print("Value stored in Accumulator: ", self.__accumulatorReg)
-        self.__accumulatorReg *= value
+        print("Value stored in Accumulator: ", self.__A)
+        self.__A *= value
     def divideToAccumulator(self,value): 
-        print("Value stored in Accumulator: ", self.__accumulatorReg)
-        self.__accumulatorReg /= value
+        print("Value stored in Accumulator: ", self.__A)
+        self.__A /= value
 
     def setRegA(self, value):
         self.__A = value
     def getRegA(self):
         return self.__A
-    
+    def performLoadInstruction(self, reg):
+        memoryLocation = getValueOfRegister(reg) # this is the memory location
+        self.setAccumulator(self.getDataAtLocation(memoryLocation))
+    def performStoreInstruction(self, reg):
+        memoryLocation = getValueOfRegister(self.reg) # this is the memory location
+        self.writeAtLocation(memoryLocation, self.getAccumulator())
+
 class ALU:
     def __init__(self):
         print("ALU Object created")
@@ -196,18 +215,45 @@ class Add(ALU): # All ADD ADA (Add to acc ) can create a single object
             # RAMObjectGlobal.addToAccumulator(sum)
             # print("Value ", sum, " was added to the acc || Accumulator Status : ",RAMObjectGlobal.getAccumulator() )
         return sum
-        
+class Sub(ALU):
+    def __init__(self, insString):
+        ALU.__init__(self)
+        # self.opcode = "0000"
+        opcode = insString.split()[0]
+        opcode = opcode.lower()
+        if opcode == "sub":
+            print("SUB class object created")
+            self.opcode = "0000" # ! This needs to be removed since this is already hard coded
+            self.numOperands = 2
+            self.reg1 = insString.split()[1] # String 
+            self.reg2 = insString.split()[2]
+        self.performOperation(getValueOfRegister(self.reg1), getValueOfRegister(self.reg2))
+    @dispatch(object, object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
+    def performOperation(self, reg1, reg2):
+        # reg1Val = getValueOfRegister(self.reg1) # now I will pass the integer value rather than the string (I can get the register in the last function that I call)
+        # reg2Val = getValueOfRegister(self.reg2)
+        # sum = reg1Val + reg2Val
+        diff = reg1 - reg2
+        RAMObjectGlobal.setAccumulator(diff)
+        print("Executing SUB command")
+        print("Subtraction of ", reg1, " and ", reg2, "Was calculated to be :", diff)
+        return sum
 RAMObjectGlobal = RAM()
-def getValueOfRegister(regString): # We will be keeping track of the register vaues separately
-    # ! this has to be be defined under the class memory
-    registerValue = RAMObjectGlobal.returnRegisterValue(regString)
-    return registerValue
 
 class InstructionDecoder:
     def __init__(self):
         self.temp = 0
     def parseFileDecodeInstructions(self, inputFile):
-        with open(inputFile, 'r') as f:
+        self.parseFileStoreToMemory(inputFile)
+        while RAMObjectGlobal.getProgramCounter() < MEMORY_SIZE:
+            line = RAMObjectGlobal.getDataAtLocation(RAMObjectGlobal.getProgramCounter())
+            RAMObjectGlobal.setProgramCounterTo(RAMObjectGlobal.getProgramCounter() + 1)
+            if(line[0:2] == "//"): # ! Handles a comment
+                continue
+            self.validateInstruction(line, RAMObjectGlobal.getProgramCounter() - 1)
+            instructionObject = self.createInstructionObject(line)
+            instructionList.append(instructionObject) # Add the validate instruction functions here.
+        '''with open(inputFile, 'r') as f:
             lineNumber = 0
             for line in f:
                 lineNumber += 1
@@ -216,8 +262,15 @@ class InstructionDecoder:
                     continue
                 self.validateInstruction(line, lineNumber)
                 instructionObject = self.createInstructionObject(line)
-                instructionList.append(instructionObject) # Add the validate instruction functions here.
-
+                instructionList.append(instructionObject) # Add the validate instruction functions here.'''
+    def parseFileStoreToMemory(self, inputFile):
+        print("Started copying code into the memory")
+        with open(inputFile, 'r') as f:
+            lineNumber = CODE_STORAGE_LOCATION_ONE - 1
+            for line in f:
+                lineNumber += 1
+                RAMObjectGlobal.writeAtLocation(lineNumber, line)
+        # RAMObjectGlobal.printMemoryStatus() # Printing the memory status
     def createInstructionObject(self,instructionString):
         opcode = instructionString.split()[0]
         print("Opcode : ", opcode)
@@ -233,6 +286,8 @@ class InstructionDecoder:
             instructionList.append(addObject)
         if opcode.lower() == "sub":
             print( "SUB instruction identified" )
+            subObject = Sub(instructionString)
+            instructionList.append(subObject)
         # if opcode.lower() == "str":
         if opcode.lower() == "ld":
             print( "LD instruction decode stage")
@@ -254,7 +309,15 @@ class InstructionDecoder:
             print("IN statement")
             inObject = IN(instructionString)
             instructionList.append(inObject)
-        
+        if(opcode.lower() == "hlt"):
+            print("HLT statement")
+            hltObject = HLT(instructionString)
+            instructionList.append(hltObject)
+        if(opcode.lower() == "jz" or opcode.lower() == "jnz"):
+            print("JZ or JNZ instruction")
+            executionControlObject = executionControl(instructionString)
+            instructionList.append(executionControlObject)
+    
     def validateInstruction(self, instructionString, lineNumber):
         insName = instructionString.split()[0]
         if insName.lower() not in instruction_list:
@@ -272,7 +335,7 @@ class InstructionDecoder:
         for i in range (0,numOperands-1): # Assuming there are only 2 operands at max for any operation (This can be expanded later)
             operand = instructionString.split()[i+1]
             if operandTypes.lower()[i] == "r":
-                print("Checking if the register is valid or not")
+                print("Checking if the register", operand," is valid or not")
                 isRegVal = self.isRegisterValid(operand, lineNumber)
                 if isRegVal == False:
                     exit()
@@ -301,16 +364,13 @@ class InstructionDecoder:
             return False
     
     def isRegisterValid(self,inputString, lineNumber): # This would return false if register does not exist OR it is not even a register
-        if inputString[0].lower() == "r":
-            for reg in register_list:
-                if reg == inputString.lower():
-                
-                    return True
-            print("ERROR : Register number out of range ,Line number :", lineNumber)
-            return False
-        else:
-            print("ERROR : Register token was expected : ", lineNumber)
-            return False
+        # if inputString[0].lower() == "r":
+        for reg in register_list:
+            if reg == inputString.lower():
+                return True
+        print("ERROR : Register number out of range ,Line number :", lineNumber)
+        return False
+        
 
 
     '''
@@ -368,7 +428,7 @@ class STR(Memory):
         RAMObjectGlobal.printMemoryStatus()
 class MOV(RAM):
     def __init__(self, insString):
-        RAM.__init__(self)
+        # RAM.__init__(self)
         self.opcode = insString.split()[0]
         self.opcode = self.opcode.lower()
         self.reg1 = insString.split()[1]
@@ -530,6 +590,46 @@ class DIV(ALU): # All ADD ADA (Add to acc ) can create a single object
             # RAMObjectGlobal.addToAccumulator(sum)
             # print("Value ", sum, " was added to the acc || Accumulator Status : ",RAMObjectGlobal.getAccumulator() )
         return quot
+class HLT():
+    def __init__(self, insString):
+        self.opcode = insString.split()[0]
+        self.performOperation()
+    def performOperation(self):
+        print ("Program Halted")
+        exit(0)
+
+class executionControl():
+    def __init__(self, insString):
+        # self.jumpedFromAddress = 0
+        self.opcode = insString.split()[0]
+        self.opcode = self.opcode.lower()
+        self.reg1 = insString.split()[1]
+        self.reg2 = insString.split()[2]
+        self.reg1Val = getValueOfRegister(self.reg1)
+        self.reg2val = getValueOfRegister(self.reg2)
+        # print("Reg 1 val for jz : ", self.reg1Val())
+        self.performOperation()
+    def jumpTo(self, location):
+        print("PC to be set to :", location)
+        RAMObjectGlobal.setProgramCounterTo(location)
+    def performOperation(self):
+        
+        if self.opcode.lower() == "jz":
+            print("Execution of JZ instruction starts")
+            if self.reg1Val == 0:
+                print("reg value zero satisfied")
+                locationToJumpTo = self.reg2val
+                self.jumpTo(locationToJumpTo)
+        if self.opcode.lower() == "jnz":
+            print("Execution of JNZ instruction starts")
+            if self.reg1Val != 0:
+                print("reg value non zero satisfied")
+                locationToJumpTo = self.reg2val
+                self.jumpTo(locationToJumpTo)
+        
+    # def performOperation
+
+
 '''
 Ideo of IO:-
 1. Output : output has to be printed using this. This should pront the operation that is happening.
