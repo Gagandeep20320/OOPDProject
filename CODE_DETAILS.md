@@ -94,3 +94,9 @@ JZ -> Pre req: PC, Memory -> DONE
 JNZ also implemented
 Debug MOV -> DONE 
 LD and STR commands should not be individual class since they re-initiate the complete memory which means that we may lose data (Check if it does that or not)
+
+See this error:
+File "d:\IIITD\MonsoonSemester2021Sem2\OOPD\OOPDProject\classes.py", line 261, in parseFileDecodeInstructions
+    if(line[0:2] == "//"): # ! Handles a comment
+TypeError: 'int' object is not subscriptable
+
