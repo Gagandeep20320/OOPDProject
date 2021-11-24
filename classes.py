@@ -154,11 +154,11 @@ class RAM(Memory):
         try:
             self.__A /= value
         except Exception as e:
-            print(e)
+            print("Cannot execute division operation because of exception ", e)
         else:
             quot = RAMObjectGlobal.getAccumulator()
             print("Executing DIVI command")
-            print("Quotient of ", self.__A, " and Accumulator reg", "Was calculated to be :", quot)
+            print("Quotient of Accumulator reg and ", value, "is calculated to be :", quot)
             return quot
 
 
@@ -574,9 +574,6 @@ class DIV(ALU): # All ADD ADA (Add to acc ) can create a single object
         self.performOperation()
     @dispatch(object, object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
     def division(self, reg1, reg2):
-        # reg1Val = getValueOfRegister(self.reg1) # now I will pass the integer value rather than the string (I can get the register in the last function that I call)
-        # reg2Val = getValueOfRegister(self.reg2)
-        # sum = reg1Val + reg2Val
         try:
             quot = reg1 / reg2
         except Exception as ex:

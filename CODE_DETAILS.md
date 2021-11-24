@@ -63,8 +63,9 @@ SUBA <RegisterName> : Subtract register value from Acc and store into the accumu
 SOUMYA :
 
 MUL  : All three types same as SUB/ADD --- Implemented This. Need some more here. Will do so----required changes done
-DIV : All three types same as SUB/ADD  ----Implemented This. Need to handle case of zero. Will do so
+DIV : All three types same as SUB/ADD  ----Implemented This. Need to handle case of zero. Done using try catch block
 #################### Exception handling (Using try catch block)###################
+Exception Handling for file and invalid instruction
 'ld' : [1, "0010", "R"],
 'str' : [1, "0011", "R"],
 
