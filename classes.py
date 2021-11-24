@@ -150,8 +150,18 @@ class RAM(Memory):
         print("Value stored in Accumulator: ", self.__A)
         self.__A *= value
     def divideToAccumulator(self,value): 
-        print("Value stored in Accumulator: ", self.__A)
-        self.__A /= value
+        print("Value stored in Accumulator: ", self.__A)      
+        try:
+            self.__A /= value
+        except Exception as e:
+            print(e)
+        else:
+            quot = RAMObjectGlobal.getAccumulator()
+            print("Executing DIVI command")
+            print("Quotient of ", self.__A, " and Accumulator reg", "Was calculated to be :", quot)
+            return quot
+
+
 
     def setRegA(self, value):
         self.__A = value
@@ -556,7 +566,7 @@ class DIV(ALU): # All ADD ADA (Add to acc ) can create a single object
             self.reg1 = insString.split()[1] # String 
             self.reg2 = insString.split()[2]
         elif opcode == "divi":
-            print("MULI class object created")
+            print("DIVI class object created")
             self.opcode = "1010"
             self.numOperands = 1
             self.reg1 = insString.split()[1]  # String 
@@ -567,18 +577,22 @@ class DIV(ALU): # All ADD ADA (Add to acc ) can create a single object
         # reg1Val = getValueOfRegister(self.reg1) # now I will pass the integer value rather than the string (I can get the register in the last function that I call)
         # reg2Val = getValueOfRegister(self.reg2)
         # sum = reg1Val + reg2Val
-        quot = reg1 / reg2
-        RAMObjectGlobal.setAccumulator(quot)
-        print("Executing DIV command")
-        print("Product of ", reg1, " and ", reg2, "Was calculated to be :", quot)
-        return quot
+        try:
+            quot = reg1 / reg2
+        except Exception as ex:
+            print ("Cannot execute the division function because of exception:", ex)
+        else:
+            RAMObjectGlobal.setAccumulator(quot)
+            print("Executing DIV command")
+            print("Product of ", reg1, " and ", reg2, "Was calculated to be :", quot)
+            return quot
     @dispatch(object)
     def division(self, reg1):
         RAMObjectGlobal.divideToAccumulator(reg1)
-        quot = RAMObjectGlobal.getAccumulator()
-        print("Executing DIVI command")
-        print("Quotient of ", reg1, " and Accumulator reg", "Was calculated to be :", quot)
-        return quot
+        #quot = RAMObjectGlobal.getAccumulator()
+        #print("Executing DIVI command")
+        #print("Quotient of ", reg1, " and Accumulator reg", "Was calculated to be :", quot)
+        #return quot
     def performOperation(self):
         reg1Val = getValueOfRegister(self.reg1)
         reg2Val = getValueOfRegister(self.reg2)
