@@ -14,7 +14,10 @@ from multipledispatch import dispatch
 # Might or might not create program counter etc.
 inputFileName = "input.OOPD.txt"
 def main():
-    classes.instructionDecoderGlobal.parseFileDecodeInstructions(inputFileName)
+    try:
+        classes.instructionDecoderGlobal.parseFileDecodeInstructions(inputFileName)
+    except Exception as eef:
+        print(eef)
 if __name__== "__main__":
     # imm = '#10.2'
     # print(isImmediateValid(imm,10))

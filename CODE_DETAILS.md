@@ -65,7 +65,7 @@ SOUMYA :
 MUL  : All three types same as SUB/ADD --- Implemented This. Need some more here. Will do so----required changes done
 DIV : All three types same as SUB/ADD  ----Implemented This. Need to handle case of zero. Done using try catch block
 #################### Exception handling (Using try catch block)###################
-Exception Handling for file and invalid instruction
+Exception Handling for file and invalid instruction ------File handling done with try catch, need verification
 'ld' : [1, "0010", "R"],
 'str' : [1, "0011", "R"],
 

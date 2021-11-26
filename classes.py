@@ -275,11 +275,26 @@ class InstructionDecoder:
                 instructionList.append(instructionObject) # Add the validate instruction functions here.'''
     def parseFileStoreToMemory(self, inputFile):
         print("Started copying code into the memory")
-        with open(inputFile, 'r') as f:
-            lineNumber = CODE_STORAGE_LOCATION_ONE - 1
-            for line in f:
-                lineNumber += 1
-                RAMObjectGlobal.writeAtLocation(lineNumber, line)
+        try:
+            f = open(inputFile, 'r')
+            #with open(inputFile, 'r') as f:
+                #lineNumber = CODE_STORAGE_LOCATION_ONE - 1
+                #for line in f:
+                    #lineNumber += 1
+                    #RAMObjectGlobal.writeAtLocation(lineNumber, line)
+        except Exception as ef:
+            print(ef)
+        else:
+             with open(inputFile, 'r') :
+             #as f:
+                lineNumber = CODE_STORAGE_LOCATION_ONE - 1
+                for line in f:
+                    lineNumber += 1
+                    RAMObjectGlobal.writeAtLocation(lineNumber, line)
+
+        finally:
+            f.close()
+
         # RAMObjectGlobal.printMemoryStatus() # Printing the memory status
     def createInstructionObject(self,instructionString):
         opcode = instructionString.split()[0]
