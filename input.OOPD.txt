@@ -1,5 +1,5 @@
-mov r1 #515
-mov r2 #0
+mov r1 #2
+mov r2 #3
 //mov a #
 //mov r3 #1
 //sub a r3
@@ -21,4 +21,5 @@ add R1 R2
 //IN P1
 div R1 R2
 divI R2
+not R1
 HLT

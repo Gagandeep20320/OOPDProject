@@ -27,7 +27,12 @@ instruction_list = {'add' : [2, "0000", "RR"],
                      'hlt' : [0, "1011", "?"],
                      'jz' : [2, "1110", "RR"],
                      'jnz' : [2, "10000", "RR"],
-                     'sub' : [2, "1111", "RR"]} # Jump to the location stored in the Register 2 if Register 1 is zero in value
+                     'sub' : [2, "1111", "RR"],
+                     'or' : [2,"10001","RR"],
+                     'and' : [2,"10010","RR"],
+                     'ora' : [1,"10011","R"],
+                     'anda' : [1,"10100","R"],
+                     'not' : [1,"10101","R"]} # Jump to the location stored in the Register 2 if Register 1 is zero in value
 
 
 instructionList = []
@@ -149,6 +154,13 @@ class RAM(Memory):
     def multiplyToAccumulator(self,value): 
         print("Value stored in Accumulator: ", self.__A)
         self.__A *= value
+    def orToAccumulator(self,value): 
+        print("Value stored in Accumulator: ", self.__A)
+        self.__A |= value
+    def andToAccumulator(self,value): 
+        print("Value stored in Accumulator: ", self.__A)
+        self.__A &= value    
+
     def divideToAccumulator(self,value): 
         print("Value stored in Accumulator: ", self.__A)      
         try:
@@ -303,6 +315,15 @@ class InstructionDecoder:
         if opcode.lower() == "add" or opcode.lower() == "ada":
             addObject = Add(instructionString) # Object once created by itself performs all the validation and execution
             instructionList.append(addObject)
+        if opcode.lower() == "or" or opcode.lower() == "ora":
+            addObject = OR(instructionString) # Object once created by itself performs all the validation and execution
+            instructionList.append(addObject)
+        if opcode.lower() == "and" or opcode.lower() == "anda":
+            addObject = AND(instructionString) # Object once created by itself performs all the validation and execution
+            instructionList.append(addObject) 
+        if opcode.lower() == "not":
+            addObject = NOT(instructionString) # Object once created by itself performs all the validation and execution
+            instructionList.append(addObject)            
         if opcode.lower() == "mul" or opcode.lower() == "muli":
             addObject = MUL(instructionString) # Object once created by itself performs all the validation and execution
             instructionList.append(addObject)
@@ -566,7 +587,139 @@ class MUL(ALU): # All ADD ADA (Add to acc ) can create a single object
             # print("Value ", sum, " was added to the acc || Accumulator Status : ",RAMObjectGlobal.getAccumulator() )
         return prod    
 
+class OR(ALU): # All ADD ADA (Add to acc ) can create a single object 
+    # this defines the type of operation
+    def __init__(self, insString):
+        ALU.__init__(self)
+        # self.opcode = "0000"
+        opcode = insString.split()[0]
+        opcode = opcode.lower()
+        if opcode == "or":
+            print("OR class object created")
+            self.opcode = "10001" # ! This needs to be removed since this is already hard coded
+            self.numOperands = 2
+            self.reg1 = insString.split()[1] # String 
+            self.reg2 = insString.split()[2]
+        elif opcode == "ora":
+            print("ORA class object created")
+            self.opcode = "10011"
+            self.numOperands = 1
+            self.reg1 = insString.split()[1]  # String 
+            self.reg2 = "ONE"
+        self.performOperation()
+    @dispatch(object, object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
+    def logicalor(self, reg1, reg2):
+        # reg1Val = getValueOfRegister(self.reg1) # now I will pass the integer value rather than the string (I can get the register in the last function that I call)
+        # reg2Val = getValueOfRegister(self.reg2)
+        # sum = reg1Val + reg2Val
+        orout = reg1 | reg2
+        RAMObjectGlobal.setAccumulator(orout)
+        print("Executing OR command")
+        print("OR of ", reg1, " and ", reg2, "Was calculated to be :", orout)
+        return orout
+    @dispatch(object)
+    def logicalor(self, reg1):
+        RAMObjectGlobal.orToAccumulator(reg1)
+        orout = RAMObjectGlobal.getAccumulator()
+        print("Executing ORA command")
+        print("OR of ", reg1, " and Accumulator reg", "Was calculated to be :", orout)
+        return orout
+    def performOperation(self):
+        reg1Val = getValueOfRegister(self.reg1)
+        reg2Val = getValueOfRegister(self.reg2)
+        if self.numOperands == 1:
+            orout = self.logicalor(reg1Val)
+        else:
+            orout = self.logicalor(reg1Val, reg2Val)
+        # if self.opcode == "0001": #ada command
+            # RAMObjectGlobal.addToAccumulator(sum)
+            # print("Value ", sum, " was added to the acc || Accumulator Status : ",RAMObjectGlobal.getAccumulator() )
+        return orout   
 
+class AND(ALU): # All ADD ADA (Add to acc ) can create a single object 
+    # this defines the type of operation
+    def __init__(self, insString):
+        ALU.__init__(self)
+        # self.opcode = "0000"
+        opcode = insString.split()[0]
+        opcode = opcode.lower()
+        if opcode == "and":
+            print("AND class object created")
+            self.opcode = "10010" # ! This needs to be removed since this is already hard coded
+            self.numOperands = 2
+            self.reg1 = insString.split()[1] # String 
+            self.reg2 = insString.split()[2]
+        elif opcode == "anda":
+            print("ANDA class object created")
+            self.opcode = "10100"
+            self.numOperands = 1
+            self.reg1 = insString.split()[1]  # String 
+            self.reg2 = "ONE"
+        self.performOperation()
+    @dispatch(object, object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
+    def logicaland(self, reg1, reg2):
+        # reg1Val = getValueOfRegister(self.reg1) # now I will pass the integer value rather than the string (I can get the register in the last function that I call)
+        # reg2Val = getValueOfRegister(self.reg2)
+        # sum = reg1Val + reg2Val
+        andout = reg1 & reg2
+        RAMObjectGlobal.setAccumulator(andout)
+        print("Executing AND command")
+        print("AND of ", reg1, " and ", reg2, "Was calculated to be :", andout)
+        return andout
+    @dispatch(object)
+    def logicaland(self, reg1):
+        RAMObjectGlobal.andToAccumulator(reg1)
+        andout = RAMObjectGlobal.getAccumulator()
+        print("Executing ANDA command")
+        print("AND of ", reg1, " and Accumulator reg", "Was calculated to be :", andout)
+        return andout
+    def performOperation(self):
+        reg1Val = getValueOfRegister(self.reg1)
+        reg2Val = getValueOfRegister(self.reg2)
+        if self.numOperands == 1:
+            andout = self.logicaland(reg1Val)
+        else:
+            andout = self.logicaland(reg1Val, reg2Val)
+        # if self.opcode == "0001": #ada command
+            # RAMObjectGlobal.addToAccumulator(sum)
+            # print("Value ", sum, " was added to the acc || Accumulator Status : ",RAMObjectGlobal.getAccumulator() )
+        return andout      
+
+class NOT(ALU): # All ADD ADA (Add to acc ) can create a single object 
+    # this defines the type of operation
+    def __init__(self, insString):
+        ALU.__init__(self)
+        # self.opcode = "0000"
+        opcode = insString.split()[0]
+        opcode = opcode.lower()
+        if opcode == "not":
+            print("NOT class object created")
+            self.opcode = "10101" # ! This needs to be removed since this is already hard coded
+            self.numOperands = 1
+            self.reg1 = insString.split()[1] # String 
+            #self.reg2 = "ONE"
+        
+        self.performOperation()
+    
+    @dispatch(object)
+    def logicalnot(self, reg1):
+
+        notout = ~reg1 
+        RAMObjectGlobal.setAccumulator(notout)
+        print("Executing NOT command")
+        print("NOT of ", reg1,"Was calculated to be :", notout)
+        return notout
+    
+    def performOperation(self):
+        reg1Val = getValueOfRegister(self.reg1)
+        
+        notout = self.logicalnot(reg1Val)
+        
+        # if self.opcode == "0001": #ada command
+            # RAMObjectGlobal.addToAccumulator(sum)
+            # print("Value ", sum, " was added to the acc || Accumulator Status : ",RAMObjectGlobal.getAccumulator() )
+        return notout      
+      
 class DIV(ALU): # All ADD ADA (Add to acc ) can create a single object 
     # this defines the type of operation
     def __init__(self, insString):
