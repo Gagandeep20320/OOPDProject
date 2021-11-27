@@ -99,4 +99,5 @@ See this error:
 File "d:\IIITD\MonsoonSemester2021Sem2\OOPD\OOPDProject\classes.py", line 261, in parseFileDecodeInstructions
     if(line[0:2] == "//"): # ! Handles a comment
 TypeError: 'int' object is not subscriptable
-
+RESOLVED : If you do not use HLT statement in the code then, this exception will show.
+            Program has to be ended with HLT statement.

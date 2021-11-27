@@ -21,3 +21,4 @@ add R1 R2
 //IN P1
 div R1 R2
 divI R2
+HLT
