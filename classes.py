@@ -32,7 +32,10 @@ instruction_list = {'add' : [2, "0000", "RR"],
                      'and' : [2,"10010","RR"],
                      'ora' : [1,"10011","R"],
                      'anda' : [1,"10100","R"],
-                     'not' : [1,"10101","R"]} # Jump to the location stored in the Register 2 if Register 1 is zero in value
+                     'not' : [1,"10101","R"],
+                     'add2' : [3,"1100","RRR"],
+                     'suba' : [1, "1101", "RR"],
+                     'sub2' : [3, "11111", "RRR"]} # Jump to the location stored in the Register 2 if Register 1 is zero in value
 
 
 instructionList = []
@@ -198,17 +201,32 @@ class Add(ALU): # All ADD ADA (Add to acc ) can create a single object
         opcode = opcode.lower()
         if opcode == "add":
             print("ADD class object created")
+            print("executing ADD")
             self.opcode = "0000" # ! This needs to be removed since this is already hard coded
             self.numOperands = 2
             self.reg1 = insString.split()[1] # String 
             self.reg2 = insString.split()[2]
+            self.reg3 = "ZERO"
+            # self.performOperation()    
         elif opcode == "ada":
             print("ADA class object created")
+            print("executing ADA")
             self.opcode = "0001"
             self.numOperands = 1
             self.reg1 = insString.split()[1]  # String 
             self.reg2 = "ZERO"
-        self.performOperation()
+            self.reg3 = "ZERO"
+            # self.performOperation()
+        elif opcode == "add2":
+            print("ADD class object created")
+            print("executing ADD2")
+            self.opcode = "1100" # ! This needs to be removed since this is already hard coded
+            self.numOperands = 3
+            self.reg1 = insString.split()[1]
+            self.reg2 = insString.split()[2] # String 
+            self.reg3 = insString.split()[3]
+            # self.performOperation()
+        self.performOperation()    
     @dispatch(object, object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
     def addition(self, reg1, reg2):
         # reg1Val = getValueOfRegister(self.reg1) # now I will pass the integer value rather than the string (I can get the register in the last function that I call)
@@ -218,6 +236,7 @@ class Add(ALU): # All ADD ADA (Add to acc ) can create a single object
         RAMObjectGlobal.setAccumulator(sum)
         print("Executing ADD command")
         print("Sum of ", reg1, " and ", reg2, "Was calculated to be :", sum)
+        print("Accumulator value after ADD command ", RAMObjectGlobal.getAccumulator())
         return sum
     @dispatch(object)
     def addition(self, reg1):
@@ -225,14 +244,32 @@ class Add(ALU): # All ADD ADA (Add to acc ) can create a single object
         sum = RAMObjectGlobal.getAccumulator()
         print("Executing ADA command")
         print("Sum of ", reg1, " and Accumulator reg", "Was calculated to be :", sum)
+        print("Accumulator value after ADA command ", RAMObjectGlobal.getAccumulator())
+        # RAMObjectGlobal.printRegisterStatus()
         return sum
+    @dispatch(object,object,object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
+    def addition(self, reg1, reg2,reg3):
+        # reg1Val = getValueOfRegister(self.reg1) # now I will pass the integer value rather than the string (I can get the register in the last function that I call)
+        # reg2Val = getValueOfRegister(self.reg2)
+        # sum = reg1Val + reg2Val
+        sum = reg2 + reg3 
+        RAMObjectGlobal.setRegisterToValue(self.reg1,sum)
+        print("Executing ADD2 command")
+        print("Sum of ", reg2, " and ", reg3, "Was calculated to be :", sum)
+        # print("Register value after ADD2 command ", RAMObjectGlobal.returnRegisterValue())
+        RAMObjectGlobal.printRegisterStatus()
+        return sum     
     def performOperation(self):
         reg1Val = getValueOfRegister(self.reg1)
         reg2Val = getValueOfRegister(self.reg2)
+        reg3Val = getValueOfRegister(self.reg3)
+
         if self.numOperands == 1:
             sum = self.addition(reg1Val)
-        else:
+        elif self.numOperands == 2:
             sum = self.addition(reg1Val, reg2Val)
+        elif self.numOperands == 3:
+            sum = self.addition(reg1Val,reg2Val, reg3Val)    
         # if self.opcode == "0001": #ada command
             # RAMObjectGlobal.addToAccumulator(sum)
             # print("Value ", sum, " was added to the acc || Accumulator Status : ",RAMObjectGlobal.getAccumulator() )
@@ -249,17 +286,82 @@ class Sub(ALU):
             self.numOperands = 2
             self.reg1 = insString.split()[1] # String 
             self.reg2 = insString.split()[2]
-        self.performOperation(getValueOfRegister(self.reg1), getValueOfRegister(self.reg2))
+            self.reg3 = "ZERO"
+            # self.performOperation()
+        elif opcode == "suba":
+            print("SUB class object created")
+            self.opcode = "1101"
+            self.numOperands = 1
+            self.reg1 = insString.split()[1]  # String 
+            self.reg2 = "ZERO"
+            self.reg3 = "ZERO"
+            # self.performOperation()
+        elif opcode == "sub2":
+            print(" SUB class object created")
+            self.opcode = "11111" # ! This needs to be removed since this is already hard coded
+            self.numOperands = 3
+            self.reg1 = insString.split()[1]
+            self.reg2 = insString.split()[2] # String 
+            self.reg3 = insString.split()[3]
+            # self.reg3 = "ZERO"
+            # self.performOperation()
+        self.performOperation()    
+        # self.performOperation(getValueOfRegister(self.reg1), getValueOfRegister(self.reg2))
     @dispatch(object, object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
-    def performOperation(self, reg1, reg2):
+    def subtraction(self, reg1, reg2):
         # reg1Val = getValueOfRegister(self.reg1) # now I will pass the integer value rather than the string (I can get the register in the last function that I call)
         # reg2Val = getValueOfRegister(self.reg2)
         # sum = reg1Val + reg2Val
-        diff = reg1 - reg2
-        RAMObjectGlobal.setAccumulator(diff)
+        difference = reg2 - reg1
+        RAMObjectGlobal.setAccumulator(difference)
         print("Executing SUB command")
-        print("Subtraction of ", reg1, " and ", reg2, "Was calculated to be :", diff)
-        return sum
+        print("Difference of ", reg1, " and ", reg2, "Was calculated to be :", difference)
+        return difference
+    @dispatch(object)
+    def subtraction(self, reg1):
+        newreg1 = reg1*(-1)
+        RAMObjectGlobal.addToAccumulator(newreg1)
+        difference = RAMObjectGlobal.getAccumulator()
+        print("Executing SUBA command")
+        print("Difference of ", reg1, " and Accumulator reg", "Was calculated to be :", difference)
+        RAMObjectGlobal.printRegisterStatus()
+        return difference
+    @dispatch(object, object,object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
+    def subtraction(self, reg1, reg2,reg3):
+        # reg1Val = getValueOfRegister(self.reg1) # now I will pass the integer value rather than the string (I can get the register in the last function that I call)
+        # reg2Val = getValueOfRegister(self.reg2)
+        # sum = reg1Val + reg2Val
+        difference = reg2 - reg3 
+        RAMObjectGlobal.setRegisterToValue(self.reg1,difference)
+        print("Executing SUB2 command")
+        print("Difference of ", reg2, " and ", reg3, "Was calculated to be :", difference)
+        RAMObjectGlobal.printRegisterStatus()
+        return difference     
+    def performOperation(self):
+        reg1Val = getValueOfRegister(self.reg1)
+        reg2Val = getValueOfRegister(self.reg2)
+        reg3Val = getValueOfRegister(self.reg3)
+
+        if self.numOperands == 1:
+            difference = self.subtraction(reg1Val)
+        elif self.numOperands == 2:
+            difference = self.subtraction(reg1Val, reg2Val)
+        elif self.numOperands == 3:
+            difference = self.subtraction(reg1Val,reg2Val, reg3Val)    
+        # if self.opcode == "0001": #ada command
+            # RAMObjectGlobal.addToAccumulator(sum)
+            # print("Value ", sum, " was added to the acc || Accumulator Status : ",RAMObjectGlobal.getAccumulator() )
+        return difference    
+    # @dispatch(object, object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
+    # def performOperation(self, reg1, reg2):
+    #     # reg1Val = getValueOfRegister(self.reg1) # now I will pass the integer value rather than the string (I can get the register in the last function that I call)
+    #     # reg2Val = getValueOfRegister(self.reg2)
+    #     # sum = reg1Val + reg2Val
+    #     diff = reg1 - reg2
+    #     RAMObjectGlobal.setAccumulator(diff)
+    #     print("Executing SUB command")
+    #     print("Subtraction of ", reg1, " and ", reg2, "Was calculated to be :", diff)
+    #     return sum
 RAMObjectGlobal = RAM()
 
 class InstructionDecoder:
@@ -312,7 +414,7 @@ class InstructionDecoder:
         opcode = instructionString.split()[0]
         print("Opcode : ", opcode)
         # if opcode.lower() == "add" or "ada":
-        if opcode.lower() == "add" or opcode.lower() == "ada":
+        if opcode.lower() == "add" or opcode.lower() == "ada" or opcode.lower() == "add2":
             addObject = Add(instructionString) # Object once created by itself performs all the validation and execution
             instructionList.append(addObject)
         if opcode.lower() == "or" or opcode.lower() == "ora":
@@ -330,7 +432,7 @@ class InstructionDecoder:
         if opcode.lower() == "div" or opcode.lower() == "divi":
             addObject = DIV(instructionString) # Object once created by itself performs all the validation and execution
             instructionList.append(addObject)
-        if opcode.lower() == "sub":
+        if opcode.lower() == "sub" or opcode.lower() == "suba" or opcode.lower() == "sub2":
             print( "SUB instruction identified" )
             subObject = Sub(instructionString)
             instructionList.append(subObject)
@@ -818,7 +920,7 @@ Ideo of IO:-
 '''TO DO
     1. Implement doxygen 
     2. Github
-    3. Classes structure visualization ->  Can be done
+    3. Classes structure visubalization ->  Can be done
     4. Profiling report ***
     5. Package implementation ***
     6. Different variations of methods
