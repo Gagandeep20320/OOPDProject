@@ -16,7 +16,7 @@ instruction_list = {'add' : [2, "0000", "RR"],
                      'ada' : [1, "0001", "R"],
                      'ld' : [1, "0010", "R"],
                      'str' : [1, "0011", "R"],
-                     'out' : [1, "0100", "R"],
+                     'out' : [1, "0100", "?"],
                      'mov' : [2, "0101", "R?"],
                      'in' : [1, "0110", "?"],
                      'mul' : [2, "0111", "RR"],
@@ -583,7 +583,8 @@ class MOV(RAM):
         self.performAction()
     def performAction(self):
         if(self.reg2[0].lower() == "r"):
-            reg2Val = self.getValueOfRegister(self.reg2)
+            # reg2Val = self.getValueOfRegister(self.reg2)
+            reg2Val = getValueOfRegister(self.reg2)
             RAMObjectGlobal.setRegisterToValue(self.reg1, reg2Val)
         elif(self.reg2[0] == "#"):
             print("Assigning the imm value")
@@ -601,8 +602,12 @@ class IO():
         print(x)
     def toOutput(self, x):
         # print("TO be printed : ", x)
-        self.__outFile.write(x)
-        self.__outFile.write("\n")
+        print(x)
+        if(x == "NEXTLINE"):
+            self.__outFile.write("\n")
+        else:
+            self.__outFile.write(x)
+            # self.__outFile.write("\n")
 
 class OUT(IO):
     def __init__(self, insString):
@@ -612,13 +617,16 @@ class OUT(IO):
         self.reg = insString.split()[1]
         self.performAction()
     def __writeToOutFile(self, string):
-        self.toOutput(string)
+        self.toOutput(string),
     def __display(self,string):
         print(string)
     def performAction(self):
-        regVal = getValueOfRegister(self.reg)
-        self.__display(regVal)
-        self.__writeToOutFile(str(regVal))
+        if(self.reg[0] == '"'):
+            self.__writeToOutFile(str(self.reg[1:-1]))
+        else:
+            regVal = getValueOfRegister(self.reg)
+            self.__display(regVal)
+            self.__writeToOutFile(str(regVal))
         RAMObjectGlobal.printRegisterStatus()
         
     
@@ -905,7 +913,7 @@ class executionControl():
             if self.reg1Val != 0:
                 print("reg value non zero satisfied")
                 locationToJumpTo = self.reg2val
-                self.jumpTo(locationToJumpTo)
+                self.jumpTo(locationToJumpTo + CODE_STORAGE_LOCATION_ONE - 1)
         
     # def performOperation
 

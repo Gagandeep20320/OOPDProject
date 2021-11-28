@@ -108,3 +108,29 @@ File "d:\IIITD\MonsoonSemester2021Sem2\OOPD\OOPDProject\classes.py", line 261, i
 TypeError: 'int' object is not subscriptable
 RESOLVED : If you do not use HLT statement in the code then, this exception will show.
             Program has to be ended with HLT statement.
+
+
+Possible demo file:-
+1. 
+mov r1 #10
+mov r2 #1
+mov r3 #514
+out r1
+out "*"
+sub2 r1 r1 r2
+jnz r1 r3
+HLT
+
+2.
+mov r1 #5
+mov r2 #1
+mov r3 #5
+mov r5 #6
+mov r4 r1
+out "*"
+sub2 r4 r4 r2
+jnz r4 r5
+out "NEXTLINE"
+sub2 r1 r1 r2
+jnz r1 r3
+HLT

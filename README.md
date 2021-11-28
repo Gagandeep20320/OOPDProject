@@ -74,8 +74,8 @@ Takes the value on the port into the accumulator register. "port_name" here is f
 Example:-
 in P1
 Here, P1 is the name of the port. P1.txt file would be the file corresponding to this port. This file acts as a port from which the value is to be read.
--> out Rx
-Prints the value of the register Rx to OutputFile.txt
+-> out ?
+Prints the value of the register Rx to OutputFile.txt. Also, it can print a string as well.
 
 
 Some general features and constraints in the assembler:-
