@@ -1,3 +1,10 @@
+TODO yet:-
+1. Packaging
+2. UML
+3 ###################### VIDEO ########################
+4. Plan demo code
+
+
 What all can this code do?
 1. Validate the passed command
 2. Create list of instructions.

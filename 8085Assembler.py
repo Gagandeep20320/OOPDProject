@@ -12,7 +12,14 @@ from multipledispatch import dispatch
 
 # We will create just 6 registers, one accumulator. 
 # Might or might not create program counter etc.
-inputFileName = "input.OOPD.txt"
+n = len(sys.argv)
+print("Total arguments passed:", n)
+print("\nName of Python script:", sys.argv[0])
+# print("\nArguments passed:")
+# for i in range(1, n):
+#     print(sys.argv[i])
+inputFileName = sys.argv[1]
+# inputFileName = "input.OOPD.txt"
 def main():
     try:
         classes.instructionDecoderGlobal.parseFileDecodeInstructions(inputFileName)

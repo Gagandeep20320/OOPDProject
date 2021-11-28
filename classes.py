@@ -1,5 +1,4 @@
 
-from io import open_code
 from multipledispatch import dispatch 
 RAM_LOCATION_ONE = 11
 MEMORY_SIZE = 1000
