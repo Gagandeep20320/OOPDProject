@@ -189,11 +189,28 @@ class RAM(Memory):
         self.writeAtLocation(memoryLocation, self.getAccumulator())
 
 class ALU:
+
+    """ The ALU base class for all the arithmetic and logical operations """
+    
     def __init__(self):
+        """ The ALU base class initializer."""
         print("ALU Object created")
 class Add(ALU): # All ADD ADA (Add to acc ) can create a single object 
     # this defines the type of operation
+    """ The Add class.
+        The addition operations taking place are : 
+        1) Adding contents of two registers
+        2) Adding content of a register to the accumulator 
+        3) Adding contents of two registers and storing it in another register
+
+    """
+
     def __init__(self, insString):
+        """! The Add class initializer.
+            @param insString The instruction containing the op code.
+        """
+        
+        
         ALU.__init__(self)
         # self.opcode = "0000"
         opcode = insString.split()[0]
@@ -228,6 +245,12 @@ class Add(ALU): # All ADD ADA (Add to acc ) can create a single object
         self.performOperation()    
     @dispatch(object, object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
     def addition(self, reg1, reg2):
+
+        """! The addition of contents of two registers
+        @param reg1  The content in Register 1.
+        @param reg2  The content in Register 2.
+        @return  The sum of the contents of the two registers.
+        """
         # reg1Val = getValueOfRegister(self.reg1) # now I will pass the integer value rather than the string (I can get the register in the last function that I call)
         # reg2Val = getValueOfRegister(self.reg2)
         # sum = reg1Val + reg2Val
@@ -239,6 +262,10 @@ class Add(ALU): # All ADD ADA (Add to acc ) can create a single object
         return sum
     @dispatch(object)
     def addition(self, reg1):
+        """! The addition of contents of a register to accumulator
+        @param reg1  The content in Register 1
+        @return  The sum of the contents of the register and the accumulator
+        """
         RAMObjectGlobal.addToAccumulator(reg1)
         sum = RAMObjectGlobal.getAccumulator()
         print("Executing ADA command")
@@ -248,6 +275,13 @@ class Add(ALU): # All ADD ADA (Add to acc ) can create a single object
         return sum
     @dispatch(object,object,object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
     def addition(self, reg1, reg2,reg3):
+
+        """! The addition of contents of two registers and storing it in another register
+        @param reg1  The sum is stored in Register 1
+        @param reg2  The content in Register 2
+        @param reg3  The content in Register 3
+        @return  The sum of the contents of the two registers (reg2 and reg3)
+        """
         # reg1Val = getValueOfRegister(self.reg1) # now I will pass the integer value rather than the string (I can get the register in the last function that I call)
         # reg2Val = getValueOfRegister(self.reg2)
         # sum = reg1Val + reg2Val
@@ -259,6 +293,8 @@ class Add(ALU): # All ADD ADA (Add to acc ) can create a single object
         RAMObjectGlobal.printRegisterStatus()
         return sum     
     def performOperation(self):
+        """The calling of the addition method based on the number of operands in the instruction"""
+        
         reg1Val = getValueOfRegister(self.reg1)
         reg2Val = getValueOfRegister(self.reg2)
         reg3Val = getValueOfRegister(self.reg3)
@@ -274,7 +310,18 @@ class Add(ALU): # All ADD ADA (Add to acc ) can create a single object
             # print("Value ", sum, " was added to the acc || Accumulator Status : ",RAMObjectGlobal.getAccumulator() )
         return sum
 class Sub(ALU):
+    """ The Sub class.
+        The subtraction operations taking place are : 
+        1) Subtraction between contents of two registers
+        2) Subtraction of content of a register from the accumulator 
+        3) Subtraction between contents of two registers and storing it in another register
+
+    """
     def __init__(self, insString):
+
+        """! The Add class initializer.
+        @param insString  The instruction containing the op code
+        """
         ALU.__init__(self)
         # self.opcode = "0000"
         opcode = insString.split()[0]
@@ -308,6 +355,12 @@ class Sub(ALU):
         # self.performOperation(getValueOfRegister(self.reg1), getValueOfRegister(self.reg2))
     @dispatch(object, object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
     def subtraction(self, reg1, reg2):
+
+        """! The subtraction between contents of two registers
+        @param reg1  The content in Register 1
+        @param reg2  The content in Register 2
+        @return  The differnce of the contents of the two registers
+        """
         # reg1Val = getValueOfRegister(self.reg1) # now I will pass the integer value rather than the string (I can get the register in the last function that I call)
         # reg2Val = getValueOfRegister(self.reg2)
         # sum = reg1Val + reg2Val
@@ -318,6 +371,10 @@ class Sub(ALU):
         return difference
     @dispatch(object)
     def subtraction(self, reg1):
+        """! The subtraction of content of a register from the accumulator 
+        @param reg1  The content in Register 1
+        @return  The differnce of the contents of the register and the accumulator
+        """
         newreg1 = reg1*(-1)
         RAMObjectGlobal.addToAccumulator(newreg1)
         difference = RAMObjectGlobal.getAccumulator()
@@ -327,6 +384,13 @@ class Sub(ALU):
         return difference
     @dispatch(object, object,object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
     def subtraction(self, reg1, reg2,reg3):
+        
+        """! The subtraction between contents of two registers and storing the difference value in another register
+        @param reg1  The difference is stored in reg1
+        @param reg2  The content in Register 2
+        @param reg3  The content in Register 3
+        @return  The difference of the contents of the two registers(reg2 and reg3)
+        """
         # reg1Val = getValueOfRegister(self.reg1) # now I will pass the integer value rather than the string (I can get the register in the last function that I call)
         # reg2Val = getValueOfRegister(self.reg2)
         # sum = reg1Val + reg2Val
@@ -337,6 +401,8 @@ class Sub(ALU):
         RAMObjectGlobal.printRegisterStatus()
         return difference     
     def performOperation(self):
+        """The calling of the subtraction method based on the number of operands in the instruction"""
+
         reg1Val = getValueOfRegister(self.reg1)
         reg2Val = getValueOfRegister(self.reg2)
         reg3Val = getValueOfRegister(self.reg3)
@@ -649,6 +715,12 @@ class IN(IO):
 
 class MUL(ALU): # All ADD ADA (Add to acc ) can create a single object 
     # this defines the type of operation
+    """ The MUL class.
+        The multiplication operations taking place are : 
+        1) Multiplication of contents of two registers
+        2) Multiplication of content of a register with the accumulator 
+        
+    """
     def __init__(self, insString):
         ALU.__init__(self)
         # self.opcode = "0000"
@@ -669,6 +741,11 @@ class MUL(ALU): # All ADD ADA (Add to acc ) can create a single object
         self.performOperation()
     @dispatch(object, object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
     def multiplication(self, reg1, reg2):
+        """! The multiplication of contents of two registers
+        @param reg1  The content in Register 1
+        @param reg2  The content in Register 2
+        @return  The product value of the contents of the two registers
+        """
         # reg1Val = getValueOfRegister(self.reg1) # now I will pass the integer value rather than the string (I can get the register in the last function that I call)
         # reg2Val = getValueOfRegister(self.reg2)
         # sum = reg1Val + reg2Val
@@ -679,12 +756,18 @@ class MUL(ALU): # All ADD ADA (Add to acc ) can create a single object
         return prod
     @dispatch(object)
     def multiplication(self, reg1):
+        """! The multiplication between contents of two registers
+        @param reg1  The content in Register 1
+        @return  The product value of the register content and the accumulator
+        """
         RAMObjectGlobal.multiplyToAccumulator(reg1)
         prod = RAMObjectGlobal.getAccumulator()
         print("Executing MULI command")
         print("Product of ", reg1, " and Accumulator reg", "Was calculated to be :", prod)
         return prod
     def performOperation(self):
+        
+        """The calling of the multiplication method based on the number of operands in the instruction"""
         reg1Val = getValueOfRegister(self.reg1)
         reg2Val = getValueOfRegister(self.reg2)
         if self.numOperands == 1:
@@ -698,6 +781,12 @@ class MUL(ALU): # All ADD ADA (Add to acc ) can create a single object
 
 class OR(ALU): # All ADD ADA (Add to acc ) can create a single object 
     # this defines the type of operation
+    """ The OR class.
+        The logical OR operations taking place are : 
+        1) OR operation between of contents of two registers
+        2) OR operation between content of a register with the accumulator 
+        
+    """
     def __init__(self, insString):
         ALU.__init__(self)
         # self.opcode = "0000"
@@ -718,6 +807,11 @@ class OR(ALU): # All ADD ADA (Add to acc ) can create a single object
         self.performOperation()
     @dispatch(object, object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
     def logicalor(self, reg1, reg2):
+        """! The logical OR of contents of two registers
+        @param reg1  The content in Register 1
+        @param reg2  The content in Register 2
+        @return  The value after logical OR between contents of the two registers
+        """
         # reg1Val = getValueOfRegister(self.reg1) # now I will pass the integer value rather than the string (I can get the register in the last function that I call)
         # reg2Val = getValueOfRegister(self.reg2)
         # sum = reg1Val + reg2Val
@@ -728,12 +822,17 @@ class OR(ALU): # All ADD ADA (Add to acc ) can create a single object
         return orout
     @dispatch(object)
     def logicalor(self, reg1):
+        """! The logical OR of contents of two registers
+        @param reg1  The content in Register 1
+        @return  The value after logical OR between content of the register and accumulator
+        """
         RAMObjectGlobal.orToAccumulator(reg1)
         orout = RAMObjectGlobal.getAccumulator()
         print("Executing ORA command")
         print("OR of ", reg1, " and Accumulator reg", "Was calculated to be :", orout)
         return orout
     def performOperation(self):
+        """The calling of the logicalor method based on the number of operands in the instruction"""
         reg1Val = getValueOfRegister(self.reg1)
         reg2Val = getValueOfRegister(self.reg2)
         if self.numOperands == 1:
@@ -747,6 +846,12 @@ class OR(ALU): # All ADD ADA (Add to acc ) can create a single object
 
 class AND(ALU): # All ADD ADA (Add to acc ) can create a single object 
     # this defines the type of operation
+    """ The AND class.
+        The logical AND operations taking place are : 
+        1) AND operation between of contents of two registers
+        2) AND operation between content of a register with the accumulator 
+        
+    """
     def __init__(self, insString):
         ALU.__init__(self)
         # self.opcode = "0000"
@@ -767,6 +872,11 @@ class AND(ALU): # All ADD ADA (Add to acc ) can create a single object
         self.performOperation()
     @dispatch(object, object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
     def logicaland(self, reg1, reg2):
+        """! The logical AND of contents of two registers
+        @param reg1  The content in Register 1
+        @param reg2  The content in Register 2
+        @return  The value after logical AND between contents of the two registers
+        """
         # reg1Val = getValueOfRegister(self.reg1) # now I will pass the integer value rather than the string (I can get the register in the last function that I call)
         # reg2Val = getValueOfRegister(self.reg2)
         # sum = reg1Val + reg2Val
@@ -777,12 +887,17 @@ class AND(ALU): # All ADD ADA (Add to acc ) can create a single object
         return andout
     @dispatch(object)
     def logicaland(self, reg1):
+        """! The logical AND of contents of two registers
+        @param reg1  The content in Register 1
+        @return  The value after logical AND between content of the register and accumulator
+        """
         RAMObjectGlobal.andToAccumulator(reg1)
         andout = RAMObjectGlobal.getAccumulator()
         print("Executing ANDA command")
         print("AND of ", reg1, " and Accumulator reg", "Was calculated to be :", andout)
         return andout
     def performOperation(self):
+        """The calling of the logicaland method based on the number of operands in the instruction"""
         reg1Val = getValueOfRegister(self.reg1)
         reg2Val = getValueOfRegister(self.reg2)
         if self.numOperands == 1:
@@ -796,6 +911,9 @@ class AND(ALU): # All ADD ADA (Add to acc ) can create a single object
 
 class NOT(ALU): # All ADD ADA (Add to acc ) can create a single object 
     # this defines the type of operation
+    """ The NOT class.
+        The logical NOT of a number gives in the 2's complement form 
+    """
     def __init__(self, insString):
         ALU.__init__(self)
         # self.opcode = "0000"
@@ -812,7 +930,10 @@ class NOT(ALU): # All ADD ADA (Add to acc ) can create a single object
     
     @dispatch(object)
     def logicalnot(self, reg1):
-
+        """! The logical NOT of contents of a register
+        @param reg1  The content in Register 1
+        @return  The 2's complement of the register content
+        """
         notout = ~reg1 
         RAMObjectGlobal.setAccumulator(notout)
         print("Executing NOT command")
@@ -820,6 +941,7 @@ class NOT(ALU): # All ADD ADA (Add to acc ) can create a single object
         return notout
     
     def performOperation(self):
+        """The calling of the logicalnot method """
         reg1Val = getValueOfRegister(self.reg1)
         
         notout = self.logicalnot(reg1Val)
