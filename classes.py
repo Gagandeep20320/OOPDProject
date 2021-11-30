@@ -45,7 +45,9 @@ def getValueOfRegister(regString): # We will be keeping track of the register va
     return registerValue
 
 class Memory:
+    """ The Memory base class for all the memory and storage operations """
     def __init__(self):
+        """ The Memory base class initializer."""
         print("Memory initialized")
         self.__Memory = [0]*MEMORY_SIZE
         print("Program counter initialized to ", CODE_STORAGE_LOCATION_ONE)
@@ -54,10 +56,16 @@ class Memory:
         self.memoryBooting()
         # ROM can have error messages that can be accesed later 
     def memoryBooting(self):
+        """! This boots up the memory or initializes the ROM content that is hard coded.
+        """
         for i in range (0,RAM_LOCATION_ONE - 1):
             self.__Memory[i] = self.ROMContent[i] 
             '''For inplementing SQL database you just need to implement some queries'''
     def getDataAtLocation(self,loc):
+        """! Getter for the memory.
+        @param loc  Location that we want to read or get.
+        @return Content stored at the memory location passed.
+        """
         if(loc > MEMORY_SIZE or loc < 0):
             # Error logs can be created (IO class can be used)
             print("Wrong memory location: ", loc," accessed : Exiting")
@@ -67,6 +75,10 @@ class Memory:
             exit()
         return self.__Memory[loc]
     def writeAtLocation(self,loc,data): # Can write any data, No constraint on writing specific data type
+        """! Setter for the memory.
+        @param loc  Location that we want to set.
+        @param data  Value that we want to set the location to.
+        """
         if(loc < 11):
             # Error logs can be created (IO class can be used)
             print("Wrong memory location: ", loc," writing tried (writing to ROM) : Exiting")
@@ -77,12 +89,20 @@ class Memory:
             exit()
         self.__Memory[loc] = data
     def printMemoryStatus(self):
+        """! Print the status of the memory. 
+        """
         for i in range (0, MEMORY_SIZE):
             print("Loc ", i, ": ", self.__Memory[i])
     def setProgramCounterTo(self, val):
+        """! Setter for the program counter.
+        @param val Value to be loaded into the program counter.
+        """ 
         print("PC value set to :", val,"(Line number: ",val - CODE_STORAGE_LOCATION_ONE ,")")
         self.__programCounter = val
     def getProgramCounter(self):
+        """! Getter for the program counter.
+        @return Program counter value.
+        """ 
         return self.__programCounter
 
         # First 10 locations are ROM location  
@@ -93,7 +113,9 @@ class Memory:
         # Read and writeAtLocation
         #! Read can be common to ROM and RAM . But only RAM should beb able to write at any location
 class RAM(Memory):
+    """ The RAM child class RAM related operations operations"""
     def __init__(self):
+        """ The RAM child class initializer."""
         Memory.__init__(self)
         self.__R1 = 10 # These can be shifter to RAM class later (child of memory)
         self.__R2 = 5
@@ -106,9 +128,12 @@ class RAM(Memory):
         # OUT P -> Any value in register A should be outputted at the port P
         # We can realize a port by a file.
         self.initialLocation = RAM_LOCATION_ONE 
-    def setR1(self,val):
-        self.__R1 = val
+
     def setRegisterToValue(self, regString, val):
+        """! Combined setter for all the register in the RAM.
+        @param val  Value to be set to the register specified.
+        @param regString  Register name passed as string.
+        """
         if(regString.lower() == "r1"):
             self.__R1 = val
             print("Register R1 assigned a value :", val)
@@ -126,6 +151,10 @@ class RAM(Memory):
         elif(regString.lower() == "a"):
             self.__A = val
     def returnRegisterValue(self,regString): # common getter
+        """! Combined getter for all the register in the RAM.
+        @param regString  Register name passed as string.
+        @return  Present value of the register.
+        """
         if(regString.lower() == "r1"):
             return self.__R1
         elif(regString.lower() == "r2"):
@@ -147,6 +176,9 @@ class RAM(Memory):
         print("R1,R2,R3,R4,R5,R6,A = ", self.__R1,",",self.__R2,",", self.__R3,",", self.__R4, ",", self.__R5, ",", self.__R6, ",", self.__A)
 
     def setAccumulator(self, value):
+        """! Setter for the accumulator.
+        @param value  Value to be set to the accumulator.
+]        """
         self.__A = value
     def addToAccumulator(self,value): 
         print("Value stored in Accumulator: ", self.__A)
@@ -154,16 +186,28 @@ class RAM(Memory):
     def getAccumulator(self): # Accumulator Getter
         return self.__A
     def multiplyToAccumulator(self,value): 
+        """! Multiplies the value to the accumulator.
+        @param value  Value to be multiplied with the accumulator.
+]        """
         print("Value stored in Accumulator: ", self.__A)
         self.__A *= value
     def orToAccumulator(self,value): 
+        """! ORs the value to the accumulator.
+        @param value  Value to be ORed with the accumulator.
+]        """
         print("Value stored in Accumulator: ", self.__A)
         self.__A |= value
     def andToAccumulator(self,value): 
+        """! ANDs the value to the accumulator.
+        @param value  Value to be ANDed with the accumulator.
+]        """
         print("Value stored in Accumulator: ", self.__A)
         self.__A &= value    
 
     def divideToAccumulator(self,value): 
+        """! Divides accumulator by value.
+        @param value  Value to be divide the accumulator with.
+]        """
         print("Value stored in Accumulator: ", self.__A)      
         try:
             self.__A /= value
@@ -181,12 +225,12 @@ class RAM(Memory):
         self.__A = value
     def getRegA(self):
         return self.__A
-    def performLoadInstruction(self, reg):
-        memoryLocation = getValueOfRegister(reg) # this is the memory location
-        self.setAccumulator(self.getDataAtLocation(memoryLocation))
-    def performStoreInstruction(self, reg):
-        memoryLocation = getValueOfRegister(self.reg) # this is the memory location
-        self.writeAtLocation(memoryLocation, self.getAccumulator())
+    # def performLoadInstruction(self, reg):
+    #     memoryLocation = getValueOfRegister(reg) # this is the memory location
+    #     self.setAccumulator(self.getDataAtLocation(memoryLocation))
+    # def performStoreInstruction(self, reg):
+    #     memoryLocation = getValueOfRegister(self.reg) # this is the memory location
+    #     self.writeAtLocation(memoryLocation, self.getAccumulator())
 
 class ALU:
 
@@ -202,7 +246,6 @@ class Add(ALU): # All ADD ADA (Add to acc ) can create a single object
         1) Adding contents of two registers
         2) Adding content of a register to the accumulator 
         3) Adding contents of two registers and storing it in another register
-
     """
 
     def __init__(self, insString):
