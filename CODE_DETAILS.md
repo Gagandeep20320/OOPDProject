@@ -134,3 +134,18 @@ out "NEXTLINE"
 sub2 r1 r1 r2
 jnz r1 r3
 HLT
+
+
+TODO :
+1. One demo file per person.  (Ensure all the basic commands are used)
+Rajat's Demo file:
+Soumya's Demo File :
+Sindhu's Demo file : 
+
+2. Complete Doxygen comments : 
+
+3. Profiling is done (we can run the command once code is final)
+
+4. Packaging remaining ----- ********
+
+5. UML Class diagram -> Soumya, Sindhu
