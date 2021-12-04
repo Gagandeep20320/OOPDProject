@@ -668,6 +668,7 @@ class LD(Memory):
     
 
 class STR(Memory):
+    
     def __init__(self, insString):
         Memory.__init__(self)
         self.opcode = insString.split()[0]
