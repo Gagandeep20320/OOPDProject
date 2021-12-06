@@ -146,17 +146,36 @@ d. Wrong memory location access errors.
 
 Rajat's Demo file:
 Soumya's Demo File :
+
+mov r1 #10
+mov r2 #1
+mov r3 #0
+mov r4 #4
+mul r1 r4
+muli r2
+div r1 r6
+out "Program is executing"
+divi r1
+ml r1 r2
+divi r1 r2 
+
 Sindhu's Demo file : 
-mov r1 #2
-mo r2 #1
-mov r3 #5
-mov r5 #6
-mov r4 r1
-out "*"
-sub2 r4 r4 r2
+mov r1 #3
+mov r2 #1
+mov r3 #8
+mov r4 #4
+or r1 r5
+anda r2
+not r3
+ora r2
+and r3 r4
+out "Logical operations done"
+or r1
+not r1 r6
+an r4 r5
 
 
-2. Complete Doxygen comments : 
+2. Complete Doxygen comments :  //done
 
 3. Profiling is done (we can run the command once code is final)
 
