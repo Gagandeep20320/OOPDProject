@@ -1,5 +1,5 @@
 
-from multipledispatch import dispatch 
+from multipledispatch import dispatch  
 RAM_LOCATION_ONE = 11
 MEMORY_SIZE = 1000
 CODE_STORAGE_LOCATION_ONE = 511
@@ -99,7 +99,7 @@ class Memory:
 
         # First 10 locations are ROM location  
         # We can store all the data in memory 
-        # RAM has setters and getters bot h
+        # RAM has setters and getters both
         # ROM has getters only
         # Two functions
         # Read and writeAtLocation
@@ -670,8 +670,7 @@ class IN(IO):
     def performAction(self):
         self.readFromPort(self.port)
 
-class MUL(ALU): # All ADD ADA (Add to acc ) can create a single object 
-    # this defines the type of operation
+class MUL(ALU): 
     """ The MUL class.
         The multiplication operations taking place are : 
         1) Multiplication of contents of two registers
@@ -684,7 +683,7 @@ class MUL(ALU): # All ADD ADA (Add to acc ) can create a single object
         opcode = opcode.lower()
         if opcode == "mul":
             print("MUL class object created")
-            self.opcode = "0111" # ! This needs to be removed since this is already hard coded
+            self.opcode = "0111"
             self.numOperands = 2
             self.reg1 = insString.split()[1] # String 
             self.reg2 = insString.split()[2]
@@ -695,7 +694,7 @@ class MUL(ALU): # All ADD ADA (Add to acc ) can create a single object
             self.reg1 = insString.split()[1]  # String 
             self.reg2 = "ONE"
         self.performOperation()
-    @dispatch(object, object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
+    @dispatch(object, object)                                               
     def multiplication(self, reg1, reg2):
         """! The multiplication of contents of two registers
         @param reg1  The content in Register 1
@@ -727,13 +726,10 @@ class MUL(ALU): # All ADD ADA (Add to acc ) can create a single object
             prod = self.multiplication(reg1Val)
         else:
             prod = self.multiplication(reg1Val, reg2Val)
-        # if self.opcode == "0001": #ada command
-            # RAMObjectGlobal.addToAccumulator(sum)
-            # print("Value ", sum, " was added to the acc || Accumulator Status : ",RAMObjectGlobal.getAccumulator() )
+        
         return prod    
 
-class OR(ALU): # All ADD ADA (Add to acc ) can create a single object 
-    # this defines the type of operation
+class OR(ALU): 
     """ The OR class.
         The logical OR operations taking place are : 
         1) OR operation between of contents of two registers
@@ -746,7 +742,7 @@ class OR(ALU): # All ADD ADA (Add to acc ) can create a single object
         opcode = opcode.lower()
         if opcode == "or":
             print("OR class object created")
-            self.opcode = "10001" # ! This needs to be removed since this is already hard coded
+            self.opcode = "10001" 
             self.numOperands = 2
             self.reg1 = insString.split()[1] # String 
             self.reg2 = insString.split()[2]
@@ -757,7 +753,7 @@ class OR(ALU): # All ADD ADA (Add to acc ) can create a single object
             self.reg1 = insString.split()[1]  # String 
             self.reg2 = "ONE"
         self.performOperation()
-    @dispatch(object, object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
+    @dispatch(object, object)                                               
     def logicalor(self, reg1, reg2):
         """! The logical OR of contents of two registers
         @param reg1  The content in Register 1
@@ -791,8 +787,7 @@ class OR(ALU): # All ADD ADA (Add to acc ) can create a single object
             orout = self.logicalor(reg1Val, reg2Val)
         return orout   
 
-class AND(ALU): # All ADD ADA (Add to acc ) can create a single object 
-    # this defines the type of operation
+class AND(ALU): 
     def __init__(self, insString):
         ALU.__init__(self)
         # self.opcode = "0000"
@@ -800,7 +795,7 @@ class AND(ALU): # All ADD ADA (Add to acc ) can create a single object
         opcode = opcode.lower()
         if opcode == "and":
             print("AND class object created")
-            self.opcode = "10010" # ! This needs to be removed since this is already hard coded
+            self.opcode = "10010" 
             self.numOperands = 2
             self.reg1 = insString.split()[1] # String 
             self.reg2 = insString.split()[2]
@@ -811,7 +806,7 @@ class AND(ALU): # All ADD ADA (Add to acc ) can create a single object
             self.reg1 = insString.split()[1]  # String 
             self.reg2 = "ONE"
         self.performOperation()
-    @dispatch(object, object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
+    @dispatch(object, object)                                               
     def logicaland(self, reg1, reg2):
         """! The logical AND of contents of two registers
         @param reg1  The content in Register 1
@@ -845,8 +840,7 @@ class AND(ALU): # All ADD ADA (Add to acc ) can create a single object
             andout = self.logicaland(reg1Val, reg2Val)
         return andout      
 
-class NOT(ALU): # All ADD ADA (Add to acc ) can create a single object 
-    # this defines the type of operation
+class NOT(ALU): 
     """ The NOT class.
         The logical NOT of a number gives in the 2's complement form 
     """
@@ -857,7 +851,7 @@ class NOT(ALU): # All ADD ADA (Add to acc ) can create a single object
         opcode = opcode.lower()
         if opcode == "not":
             print("NOT class object created")
-            self.opcode = "10101" # ! This needs to be removed since this is already hard coded
+            self.opcode = "10101"
             self.numOperands = 1
             self.reg1 = insString.split()[1] # String 
             #self.reg2 = "ONE"
@@ -882,7 +876,7 @@ class NOT(ALU): # All ADD ADA (Add to acc ) can create a single object
         notout = self.logicalnot(reg1Val)
         return notout      
       
-class DIV(ALU): # All ADD ADA (Add to acc ) can create a single object
+class DIV(ALU): 
     """ The DIV class.
         The division operations taking place are : 
         1) Division of contents of two registers
@@ -907,7 +901,7 @@ class DIV(ALU): # All ADD ADA (Add to acc ) can create a single object
             self.reg1 = insString.split()[1]  # String 
             self.reg2 = "ONE"
         self.performOperation()
-    @dispatch(object, object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
+    @dispatch(object, object)                                               
     def division(self, reg1, reg2):
         """! The division of contents of two registers
         @param reg1  The content in Register 1
@@ -940,6 +934,9 @@ class DIV(ALU): # All ADD ADA (Add to acc ) can create a single object
             quot = self.division(reg1Val, reg2Val)
         return quot
 class HLT():
+    """ The HLT class.
+        The halt operations takes place, i.e., the execution of the program stops. 
+        """
     def __init__(self, insString):
         self.opcode = insString.split()[0]
         self.performOperation()
@@ -948,6 +945,10 @@ class HLT():
         exit(0)
 
 class executionControl():
+    """ The Execution Control class.
+        1) Uses the jump statements, JZ(Jump if Zero) and JNZ(Jump if not Zero)
+        
+        """
     def __init__(self, insString):
         self.opcode = insString.split()[0]
         self.opcode = self.opcode.lower()
@@ -957,13 +958,17 @@ class executionControl():
         self.reg2val = getValueOfRegister(self.reg2)
         self.performOperation()
     def jumpTo(self, location):
+        """! Sets the program counter to the passed location value
+        @param location The location of the register"""
         print("PC to be set to :", location)
         RAMObjectGlobal.setProgramCounterTo(location)
     def performOperation(self):
-        
+        """The calling of the jumpTo method based on the opcode in the instruction
+        1) If the opcode is JZ, then, jumpTo method is called when register value is 0
+        2) If the opcode is JNZ, then, jumpTo method is called when register value is not 0"""
         if self.opcode.lower() == "jz":
             print("Execution of JZ instruction starts")
-            if self.reg1Val == 0:
+            if self.reg1Val ==0:
                 print("reg value zero satisfied")
                 locationToJumpTo = self.reg2val
                 self.jumpTo(locationToJumpTo)
@@ -975,6 +980,10 @@ class executionControl():
                 self.jumpTo(locationToJumpTo + CODE_STORAGE_LOCATION_ONE - 1)
         
 
-def getValueOfRegister(regString): # We will be keeping track of the register vaues separately
+def getValueOfRegister(regString): 
+    # We will be keeping track of the register vaues separately
+    """!For the given register name, the value of the register is returned.
+    @param regString Name of the Register
+    @return registerValue Value of the register."""
     registerValue = RAMObjectGlobal.returnRegisterValue(regString)
     return registerValue
