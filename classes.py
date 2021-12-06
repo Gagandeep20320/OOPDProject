@@ -563,17 +563,6 @@ class InstructionDecoder:
 
 instructionDecoderGlobal = InstructionDecoder()
 
-class IO:
-    """Parent class to handle IO operations"""
-    def __init__(self):
-        temp = 0
-class Output(IO):
-    """Chlild class of the IO to give the output"""
-    def __init__(self):
-        IO.__init__(self)
-    def printToStdout(self, printStatement):
-        print(printStatement)
-
 class LD(Memory):
     """Child class of memory to handle the load operation"""
     def __init__(self, insString):
