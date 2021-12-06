@@ -616,6 +616,7 @@ class MOV(RAM):
             print("ERROR : Move statement second argument should either be #(immediate value) or R type")
             exit(0)
 class IO():
+    """Parent class to perform the IO operations"""
     def __init__(self):
         self.__outFile = outputFile
     def toTerminal(self, x):
@@ -628,6 +629,7 @@ class IO():
             self.__outFile.write(x)
 
 class OUT(IO):
+    """Child class of IO to perform the output operation"""
     def __init__(self, insString):
         IO.__init__(self)
         self.opcode = insString.split()[0]
@@ -639,6 +641,7 @@ class OUT(IO):
     def __display(self,string):
         print(string)
     def performAction(self):
+        """Printing the data to the optput file"""
         if(self.reg[0] == '"'):
             self.__writeToOutFile(str(self.reg[1:-1]))
         else:
@@ -649,6 +652,7 @@ class OUT(IO):
         
     
 class IN(IO):
+    """Class to perform the Input operation"""
     def __init__(self, insString):
         IO.__init__(self)
         self.opcode = insString.split()[0]
@@ -656,6 +660,7 @@ class IN(IO):
         self.port = insString.split()[1]
         self.performAction()
     def readFromPort(self, portFileName):
+        """To read data form the  ports"""
         portFile = open(portFileName+".txt", "r")
         readValue = portFile.read()
         RAMObjectGlobal.setRegA(int(readValue))
@@ -877,7 +882,14 @@ class NOT(ALU): # All ADD ADA (Add to acc ) can create a single object
         notout = self.logicalnot(reg1Val)
         return notout      
       
-class DIV(ALU): # All ADD ADA (Add to acc ) can create a single object 
+class DIV(ALU): # All ADD ADA (Add to acc ) can create a single object
+    """ The DIV class.
+        The division operations taking place are : 
+        1) Division of contents of two registers
+        2) Division of content of a register with the accumulator 
+        
+    """ 
+     
     def __init__(self, insString):
         ALU.__init__(self)
         opcode = insString.split()[0]
@@ -897,6 +909,11 @@ class DIV(ALU): # All ADD ADA (Add to acc ) can create a single object
         self.performOperation()
     @dispatch(object, object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
     def division(self, reg1, reg2):
+        """! The division of contents of two registers
+        @param reg1  The content in Register 1
+        @param reg2  The content in Register 2
+        @return  The division value of the contents of the two registers
+        """
         try:
             quot = reg1 / reg2
         except Exception as ex:
@@ -908,8 +925,13 @@ class DIV(ALU): # All ADD ADA (Add to acc ) can create a single object
             return quot
     @dispatch(object)
     def division(self, reg1):
+        """! The division between contents of two registers
+        @param reg1  The content in Register 1
+        @return  The division value of the register content and the accumulator
+        """
         RAMObjectGlobal.divideToAccumulator(reg1)
     def performOperation(self):
+        """The calling of the division method based on the number of operands in the instruction"""
         reg1Val = getValueOfRegister(self.reg1)
         reg2Val = getValueOfRegister(self.reg2)
         if self.numOperands == 1:
