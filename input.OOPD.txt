@@ -9,4 +9,9 @@ jnz r4 r5
 out "NEXTLINE"
 sub2 r1 r1 r2
 jnz r1 r3
+mov r2 #0
+div r1 r2
+mov r1 #2
+ld r1
+mov r2 #12
 HLT
