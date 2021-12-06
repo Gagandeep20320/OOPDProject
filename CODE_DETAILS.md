@@ -147,6 +147,14 @@ d. Wrong memory location access errors.
 Rajat's Demo file:
 Soumya's Demo File :
 Sindhu's Demo file : 
+mov r1 #2
+mo r2 #1
+mov r3 #5
+mov r5 #6
+mov r4 r1
+out "*"
+sub2 r4 r4 r2
+
 
 2. Complete Doxygen comments : 
 
