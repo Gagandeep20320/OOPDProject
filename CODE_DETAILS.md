@@ -198,3 +198,4 @@ Points to be highlight in video
 3. 1 Code for looping
 4. RAM and ROM implementation (atleast the notion of ROM) -> You cannot access(read) certain memory locations
 5. Program execution (PC, Memory storing the code for execution)
+6. IN command uses port. Show how to use port.
