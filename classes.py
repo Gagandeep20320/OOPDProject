@@ -4,12 +4,7 @@ RAM_LOCATION_ONE = 11
 MEMORY_SIZE = 1000
 CODE_STORAGE_LOCATION_ONE = 511
 outputFile = open("OutputFile.txt", "w")
-# inputPort  = open("inputPort.txt", "r")
-# outputPort = open("outputPort.txt", "w")
-'''
-Memory can also store the instructions and this way we can very easily acheive looping. With PC tracking, looping can be done easily.
-We can also make PC tracking consistent with complete execution.
-'''
+
 register_list =['r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'a']
 
 instruction_list = {'add' : [2, "0000", "RR"],
@@ -39,10 +34,6 @@ instruction_list = {'add' : [2, "0000", "RR"],
 
 instructionList = []
 
-def getValueOfRegister(regString): # We will be keeping track of the register vaues separately
-    # ! this has to be be defined under the class memory
-    registerValue = RAMObjectGlobal.returnRegisterValue(regString)
-    return registerValue
 
 class Memory:
     """ The Memory base class for all the memory and storage operations """
@@ -52,8 +43,9 @@ class Memory:
         self.__Memory = [0]*MEMORY_SIZE
         print("Program counter initialized to ", CODE_STORAGE_LOCATION_ONE)
         self.__programCounter = CODE_STORAGE_LOCATION_ONE
-        self.ROMContent = ["Group","Members","are","Gagandeep","Rajat","Sindhu","Soumya","All","the","Best"]
-        self.memoryBooting()
+        self.ROMContent = ["Group","Members","are","Gagandeep","Rajat","Sindhu","Soumya","DUMMY","ROM","DATA"] # This realizes he ROM notion
+        # These memory locations can only be read. These cannot be written to.
+        self.memoryBooting() # This data is written to the overall memory everytime device boots up.
         # ROM can have error messages that can be accesed later 
     def memoryBooting(self):
         """! This boots up the memory or initializes the ROM content that is hard coded.
@@ -218,20 +210,11 @@ class RAM(Memory):
             print("Executing DIVI command")
             print("Quotient of Accumulator reg and ", value, "is calculated to be :", quot)
             return quot
-
-
-
     def setRegA(self, value):
         self.__A = value
     def getRegA(self):
         return self.__A
-    # def performLoadInstruction(self, reg):
-    #     memoryLocation = getValueOfRegister(reg) # this is the memory location
-    #     self.setAccumulator(self.getDataAtLocation(memoryLocation))
-    # def performStoreInstruction(self, reg):
-    #     memoryLocation = getValueOfRegister(self.reg) # this is the memory location
-    #     self.writeAtLocation(memoryLocation, self.getAccumulator())
-
+    
 class ALU:
 
     """ The ALU base class for all the arithmetic and logical operations """
@@ -252,10 +235,7 @@ class Add(ALU): # All ADD ADA (Add to acc ) can create a single object
         """! The Add class initializer.
             @param insString The instruction containing the op code.
         """
-        
-        
         ALU.__init__(self)
-        # self.opcode = "0000"
         opcode = insString.split()[0]
         opcode = opcode.lower()
         if opcode == "add":
@@ -266,7 +246,6 @@ class Add(ALU): # All ADD ADA (Add to acc ) can create a single object
             self.reg1 = insString.split()[1] # String 
             self.reg2 = insString.split()[2]
             self.reg3 = "ZERO"
-            # self.performOperation()    
         elif opcode == "ada":
             print("ADA class object created")
             print("executing ADA")
@@ -275,7 +254,6 @@ class Add(ALU): # All ADD ADA (Add to acc ) can create a single object
             self.reg1 = insString.split()[1]  # String 
             self.reg2 = "ZERO"
             self.reg3 = "ZERO"
-            # self.performOperation()
         elif opcode == "add2":
             print("ADD class object created")
             print("executing ADD2")
@@ -284,7 +262,6 @@ class Add(ALU): # All ADD ADA (Add to acc ) can create a single object
             self.reg1 = insString.split()[1]
             self.reg2 = insString.split()[2] # String 
             self.reg3 = insString.split()[3]
-            # self.performOperation()
         self.performOperation()    
     @dispatch(object, object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
     def addition(self, reg1, reg2):
@@ -294,9 +271,6 @@ class Add(ALU): # All ADD ADA (Add to acc ) can create a single object
         @param reg2  The content in Register 2.
         @return  The sum of the contents of the two registers.
         """
-        # reg1Val = getValueOfRegister(self.reg1) # now I will pass the integer value rather than the string (I can get the register in the last function that I call)
-        # reg2Val = getValueOfRegister(self.reg2)
-        # sum = reg1Val + reg2Val
         sum = reg1 + reg2
         RAMObjectGlobal.setAccumulator(sum)
         print("Executing ADD command")
@@ -314,7 +288,6 @@ class Add(ALU): # All ADD ADA (Add to acc ) can create a single object
         print("Executing ADA command")
         print("Sum of ", reg1, " and Accumulator reg", "Was calculated to be :", sum)
         print("Accumulator value after ADA command ", RAMObjectGlobal.getAccumulator())
-        # RAMObjectGlobal.printRegisterStatus()
         return sum
     @dispatch(object,object,object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
     def addition(self, reg1, reg2,reg3):
@@ -325,14 +298,10 @@ class Add(ALU): # All ADD ADA (Add to acc ) can create a single object
         @param reg3  The content in Register 3
         @return  The sum of the contents of the two registers (reg2 and reg3)
         """
-        # reg1Val = getValueOfRegister(self.reg1) # now I will pass the integer value rather than the string (I can get the register in the last function that I call)
-        # reg2Val = getValueOfRegister(self.reg2)
-        # sum = reg1Val + reg2Val
         sum = reg2 + reg3 
         RAMObjectGlobal.setRegisterToValue(self.reg1,sum)
         print("Executing ADD2 command")
         print("Sum of ", reg2, " and ", reg3, "Was calculated to be :", sum)
-        # print("Register value after ADD2 command ", RAMObjectGlobal.returnRegisterValue())
         RAMObjectGlobal.printRegisterStatus()
         return sum     
     def performOperation(self):
@@ -348,9 +317,6 @@ class Add(ALU): # All ADD ADA (Add to acc ) can create a single object
             sum = self.addition(reg1Val, reg2Val)
         elif self.numOperands == 3:
             sum = self.addition(reg1Val,reg2Val, reg3Val)    
-        # if self.opcode == "0001": #ada command
-            # RAMObjectGlobal.addToAccumulator(sum)
-            # print("Value ", sum, " was added to the acc || Accumulator Status : ",RAMObjectGlobal.getAccumulator() )
         return sum
 class Sub(ALU):
     """ The Sub class.
@@ -366,7 +332,6 @@ class Sub(ALU):
         @param insString  The instruction containing the op code
         """
         ALU.__init__(self)
-        # self.opcode = "0000"
         opcode = insString.split()[0]
         opcode = opcode.lower()
         if opcode == "sub":
@@ -376,7 +341,6 @@ class Sub(ALU):
             self.reg1 = insString.split()[1] # String 
             self.reg2 = insString.split()[2]
             self.reg3 = "ZERO"
-            # self.performOperation()
         elif opcode == "suba":
             print("SUB class object created")
             self.opcode = "1101"
@@ -384,7 +348,6 @@ class Sub(ALU):
             self.reg1 = insString.split()[1]  # String 
             self.reg2 = "ZERO"
             self.reg3 = "ZERO"
-            # self.performOperation()
         elif opcode == "sub2":
             print(" SUB class object created")
             self.opcode = "11111" # ! This needs to be removed since this is already hard coded
@@ -392,10 +355,7 @@ class Sub(ALU):
             self.reg1 = insString.split()[1]
             self.reg2 = insString.split()[2] # String 
             self.reg3 = insString.split()[3]
-            # self.reg3 = "ZERO"
-            # self.performOperation()
         self.performOperation()    
-        # self.performOperation(getValueOfRegister(self.reg1), getValueOfRegister(self.reg2))
     @dispatch(object, object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
     def subtraction(self, reg1, reg2):
 
@@ -404,9 +364,6 @@ class Sub(ALU):
         @param reg2  The content in Register 2
         @return  The differnce of the contents of the two registers
         """
-        # reg1Val = getValueOfRegister(self.reg1) # now I will pass the integer value rather than the string (I can get the register in the last function that I call)
-        # reg2Val = getValueOfRegister(self.reg2)
-        # sum = reg1Val + reg2Val
         difference = reg2 - reg1
         RAMObjectGlobal.setAccumulator(difference)
         print("Executing SUB command")
@@ -456,20 +413,7 @@ class Sub(ALU):
             difference = self.subtraction(reg1Val, reg2Val)
         elif self.numOperands == 3:
             difference = self.subtraction(reg1Val,reg2Val, reg3Val)    
-        # if self.opcode == "0001": #ada command
-            # RAMObjectGlobal.addToAccumulator(sum)
-            # print("Value ", sum, " was added to the acc || Accumulator Status : ",RAMObjectGlobal.getAccumulator() )
-        return difference    
-    # @dispatch(object, object)                                               # ! Polymorphism -> SUB and SUBA can use this(All the binary operations)
-    # def performOperation(self, reg1, reg2):
-    #     # reg1Val = getValueOfRegister(self.reg1) # now I will pass the integer value rather than the string (I can get the register in the last function that I call)
-    #     # reg2Val = getValueOfRegister(self.reg2)
-    #     # sum = reg1Val + reg2Val
-    #     diff = reg1 - reg2
-    #     RAMObjectGlobal.setAccumulator(diff)
-    #     print("Executing SUB command")
-    #     print("Subtraction of ", reg1, " and ", reg2, "Was calculated to be :", diff)
-    #     return sum
+        return difference
 RAMObjectGlobal = RAM()
 
 class InstructionDecoder:
@@ -485,43 +429,24 @@ class InstructionDecoder:
             self.validateInstruction(line, RAMObjectGlobal.getProgramCounter() - 1)
             instructionObject = self.createInstructionObject(line)
             instructionList.append(instructionObject) # Add the validate instruction functions here.
-        '''with open(inputFile, 'r') as f:
-            lineNumber = 0
-            for line in f:
-                lineNumber += 1
-               
-                if(line[0:2] == "//"): # ! Handles a comment
-                    continue
-                self.validateInstruction(line, lineNumber)
-                instructionObject = self.createInstructionObject(line)
-                instructionList.append(instructionObject) # Add the validate instruction functions here.'''
     def parseFileStoreToMemory(self, inputFile):
         print("Started copying code into the memory")
         try:
             f = open(inputFile, 'r')
-            #with open(inputFile, 'r') as f:
-                #lineNumber = CODE_STORAGE_LOCATION_ONE - 1
-                #for line in f:
-                    #lineNumber += 1
-                    #RAMObjectGlobal.writeAtLocation(lineNumber, line)
         except Exception as ef:
             print(ef)
         else:
              with open(inputFile, 'r') :
-             #as f:
                 lineNumber = CODE_STORAGE_LOCATION_ONE - 1
                 for line in f:
                     lineNumber += 1
                     RAMObjectGlobal.writeAtLocation(lineNumber, line)
-
         finally:
             f.close()
 
-        # RAMObjectGlobal.printMemoryStatus() # Printing the memory status
     def createInstructionObject(self,instructionString):
         opcode = instructionString.split()[0]
         print("Opcode : ", opcode)
-        # if opcode.lower() == "add" or "ada":
         if opcode.lower() == "add" or opcode.lower() == "ada" or opcode.lower() == "add2":
             addObject = Add(instructionString) # Object once created by itself performs all the validation and execution
             instructionList.append(addObject)
@@ -542,24 +467,24 @@ class InstructionDecoder:
             instructionList.append(addObject)
         if opcode.lower() == "sub" or opcode.lower() == "suba" or opcode.lower() == "sub2":
             print( "SUB instruction identified" )
-            subObject = Sub(instructionString)
+            subObject = Sub(instructionString) # Object once created by itself performs all the validation and execution
             instructionList.append(subObject)
         # if opcode.lower() == "str":
         if opcode.lower() == "ld":
             print( "LD instruction decode stage")
-            ldObject = LD(instructionString)
+            ldObject = LD(instructionString) # Object once created by itself performs all the validation and execution
             instructionList.append(ldObject)
         if opcode.lower() == "str":
             print( "STR instruction decode stage")
-            strObject = STR(instructionString)
+            strObject = STR(instructionString) # Object once created by itself performs all the validation and execution
             instructionList.append(strObject)
         if opcode.lower() == "out":
             print("OUT instruction encountered")
-            outObject = OUT(instructionString)
+            outObject = OUT(instructionString) # Object once created by itself performs all the validation and execution
             instructionList.append(outObject)
         if opcode.lower() == "mov":
             print("MOV instruction encountered")
-            movObject = MOV(instructionString)
+            movObject = MOV(instructionString) # Object once created by itself performs all the validation and execution
             instructionList.append(movObject)
         if opcode.lower() == "in":
             print("IN statement")
@@ -628,19 +553,6 @@ class InstructionDecoder:
         return False
         
 
-
-    '''
-    1. Operator : I can identify what is the number of operands
-        Only validation related to the operator can be to identify whether or not this operator is non existant.
-        I would also knwo what is the "Type" of the operands that I expect.
-        Ex : ADI (Add immediate) should have a numerical value in form #<value> (Type immediate)
-        ADD : I would have 2 registers
-        ADI : I would have just one register
-    2. Operand : These would simply be either number, registerName, Address
-        I would need to validate operator by checking the type or the format.
-        ! Attribute : 1. Number of operands -> X ERROR
-        2. Type of operand -> X ERROR
-    '''
 instructionDecoderGlobal = InstructionDecoder()
 
 class IO:
@@ -660,8 +572,6 @@ class LD(Memory):
         self.reg = insString.split()[1]
         self.performAction()
         print("Value of the accumulator is : ", RAMObjectGlobal.getAccumulator())
-    # def storeValueAtMemoryToAccumulator(self):
-    #     memoryLocation = getValueOfRegister(self.reg) # this is the memory location
     def performAction(self):
         memoryLocation = getValueOfRegister(self.reg) # this is the memory location
         RAMObjectGlobal.setAccumulator(RAMObjectGlobal.getDataAtLocation(memoryLocation))
@@ -676,8 +586,6 @@ class STR(Memory):
         self.reg = insString.split()[1]
         self.performAction()
         print("Value of the accumulator while performing STORE is : ", RAMObjectGlobal.getAccumulator())
-    # def storeValueAtMemoryToAccumulator(self):
-    #     memoryLocation = getValueOfRegister(self.reg) # this is the memory location
     def performAction(self):
         memoryLocation = getValueOfRegister(self.reg) # this is the memory location
         RAMObjectGlobal.writeAtLocation(memoryLocation, RAMObjectGlobal.getAccumulator())
@@ -685,39 +593,36 @@ class STR(Memory):
         RAMObjectGlobal.printMemoryStatus()
 class MOV(RAM):
     def __init__(self, insString):
-        # RAM.__init__(self)
         self.opcode = insString.split()[0]
         self.opcode = self.opcode.lower()
         self.reg1 = insString.split()[1]
         self.reg2 = insString.split()[2]
+
         self.performAction()
     def performAction(self):
         if(self.reg2[0].lower() == "r"):
-            # reg2Val = self.getValueOfRegister(self.reg2)
             reg2Val = getValueOfRegister(self.reg2)
             RAMObjectGlobal.setRegisterToValue(self.reg1, reg2Val)
         elif(self.reg2[0] == "#"):
             print("Assigning the imm value")
             immVal = int(self.reg2[1:])
             print(self.reg2[1:])
-            # print(type(immVal))
             RAMObjectGlobal.setRegisterToValue(self.reg1, immVal)
             RAMObjectGlobal.printRegisterStatus()
+        else:
+            print("ERROR : Move statement second argument should either be #(immediate value) or R type")
+            exit(0)
 class IO():
     def __init__(self):
         self.__outFile = outputFile
-        # self.__inputPortFile = inputPort # Can we also feed the file name from the code itself?
-        # self.__outputPortFile = outputPort
     def toTerminal(self, x):
         print(x)
     def toOutput(self, x):
-        # print("TO be printed : ", x)
         print(x)
         if(x == "NEXTLINE"):
             self.__outFile.write("\n")
         else:
             self.__outFile.write(x)
-            # self.__outFile.write("\n")
 
 class OUT(IO):
     def __init__(self, insString):
@@ -767,7 +672,6 @@ class MUL(ALU): # All ADD ADA (Add to acc ) can create a single object
     """
     def __init__(self, insString):
         ALU.__init__(self)
-        # self.opcode = "0000"
         opcode = insString.split()[0]
         opcode = opcode.lower()
         if opcode == "mul":
@@ -790,9 +694,6 @@ class MUL(ALU): # All ADD ADA (Add to acc ) can create a single object
         @param reg2  The content in Register 2
         @return  The product value of the contents of the two registers
         """
-        # reg1Val = getValueOfRegister(self.reg1) # now I will pass the integer value rather than the string (I can get the register in the last function that I call)
-        # reg2Val = getValueOfRegister(self.reg2)
-        # sum = reg1Val + reg2Val
         prod = reg1 * reg2
         RAMObjectGlobal.setAccumulator(prod)
         print("Executing MUL command")
@@ -833,7 +734,6 @@ class OR(ALU): # All ADD ADA (Add to acc ) can create a single object
     """
     def __init__(self, insString):
         ALU.__init__(self)
-        # self.opcode = "0000"
         opcode = insString.split()[0]
         opcode = opcode.lower()
         if opcode == "or":
@@ -856,9 +756,7 @@ class OR(ALU): # All ADD ADA (Add to acc ) can create a single object
         @param reg2  The content in Register 2
         @return  The value after logical OR between contents of the two registers
         """
-        # reg1Val = getValueOfRegister(self.reg1) # now I will pass the integer value rather than the string (I can get the register in the last function that I call)
-        # reg2Val = getValueOfRegister(self.reg2)
-        # sum = reg1Val + reg2Val
+
         orout = reg1 | reg2
         RAMObjectGlobal.setAccumulator(orout)
         print("Executing OR command")
@@ -883,19 +781,10 @@ class OR(ALU): # All ADD ADA (Add to acc ) can create a single object
             orout = self.logicalor(reg1Val)
         else:
             orout = self.logicalor(reg1Val, reg2Val)
-        # if self.opcode == "0001": #ada command
-            # RAMObjectGlobal.addToAccumulator(sum)
-            # print("Value ", sum, " was added to the acc || Accumulator Status : ",RAMObjectGlobal.getAccumulator() )
         return orout   
 
 class AND(ALU): # All ADD ADA (Add to acc ) can create a single object 
     # this defines the type of operation
-    """ The AND class.
-        The logical AND operations taking place are : 
-        1) AND operation between of contents of two registers
-        2) AND operation between content of a register with the accumulator 
-        
-    """
     def __init__(self, insString):
         ALU.__init__(self)
         # self.opcode = "0000"
@@ -921,9 +810,7 @@ class AND(ALU): # All ADD ADA (Add to acc ) can create a single object
         @param reg2  The content in Register 2
         @return  The value after logical AND between contents of the two registers
         """
-        # reg1Val = getValueOfRegister(self.reg1) # now I will pass the integer value rather than the string (I can get the register in the last function that I call)
-        # reg2Val = getValueOfRegister(self.reg2)
-        # sum = reg1Val + reg2Val
+        
         andout = reg1 & reg2
         RAMObjectGlobal.setAccumulator(andout)
         print("Executing AND command")
@@ -948,9 +835,6 @@ class AND(ALU): # All ADD ADA (Add to acc ) can create a single object
             andout = self.logicaland(reg1Val)
         else:
             andout = self.logicaland(reg1Val, reg2Val)
-        # if self.opcode == "0001": #ada command
-            # RAMObjectGlobal.addToAccumulator(sum)
-            # print("Value ", sum, " was added to the acc || Accumulator Status : ",RAMObjectGlobal.getAccumulator() )
         return andout      
 
 class NOT(ALU): # All ADD ADA (Add to acc ) can create a single object 
@@ -987,24 +871,17 @@ class NOT(ALU): # All ADD ADA (Add to acc ) can create a single object
     def performOperation(self):
         """The calling of the logicalnot method """
         reg1Val = getValueOfRegister(self.reg1)
-        
         notout = self.logicalnot(reg1Val)
-        
-        # if self.opcode == "0001": #ada command
-            # RAMObjectGlobal.addToAccumulator(sum)
-            # print("Value ", sum, " was added to the acc || Accumulator Status : ",RAMObjectGlobal.getAccumulator() )
         return notout      
       
 class DIV(ALU): # All ADD ADA (Add to acc ) can create a single object 
-    # this defines the type of operation
     def __init__(self, insString):
         ALU.__init__(self)
-        # self.opcode = "0000"
         opcode = insString.split()[0]
         opcode = opcode.lower()
         if opcode == "div":
             print("DIV class object created")
-            self.opcode = "1001" # ! This needs to be removed since this is already hard coded
+            self.opcode = "1001"
             self.numOperands = 2
             self.reg1 = insString.split()[1] # String 
             self.reg2 = insString.split()[2]
@@ -1029,10 +906,6 @@ class DIV(ALU): # All ADD ADA (Add to acc ) can create a single object
     @dispatch(object)
     def division(self, reg1):
         RAMObjectGlobal.divideToAccumulator(reg1)
-        #quot = RAMObjectGlobal.getAccumulator()
-        #print("Executing DIVI command")
-        #print("Quotient of ", reg1, " and Accumulator reg", "Was calculated to be :", quot)
-        #return quot
     def performOperation(self):
         reg1Val = getValueOfRegister(self.reg1)
         reg2Val = getValueOfRegister(self.reg2)
@@ -1040,9 +913,6 @@ class DIV(ALU): # All ADD ADA (Add to acc ) can create a single object
             quot = self.division(reg1Val)
         else:
             quot = self.division(reg1Val, reg2Val)
-        # if self.opcode == "0001": #ada command
-            # RAMObjectGlobal.addToAccumulator(sum)
-            # print("Value ", sum, " was added to the acc || Accumulator Status : ",RAMObjectGlobal.getAccumulator() )
         return quot
 class HLT():
     def __init__(self, insString):
@@ -1054,14 +924,12 @@ class HLT():
 
 class executionControl():
     def __init__(self, insString):
-        # self.jumpedFromAddress = 0
         self.opcode = insString.split()[0]
         self.opcode = self.opcode.lower()
         self.reg1 = insString.split()[1]
         self.reg2 = insString.split()[2]
         self.reg1Val = getValueOfRegister(self.reg1)
         self.reg2val = getValueOfRegister(self.reg2)
-        # print("Reg 1 val for jz : ", self.reg1Val())
         self.performOperation()
     def jumpTo(self, location):
         print("PC to be set to :", location)
@@ -1081,22 +949,7 @@ class executionControl():
                 locationToJumpTo = self.reg2val
                 self.jumpTo(locationToJumpTo + CODE_STORAGE_LOCATION_ONE - 1)
         
-    # def performOperation
 
-
-'''
-Ideo of IO:-
-1. Output : output has to be printed using this. This should pront the operation that is happening.
-'''
-
-
-'''TO DO
-    1. Implement doxygen 
-    2. Github
-    3. Classes structure visubalization ->  Can be done
-    4. Profiling report ***
-    5. Package implementation ***
-    6. Different variations of methods
-'''
-
-# ! Instructions should also be stored in memory
+def getValueOfRegister(regString): # We will be keeping track of the register vaues separately
+    registerValue = RAMObjectGlobal.returnRegisterValue(regString)
+    return registerValue

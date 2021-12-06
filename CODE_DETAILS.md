@@ -138,6 +138,12 @@ HLT
 
 TODO :
 1. One demo file per person.  (Ensure all the basic commands are used)
+-> Important functionalities to be shown through the demo files.
+a. Taking input from ports
+b. LD and STR instructions and ROM related read only exceptions.
+c. Exceptions for wrong syntax errors.
+d. Wrong memory location access errors.
+
 Rajat's Demo file:
 Soumya's Demo File :
 Sindhu's Demo file : 
