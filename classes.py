@@ -105,7 +105,7 @@ class Memory:
         # Read and writeAtLocation
         #! Read can be common to ROM and RAM . But only RAM should beb able to write at any location
 class RAM(Memory):
-    """ The RAM child class RAM related operations operations"""
+    """ The RAM child class handling RAM related operations """
     def __init__(self):
         """ The RAM child class initializer."""
         Memory.__init__(self)
@@ -417,9 +417,11 @@ class Sub(ALU):
 RAMObjectGlobal = RAM()
 
 class InstructionDecoder:
+    """InstructionDecoder class to take instructions given by user through and validate them and then copying it to the memory."""
     def __init__(self):
         self.temp = 0
     def parseFileDecodeInstructions(self, inputFile):
+        """Function to decode instruction given in the file by the user"""
         self.parseFileStoreToMemory(inputFile)
         while RAMObjectGlobal.getProgramCounter() < MEMORY_SIZE:
             line = RAMObjectGlobal.getDataAtLocation(RAMObjectGlobal.getProgramCounter())
@@ -430,6 +432,7 @@ class InstructionDecoder:
             instructionObject = self.createInstructionObject(line)
             instructionList.append(instructionObject) # Add the validate instruction functions here.
     def parseFileStoreToMemory(self, inputFile):
+        """ function to copy code into the memory"""
         print("Started copying code into the memory")
         try:
             f = open(inputFile, 'r')
@@ -445,6 +448,7 @@ class InstructionDecoder:
             f.close()
 
     def createInstructionObject(self,instructionString):
+        """Function to extract the opcode for the instruction and then call the respective function for the execution"""
         opcode = instructionString.split()[0]
         print("Opcode : ", opcode)
         if opcode.lower() == "add" or opcode.lower() == "ada" or opcode.lower() == "add2":
@@ -500,6 +504,7 @@ class InstructionDecoder:
             instructionList.append(executionControlObject)
     
     def validateInstruction(self, instructionString, lineNumber):
+        """To validate the instruction given by the user with the standard format """
         insName = instructionString.split()[0]
         if insName.lower() not in instruction_list:
             print("The command mentioned does not exist ,line number:" ,lineNumber)
@@ -526,6 +531,7 @@ class InstructionDecoder:
                 if isImmVal == False:
                     exit()
     def isImmediateValid(self,inputString, lineNumber): # Does not allow floating point values
+        """To check any immediate value entered by the user"""
         if inputString[0].lower() == "#":
             splitElement = inputString[1:]
             print("Value is ", splitElement)
@@ -537,6 +543,7 @@ class InstructionDecoder:
             print("ERROR : Immediate value token was expected : ", lineNumber)
             return False
     def isInstructionLengthCorrect(self,instructionString, insLength):
+        """To check the length of the instruction"""
         lenOfInstruction = len(instructionString.split())
         if lenOfInstruction == insLength:
             return True
@@ -545,6 +552,7 @@ class InstructionDecoder:
             return False
     
     def isRegisterValid(self,inputString, lineNumber): # This would return false if register does not exist OR it is not even a register
+        """TAo check whether the register  entered by the user is valid or not"""
         # if inputString[0].lower() == "r":
         for reg in register_list:
             if reg == inputString.lower():
@@ -556,15 +564,18 @@ class InstructionDecoder:
 instructionDecoderGlobal = InstructionDecoder()
 
 class IO:
+    """Parent class to handle IO operations"""
     def __init__(self):
         temp = 0
 class Output(IO):
+    """Chlild class of the IO to give the output"""
     def __init__(self):
         IO.__init__(self)
     def printToStdout(self, printStatement):
         print(printStatement)
 
 class LD(Memory):
+    """Child class of memory to handle the load operation"""
     def __init__(self, insString):
         Memory.__init__(self)
         self.opcode = insString.split()[0]
@@ -578,6 +589,7 @@ class LD(Memory):
     
 
 class STR(Memory):
+    """Child class of memory fot handling the store operation"""
     
     def __init__(self, insString):
         Memory.__init__(self)
@@ -592,6 +604,7 @@ class STR(Memory):
         print("Memory status : ")
         RAMObjectGlobal.printMemoryStatus()
 class MOV(RAM):
+    """ child class of RAM to handle MOV instruction """
     def __init__(self, insString):
         self.opcode = insString.split()[0]
         self.opcode = self.opcode.lower()
@@ -600,6 +613,7 @@ class MOV(RAM):
 
         self.performAction()
     def performAction(self):
+        """Moving data provided by user to a register"""
         if(self.reg2[0].lower() == "r"):
             reg2Val = getValueOfRegister(self.reg2)
             RAMObjectGlobal.setRegisterToValue(self.reg1, reg2Val)
