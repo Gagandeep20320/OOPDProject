@@ -154,10 +154,11 @@ mov r4 #4
 mul r1 r4
 muli r2
 div r1 r6
-out "Program is executing"
+out "Program_is_executing"
 divi r1
 ml r1 r2
 divi r1 r2 
+hlt
 
 Sindhu's Demo file : 
 mov r1 #3
@@ -169,16 +170,31 @@ anda r2
 not r3
 ora r2
 and r3 r4
-out "Logical operations done"
+out "Logical_operations_done"
 or r1
 not r1 r6
 an r4 r5
+hlt
 
 
 2. Complete Doxygen comments :  //done
 
 3. Profiling is done (we can run the command once code is final)
 
-4. Packaging remaining ----- ********
+4. Packaging remaining ----- ******
 
 5. UML Class diagram -> Soumya, Sindhu
+
+6. Use of abstract classes
+
+All exceptions should be printed after execution
+
+7. Runtime and syntax errors are handled differently (show)
+
+Points to be highlight in video
+
+1. Abs, Poly, Encap, Inheritance 
+2. 2 Codes for exception handling
+3. 1 Code for looping
+4. RAM and ROM implementation (atleast the notion of ROM) -> You cannot access(read) certain memory locations
+5. Program execution (PC, Memory storing the code for execution)

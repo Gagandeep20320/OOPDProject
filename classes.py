@@ -1,9 +1,14 @@
 
-from multipledispatch import dispatch  
+from multipledispatch import dispatch 
+from abc import ABC, abstractmethod 
+import matplotlib.pyplot as plt
 RAM_LOCATION_ONE = 11
 MEMORY_SIZE = 1000
 CODE_STORAGE_LOCATION_ONE = 511
+CODE_STORAGE_LOCATION_END = 700
+
 outputFile = open("OutputFile.txt", "w")
+timeInstant = 0
 
 register_list =['r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'a']
 
@@ -33,11 +38,14 @@ instruction_list = {'add' : [2, "0000", "RR"],
 
 
 instructionList = []
-
+exceptionList = []
 
 class Memory:
+    
     """ The Memory base class for all the memory and storage operations """
     def __init__(self):
+        self.timeInstant = 0
+        self.exceptionList = []
         """ The Memory base class initializer."""
         print("Memory initialized")
         self.__Memory = [0]*MEMORY_SIZE
@@ -47,6 +55,8 @@ class Memory:
         # These memory locations can only be read. These cannot be written to.
         self.memoryBooting() # This data is written to the overall memory everytime device boots up.
         # ROM can have error messages that can be accesed later 
+    def resetProgramCounter(self):
+        self.__programCounter = CODE_STORAGE_LOCATION_ONE
     def memoryBooting(self):
         """! This boots up the memory or initializes the ROM content that is hard coded.
         """
@@ -62,11 +72,12 @@ class Memory:
             # Error logs can be created (IO class can be used)
             print("Wrong memory location: ", loc," accessed : Exiting")
             exit()
+
         if(loc + 1 > len(self.__Memory)):
             print("Random location accessed where no data was stored, exiting")
             exit()
         return self.__Memory[loc]
-    def writeAtLocation(self,loc,data): # Can write any data, No constraint on writing specific data type
+    def writeAtLocation(self,loc,data, copyingCode): # Can write any data, No constraint on writing specific data type
         """! Setter for the memory.
         @param loc  Location that we want to set.
         @param data  Value that we want to set the location to.
@@ -79,17 +90,23 @@ class Memory:
             # Error logs can be created (IO class can be used)
             print("Wrong memory location: ", loc," writing tried : Exiting")
             exit()
+        if ((loc > CODE_STORAGE_LOCATION_ONE) and (loc <= CODE_STORAGE_LOCATION_END) and (copyingCode == False)):
+            print("Cannot write to locations used for storing input codes")
+            exit()
         self.__Memory[loc] = data
     def printMemoryStatus(self):
         """! Print the status of the memory. 
         """
         for i in range (0, MEMORY_SIZE):
             print("Loc ", i, ": ", self.__Memory[i])
-    def setProgramCounterTo(self, val):
+    def setProgramCounterTo(self, val, executing):
         """! Setter for the program counter.
         @param val Value to be loaded into the program counter.
-        """ 
+        """
+        RAMObjectGlobal.timeInstant += 1
         print("PC value set to :", val,"(Line number: ",val - CODE_STORAGE_LOCATION_ONE ,")")
+        if executing == True:
+            plt.scatter(val, RAMObjectGlobal.timeInstant)
         self.__programCounter = val
     def getProgramCounter(self):
         """! Getter for the program counter.
@@ -109,6 +126,8 @@ class RAM(Memory):
     def __init__(self):
         """ The RAM child class initializer."""
         Memory.__init__(self)
+        self.executionFile = "DUMMY"
+        self.geneExecutionFile = False
         self.__R1 = 10 # These can be shifter to RAM class later (child of memory)
         self.__R2 = 5
         self.__R3 = 0
@@ -215,13 +234,16 @@ class RAM(Memory):
     def getRegA(self):
         return self.__A
     
-class ALU:
+class ALU(ABC): # This is an abstract class 
 
     """ The ALU base class for all the arithmetic and logical operations """
     
     def __init__(self):
         """ The ALU base class initializer."""
         print("ALU Object created")
+        @abstractmethod
+        def performAction(self): # This is an abstract method
+            pass
 class Add(ALU): # All ADD ADA (Add to acc ) can create a single object 
     # this defines the type of operation
     """ The Add class.
@@ -418,17 +440,41 @@ RAMObjectGlobal = RAM()
 
 class InstructionDecoder:
     """InstructionDecoder class to take instructions given by user through and validate them and then copying it to the memory."""
-    def __init__(self):
+    def __init__(self ):
         self.temp = 0
-    def parseFileDecodeInstructions(self, inputFile):
+    def parseFileDecodeInstructions(self, inputFile, executionFileName, generateExecutionFile):
+        RAMObjectGlobal.executionFile = executionFileName
+        RAMObjectGlobal.geneExecutionFile = generateExecutionFile
         """Function to decode instruction given in the file by the user"""
         self.parseFileStoreToMemory(inputFile)
+        print("Parsing file and validating")
         while RAMObjectGlobal.getProgramCounter() < MEMORY_SIZE:
             line = RAMObjectGlobal.getDataAtLocation(RAMObjectGlobal.getProgramCounter())
-            RAMObjectGlobal.setProgramCounterTo(RAMObjectGlobal.getProgramCounter() + 1)
+            
+            RAMObjectGlobal.setProgramCounterTo((RAMObjectGlobal.getProgramCounter() + 1), False)
             if(line[0:2] == "//"): # ! Handles a comment
                 continue
-            self.validateInstruction(line, RAMObjectGlobal.getProgramCounter() - 1)
+            if(line.split()[0] == "hlt"):
+                break
+            flag = self.validateInstruction(line, RAMObjectGlobal.getProgramCounter() - 1)
+        if(len(exceptionList) != 0):
+            print("Exceptions :- ")
+            ecount = 0
+            for ex in exceptionList:
+                ecount += 1
+                print("ERROR ", ecount , ": ", ex)
+            print("Remove the errors to execute the instructions")
+            exit()
+        else:
+            print("Code has no errors, going ahead with the execution")
+            RAMObjectGlobal.resetProgramCounter()
+        
+        while RAMObjectGlobal.getProgramCounter() < MEMORY_SIZE:
+            line = RAMObjectGlobal.getDataAtLocation(RAMObjectGlobal.getProgramCounter())
+            RAMObjectGlobal.setProgramCounterTo((RAMObjectGlobal.getProgramCounter() + 1),True)
+            if(line[0:2] == "//"): # ! Handles a comment
+                continue
+            #self.validateInstruction(line, RAMObjectGlobal.getProgramCounter() - 1)
             instructionObject = self.createInstructionObject(line)
             instructionList.append(instructionObject) # Add the validate instruction functions here.
     def parseFileStoreToMemory(self, inputFile):
@@ -443,7 +489,7 @@ class InstructionDecoder:
                 lineNumber = CODE_STORAGE_LOCATION_ONE - 1
                 for line in f:
                     lineNumber += 1
-                    RAMObjectGlobal.writeAtLocation(lineNumber, line)
+                    RAMObjectGlobal.writeAtLocation(lineNumber, line, True)
         finally:
             f.close()
 
@@ -507,29 +553,33 @@ class InstructionDecoder:
         """To validate the instruction given by the user with the standard format """
         insName = instructionString.split()[0]
         if insName.lower() not in instruction_list:
-            print("The command mentioned does not exist ,line number:" ,lineNumber)
-            exit()
+            print("The command mentioned does not exist ,line number:" ,lineNumber - CODE_STORAGE_LOCATION_ONE + 1)
+            exceptionList.append("The command mentioned does not exist ,line number:" + str(lineNumber - CODE_STORAGE_LOCATION_ONE + 1))
+            return False
+            #exit()
         instruction = instruction_list[insName.lower()]
         numOperands = instruction[0]
         opcode = instruction[1]
         operandTypes = instruction[2]
         isInsLenCorr = self.isInstructionLengthCorrect(instructionString, numOperands + 1)
         if isInsLenCorr == False:
-            print("More/Less operands were expected, Line number : ", lineNumber)
-            exit()
+            print("More/Less operands were expected, Line number : ", lineNumber - CODE_STORAGE_LOCATION_ONE + 1)
+            exceptionList.append("More/Less operands were expected, Line number : "+ str(lineNumber - CODE_STORAGE_LOCATION_ONE + 1))
+            
         print ("operandTypes : ", operandTypes)
-        for i in range (0,numOperands-1): # Assuming there are only 2 operands at max for any operation (This can be expanded later)
+        for i in range (0,numOperands): # Assuming there are only 2 operands at max for any operation (This can be expanded later)
             operand = instructionString.split()[i+1]
             if operandTypes.lower()[i] == "r":
                 print("Checking if the register", operand," is valid or not")
                 isRegVal = self.isRegisterValid(operand, lineNumber)
                 if isRegVal == False:
-                    exit()
+                    return False
             if operandTypes.lower()[i] == "#":
                 print("Checking if the #val is valid or not")
                 isImmVal = self.isImmediateValid(operand, lineNumber)
                 if isImmVal == False:
-                    exit()
+                    return False
+        return True
     def isImmediateValid(self,inputString, lineNumber): # Does not allow floating point values
         """To check any immediate value entered by the user"""
         if inputString[0].lower() == "#":
@@ -537,10 +587,12 @@ class InstructionDecoder:
             print("Value is ", splitElement)
             if splitElement.isdigit() == True:
                 return True
-            print("ERROR : Immediate value can only be numerical value ,Line number :", lineNumber)
+            exceptionList("Immediate value can only be numerical value ,Line number :"+ str(lineNumber - CODE_STORAGE_LOCATION_ONE + 1))
+            print("ERROR : Immediate value can only be numerical value ,Line number :", lineNumber - CODE_STORAGE_LOCATION_ONE + 1)
             return False
         else:
-            print("ERROR : Immediate value token was expected : ", lineNumber)
+            exceptionList("ERROR : Immediate value token was expected : "+str(lineNumber- CODE_STORAGE_LOCATION_ONE))
+            print("ERROR : Immediate value token was expected : ", lineNumber-CODE_STORAGE_LOCATION_ONE)
             return False
     def isInstructionLengthCorrect(self,instructionString, insLength):
         """To check the length of the instruction"""
@@ -553,11 +605,15 @@ class InstructionDecoder:
     
     def isRegisterValid(self,inputString, lineNumber): # This would return false if register does not exist OR it is not even a register
         """TAo check whether the register  entered by the user is valid or not"""
-        # if inputString[0].lower() == "r":
+        if inputString[0].lower() != "r":
+            exceptionList.append("Register was expected as an argument,line number :"+ str(lineNumber - CODE_STORAGE_LOCATION_ONE + 1))
+            print("Register was expected")
+            return False
         for reg in register_list:
             if reg == inputString.lower():
                 return True
-        print("ERROR : Register number out of range ,Line number :", lineNumber)
+        exceptionList.append("Register number out of range ,Line number :"+ str(lineNumber - CODE_STORAGE_LOCATION_ONE + 1))
+        print("Register number out of range ,Line number :", lineNumber - CODE_STORAGE_LOCATION_ONE + 1)
         return False
         
 
@@ -589,7 +645,7 @@ class STR(Memory):
         print("Value of the accumulator while performing STORE is : ", RAMObjectGlobal.getAccumulator())
     def performAction(self):
         memoryLocation = getValueOfRegister(self.reg) # this is the memory location
-        RAMObjectGlobal.writeAtLocation(memoryLocation, RAMObjectGlobal.getAccumulator())
+        RAMObjectGlobal.writeAtLocation(memoryLocation, RAMObjectGlobal.getAccumulator(), False)
         print("Memory status : ")
         RAMObjectGlobal.printMemoryStatus()
 class MOV(RAM):
@@ -613,9 +669,10 @@ class MOV(RAM):
             RAMObjectGlobal.setRegisterToValue(self.reg1, immVal)
             RAMObjectGlobal.printRegisterStatus()
         else:
-            print("ERROR : Move statement second argument should either be #(immediate value) or R type")
-            exit(0)
-class IO():
+            print("Move statement second argument should either be #(immediate value) or R type")
+            exceptionList("Move statement second argument should either be #(immediate value) or R type")
+            exit()
+class IO(ABC):
     """Parent class to perform the IO operations"""
     def __init__(self):
         self.__outFile = outputFile
@@ -627,6 +684,8 @@ class IO():
             self.__outFile.write("\n")
         else:
             self.__outFile.write(x)
+    def performAction():
+        pass
 
 class OUT(IO):
     """Child class of IO to perform the output operation"""
@@ -942,6 +1001,11 @@ class HLT():
         self.performOperation()
     def performOperation(self):
         print ("Program Halted")
+        plt.xlabel("Location of storage of instruction in memory")
+        plt.ylabel("Time")
+        if RAMObjectGlobal.geneExecutionFile == True:
+            plt.savefig(RAMObjectGlobal.executionFile)
+        print(RAMObjectGlobal.geneExecutionFile)
         exit(0)
 
 class executionControl():
@@ -961,7 +1025,7 @@ class executionControl():
         """! Sets the program counter to the passed location value
         @param location The location of the register"""
         print("PC to be set to :", location)
-        RAMObjectGlobal.setProgramCounterTo(location)
+        RAMObjectGlobal.setProgramCounterTo(location ,True)
     def performOperation(self):
         """The calling of the jumpTo method based on the opcode in the instruction
         1) If the opcode is JZ, then, jumpTo method is called when register value is 0

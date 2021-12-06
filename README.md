@@ -13,6 +13,11 @@ How to run this code:
 1. Open terminal in the same folder where the python and input file are stored.
 2. Syntax : python <python_file_name> <input_file_name>
 Example : python 8085Assembler.py input.OOPD.txt
+ 
+Options:-
+
+-execution_file <png file name>
+Generates memory access visualization in png format.
 
 (a) Arithmetic operations
 -> add Rx1 Rx2
