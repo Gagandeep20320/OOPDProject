@@ -467,6 +467,7 @@ class InstructionDecoder:
             if(line[0:2] == "//"): # ! Handles a comment
                 continue
             if((RAMObjectGlobal.getProgramCounter() - CODE_STORAGE_LOCATION_ONE) in exceptionLineNumberList):
+                print("skipped : ", line)
                 continue
             #self.validateInstruction(line, RAMObjectGlobal.getProgramCounter() - 1)
             instructionObject = self.createInstructionObject(line)

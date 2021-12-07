@@ -6,7 +6,7 @@ mov r4 r1
 out "*"
 sub2 r4 r4 r2
 jnz r4 r5
-out "NEXTLINE"
+out "NEXT LINE"
 sub2 r1 r1 r2
 jnz r1 r3
 hlt
