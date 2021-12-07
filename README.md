@@ -16,8 +16,10 @@ Example : python 8085Assembler.py input.OOPD.txt
  
 Options:-
 
--execution_file <png file name>
+-execution_image <png file name>
 Generates memory access visualization in png format.
+ Example: 
+ python 8085Assembler.py input.OOPD.txt -execution_image example.png
 
 (a) Arithmetic operations
 -> add Rx1 Rx2
