@@ -39,7 +39,7 @@ instruction_list = {'add' : [2, "0000", "RR"],
 
 instructionList = []
 exceptionList = []
-
+exceptionLineNumberList = []
 class Memory:
     
     """ The Memory base class for all the memory and storage operations """
@@ -457,22 +457,16 @@ class InstructionDecoder:
             if(line.split()[0] == "hlt"):
                 break
             flag = self.validateInstruction(line, RAMObjectGlobal.getProgramCounter() - 1)
-        if(len(exceptionList) != 0):
-            print("Exceptions :- ")
-            ecount = 0
-            for ex in exceptionList:
-                ecount += 1
-                print("ERROR ", ecount , ": ", ex)
-            print("Remove the errors to execute the instructions")
-            exit()
-        else:
-            print("Code has no errors, going ahead with the execution")
-            RAMObjectGlobal.resetProgramCounter()
+            
+        RAMObjectGlobal.resetProgramCounter()
         
-        while RAMObjectGlobal.getProgramCounter() < MEMORY_SIZE:
+        while RAMObjectGlobal.getProgramCounter() < CODE_STORAGE_LOCATION_END:
+
             line = RAMObjectGlobal.getDataAtLocation(RAMObjectGlobal.getProgramCounter())
             RAMObjectGlobal.setProgramCounterTo((RAMObjectGlobal.getProgramCounter() + 1),True)
             if(line[0:2] == "//"): # ! Handles a comment
+                continue
+            if((RAMObjectGlobal.getProgramCounter() - CODE_STORAGE_LOCATION_ONE) in exceptionLineNumberList):
                 continue
             #self.validateInstruction(line, RAMObjectGlobal.getProgramCounter() - 1)
             instructionObject = self.createInstructionObject(line)
@@ -555,6 +549,7 @@ class InstructionDecoder:
         if insName.lower() not in instruction_list:
             print("The command mentioned does not exist ,line number:" ,lineNumber - CODE_STORAGE_LOCATION_ONE + 1)
             exceptionList.append("The command mentioned does not exist ,line number:" + str(lineNumber - CODE_STORAGE_LOCATION_ONE + 1))
+            exceptionLineNumberList.append(lineNumber - CODE_STORAGE_LOCATION_ONE + 1)
             return False
             #exit()
         instruction = instruction_list[insName.lower()]
@@ -565,7 +560,7 @@ class InstructionDecoder:
         if isInsLenCorr == False:
             print("More/Less operands were expected, Line number : ", lineNumber - CODE_STORAGE_LOCATION_ONE + 1)
             exceptionList.append("More/Less operands were expected, Line number : "+ str(lineNumber - CODE_STORAGE_LOCATION_ONE + 1))
-            
+            exceptionLineNumberList.append(lineNumber - CODE_STORAGE_LOCATION_ONE + 1)
         print ("operandTypes : ", operandTypes)
         for i in range (0,numOperands): # Assuming there are only 2 operands at max for any operation (This can be expanded later)
             operand = instructionString.split()[i+1]
@@ -607,12 +602,14 @@ class InstructionDecoder:
         """TAo check whether the register  entered by the user is valid or not"""
         if inputString[0].lower() != "r":
             exceptionList.append("Register was expected as an argument,line number :"+ str(lineNumber - CODE_STORAGE_LOCATION_ONE + 1))
+            exceptionLineNumberList.append(lineNumber - CODE_STORAGE_LOCATION_ONE + 1)
             print("Register was expected")
             return False
         for reg in register_list:
             if reg == inputString.lower():
                 return True
         exceptionList.append("Register number out of range ,Line number :"+ str(lineNumber - CODE_STORAGE_LOCATION_ONE + 1))
+        exceptionLineNumberList.append(lineNumber - CODE_STORAGE_LOCATION_ONE + 1)
         print("Register number out of range ,Line number :", lineNumber - CODE_STORAGE_LOCATION_ONE + 1)
         return False
         
@@ -1005,8 +1002,15 @@ class HLT():
         plt.ylabel("Time")
         if RAMObjectGlobal.geneExecutionFile == True:
             plt.savefig(RAMObjectGlobal.executionFile)
-        print(RAMObjectGlobal.geneExecutionFile)
+        self.printExceptions()
         exit(0)
+    def printExceptions(self):
+        if(len(exceptionList) != 0):
+            print("Exceptions that were handled and program was executed:- ")
+            ecount = 0
+            for ex in exceptionList:
+                ecount += 1
+                print("ERROR ", ecount , ": ", ex)
 
 class executionControl():
     """ The Execution Control class.
