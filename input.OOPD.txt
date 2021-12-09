@@ -1,4 +1,4 @@
-mov r1 #500000000
+mov r1 #9999999999999
 //r1 value in binary is more than 16 bits wide (Hence would be truncated)
 out r1
 hlt
