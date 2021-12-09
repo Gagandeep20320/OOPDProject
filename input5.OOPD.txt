@@ -1,0 +1,16 @@
+IN P1
+// Taking input from the port file
+mov r1 a
+mov r2 #1
+mov r3 #5
+// r5 is carrying the line number which indirectly means the memory location since each instruction is stored
+// at one location in memory
+mov r5 #10
+mov r4 r1
+out "*"
+sub2 r4 r4 r2
+jnz r4 r5
+out "NEXTLINE"
+sub2 r1 r1 r2
+jnz r1 r3
+HLT

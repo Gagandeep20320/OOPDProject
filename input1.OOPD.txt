@@ -1,0 +1,21 @@
+// Exception handling and basic arithmetic commands demo
+mov r1 #10
+mov r2 #1
+mov r3 #0
+mov r4 #4
+mul r1 r4
+out "Multiplication_output:->"
+out a
+out "NEXTLINE"
+muli r2
+div r1 r3
+add r1 r2
+out "Addition_output:->"
+out a
+out "NEXTLINE"
+out "Program_is_executing"
+divi r1
+// Wrong command added 
+ml r1 r2
+divi r1 r2
+hlt

@@ -1,0 +1,11 @@
+// Demo for LD and STR instructions
+mov r1 #100
+mov a #10
+// str should set the value of memory location to the value stored in the accumulator register.
+str r1
+// ld loads the value at the memory location stored in register into the accumulator
+ld r1
+out "Final_value_of_r1:->"
+out a
+// Exepected output = 10
+hlt

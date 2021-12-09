@@ -4,4 +4,5 @@ packageoopd/__init__.py
 packageoopd.egg-info/PKG-INFO
 packageoopd.egg-info/SOURCES.txt
 packageoopd.egg-info/dependency_links.txt
+packageoopd.egg-info/requires.txt
 packageoopd.egg-info/top_level.txt

@@ -1,0 +1,26 @@
+// Exception handling and basic logical commands demo
+mov r1 #3
+mov r2 #1
+mov r3 #8
+// Incorrect syntax (We had to pass a resgiter)
+mov 4 #4
+or r1 r5
+out "OR_output:->"
+out a
+// Unknown command for the assembler
+an r2
+not r3
+out "NEWLINE"
+out "NOT_result:->"
+out a
+ora r2
+and r3 r4
+out "NEWLINE"
+out "AND_result:->"
+out a
+out "Logical_operations_done"
+or r1
+not r1
+// Wrong number of operands
+anda r4 r5
+hlt

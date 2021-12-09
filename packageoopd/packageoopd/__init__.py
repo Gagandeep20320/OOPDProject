@@ -41,19 +41,19 @@ instructionList = []
 exceptionList = []
 exceptionLineNumberList = []
 executionFileName = "execution.png"
-inputFileName = "input.OOPD.txt"
+inputFileName = "input_basic.OOPD.txt"
 
 
 class Memory:
     
     """ The Memory base class for all the memory and storage operations """
+    
     def __init__(self):
         self.timeInstant = 0
         self.exceptionList = []
         """ The Memory base class initializer."""
         print("Memory initialized")
         self.__Memory = [0]*MEMORY_SIZE
-        print("Program counter initialized to ", CODE_STORAGE_LOCATION_ONE)
         self.__programCounter = CODE_STORAGE_LOCATION_ONE
         self.ROMContent = ["Group","Members","are","Gagandeep","Rajat","Sindhu","Soumya","DUMMY","ROM","DATA"] # This realizes he ROM notion
         # These memory locations can only be read. These cannot be written to.
@@ -130,8 +130,8 @@ class RAM(Memory):
         Memory.__init__(self)
         self.executionFile = "DUMMY"
         self.geneExecutionFile = False
-        self.__R1 = 10 # These can be shifter to RAM class later (child of memory)
-        self.__R2 = 5
+        self.__R1 = 0 # These can be shifter to RAM class later (child of memory)
+        self.__R2 = 0
         self.__R3 = 0
         self.__R4 = 0
         self.__R5 = 0
@@ -224,8 +224,10 @@ class RAM(Memory):
         print("Value stored in Accumulator: ", self.__A)      
         try:
             self.__A /= value
+            self.__A = int(self.__A)
         except Exception as e:
             print("Cannot execute division operation because of exception ", e)
+            exceptionList.append("Cannot execute division operation because of exception "+str(e))
         else:
             quot = RAMObjectGlobal.getAccumulator()
             print("Executing DIVI command")
@@ -455,7 +457,7 @@ class InstructionDecoder:
             RAMObjectGlobal.setProgramCounterTo((RAMObjectGlobal.getProgramCounter() + 1), False)
             if(line[0:2] == "//"): # ! Handles a comment
                 continue
-            if(line.split()[0] == "hlt"):
+            if(line.split()[0].lower() == "hlt"):
                 break
             flag = self.validateInstruction(line, RAMObjectGlobal.getProgramCounter() - 1)
             
@@ -570,6 +572,8 @@ class InstructionDecoder:
             print("More/Less operands were expected, Line number : ", lineNumber - CODE_STORAGE_LOCATION_ONE + 1)
             exceptionList.append("More/Less operands were expected, Line number : "+ str(lineNumber - CODE_STORAGE_LOCATION_ONE + 1))
             exceptionLineNumberList.append(lineNumber - CODE_STORAGE_LOCATION_ONE + 1)
+            return False
+            
         print ("operandTypes : ", operandTypes)
         for i in range (0,numOperands): # Assuming there are only 2 operands at max for any operation (This can be expanded later)
             operand = instructionString.split()[i+1]
@@ -609,7 +613,8 @@ class InstructionDecoder:
     
     def isRegisterValid(self,inputString, lineNumber): # This would return false if register does not exist OR it is not even a register
         """TAo check whether the register  entered by the user is valid or not"""
-        if inputString[0].lower() != "r":
+        # if inputString[0].lower() != "r" :
+        if inputString not in register_list:
             exceptionList.append("Register was expected as an argument,line number :"+ str(lineNumber - CODE_STORAGE_LOCATION_ONE + 1))
             exceptionLineNumberList.append(lineNumber - CODE_STORAGE_LOCATION_ONE + 1)
             print("Register was expected")
@@ -664,7 +669,7 @@ class MOV(RAM):
         self.performAction()
     def performAction(self):
         """Moving data provided by user to a register"""
-        if(self.reg2[0].lower() == "r"):
+        if self.reg2 in register_list:
             reg2Val = getValueOfRegister(self.reg2)
             reg2Val = instructionDecoderGlobal.truncateTo16BitDecimal(reg2Val)
             RAMObjectGlobal.setRegisterToValue(self.reg1, reg2Val)
@@ -976,8 +981,10 @@ class DIV(ALU):
         """
         try:
             quot = reg1 / reg2
+            quot = int(quot)
         except Exception as ex:
             print ("Cannot execute the division function because of exception:", ex)
+            exceptionList.append("Cannot execute division operation because of exception :"+str(ex))
         else:
             RAMObjectGlobal.setAccumulator(quot)
             print("Executing DIV command")
@@ -989,6 +996,7 @@ class DIV(ALU):
         @param reg1  The content in Register 1
         @return  The division value of the register content and the accumulator
         """
+        
         RAMObjectGlobal.divideToAccumulator(reg1)
     def performOperation(self):
         """The calling of the division method based on the number of operands in the instruction"""
