@@ -1,12 +1,4 @@
-mov r1 #5
-mov r2 #1
-mov r3 #5
-mov r5 #6
-mov r4 r1
-out "*"
-sub2 r4 r4 r2
-jnz r4 r5
-out "NEXT LINE"
-sub2 r1 r1 r2
-jnz r1 r3
+mov r1 #500000000
+//r1 value in binary is more than 16 bits wide (Hence would be truncated)
+out r1
 hlt

@@ -2,11 +2,11 @@
 from multipledispatch import dispatch 
 from abc import ABC, abstractmethod 
 import matplotlib.pyplot as plt
-RAM_LOCATION_ONE = 11
-MEMORY_SIZE = 1000
+RAM_LOCATION_ONE = 11   # Creates a memory adress space fixed for the ROM
+MEMORY_SIZE = 1024
 CODE_STORAGE_LOCATION_ONE = 511
 CODE_STORAGE_LOCATION_END = 700
-
+# This is a 16 bit processor
 outputFile = open("OutputFile.txt", "w")
 timeInstant = 0
 
@@ -68,31 +68,29 @@ class Memory:
         @param loc  Location that we want to read or get.
         @return Content stored at the memory location passed.
         """
+        assert loc >= 0 and loc <=MEMORY_SIZE, "Memory accessed is out of address space"
         if(loc > MEMORY_SIZE or loc < 0):
+
             # Error logs can be created (IO class can be used)
             print("Wrong memory location: ", loc," accessed : Exiting")
             exit()
-
+        
         if(loc + 1 > len(self.__Memory)):
             print("Random location accessed where no data was stored, exiting")
             exit()
+        assert loc+1 <= len(self.__Memory), "Random location accessed where no data was stored, exiting"
         return self.__Memory[loc]
     def writeAtLocation(self,loc,data, copyingCode): # Can write any data, No constraint on writing specific data type
         """! Setter for the memory.
         @param loc  Location that we want to set.
         @param data  Value that we want to set the location to.
         """
-        if(loc < 11):
-            # Error logs can be created (IO class can be used)
-            print("Wrong memory location: ", loc," writing tried (writing to ROM) : Exiting")
-            exit()
-        if(loc > MEMORY_SIZE):
-            # Error logs can be created (IO class can be used)
-            print("Wrong memory location: ", loc," writing tried : Exiting")
-            exit()
+        assert loc > 10, "Wrong memory location: "+ str(loc)+" writing tried (writing to ROM)"
+        assert loc <= MEMORY_SIZE, "Wrong memory location: "+ str(loc)+" writing tried (Above total size of memory)"
         if ((loc > CODE_STORAGE_LOCATION_ONE) and (loc <= CODE_STORAGE_LOCATION_END) and (copyingCode == False)):
-            print("Cannot write to locations used for storing input codes")
+            print("Cannot write to locations used for storing input code")
             exit()
+
         self.__Memory[loc] = data
     def printMemoryStatus(self):
         """! Print the status of the memory. 
@@ -472,6 +470,13 @@ class InstructionDecoder:
             #self.validateInstruction(line, RAMObjectGlobal.getProgramCounter() - 1)
             instructionObject = self.createInstructionObject(line)
             instructionList.append(instructionObject) # Add the validate instruction functions here.
+    def truncateTo16BitDecimal(self, number):
+        binary = bin(number)
+        truncatedBinaryNumber = binary[-16:]
+        decimalNumber16Bit = int(truncatedBinaryNumber, 2)
+        return decimalNumber16Bit
+        
+
     def parseFileStoreToMemory(self, inputFile):
         """ function to copy code into the memory"""
         print("Started copying code into the memory")
@@ -659,11 +664,13 @@ class MOV(RAM):
         """Moving data provided by user to a register"""
         if(self.reg2[0].lower() == "r"):
             reg2Val = getValueOfRegister(self.reg2)
+            reg2Val = instructionDecoderGlobal.truncateTo16BitDecimal(reg2Val)
             RAMObjectGlobal.setRegisterToValue(self.reg1, reg2Val)
         elif(self.reg2[0] == "#"):
             print("Assigning the imm value")
             immVal = int(self.reg2[1:])
             print(self.reg2[1:])
+            immVal = instructionDecoderGlobal.truncateTo16BitDecimal(immVal)
             RAMObjectGlobal.setRegisterToValue(self.reg1, immVal)
             RAMObjectGlobal.printRegisterStatus()
         else:
@@ -720,7 +727,7 @@ class IN(IO):
         """To read data form the  ports"""
         portFile = open(portFileName+".txt", "r")
         readValue = portFile.read()
-        RAMObjectGlobal.setRegA(int(readValue))
+        RAMObjectGlobal.setRegA(instructionDecoderGlobal.truncateTo16BitDecimal(int(readValue)))
         print("Value read from the port : ", readValue)
         print("Value set to reg A : ", RAMObjectGlobal.getRegA())
 
