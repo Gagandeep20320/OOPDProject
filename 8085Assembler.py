@@ -1,23 +1,14 @@
 import sys
 import classes
 from multipledispatch import dispatch    
-
-n = len(sys.argv)
-print("Total arguments passed:", n)
-print("\nName of Python script:", sys.argv[0])
-inputFileName = sys.argv[1]
-generateExecutionFile = False
-executionFileName = "DUMMY"
-if(n > 2):
-    if(sys.argv[2] == "-execution_image"):
-        generateExecutionFile = True
-        executionFileName = sys.argv[3]
+executionFileName = "execution.png"
+inputFileName = "input.OOPD.txt"
         
-def main():
+def main(inputFileName):
     try:
-        classes.instructionDecoderGlobal.parseFileDecodeInstructions(inputFileName, executionFileName, generateExecutionFile)
+        classes.instructionDecoderGlobal.parseFileDecodeInstructions(inputFileName, executionFileName)
     except Exception as eef:
         print(eef)
 if __name__== "__main__":
-    main()
+    main(inputFileName)
 

@@ -440,9 +440,8 @@ class InstructionDecoder:
     """InstructionDecoder class to take instructions given by user through and validate them and then copying it to the memory."""
     def __init__(self ):
         self.temp = 0
-    def parseFileDecodeInstructions(self, inputFile, executionFileName, generateExecutionFile):
+    def parseFileDecodeInstructions(self, inputFile, executionFileName):
         RAMObjectGlobal.executionFile = executionFileName
-        RAMObjectGlobal.geneExecutionFile = generateExecutionFile
         """Function to decode instruction given in the file by the user"""
         self.parseFileStoreToMemory(inputFile)
         print("Parsing file and validating")
@@ -1008,8 +1007,8 @@ class HLT():
         print ("Program Halted")
         plt.xlabel("Location of storage of instruction in memory")
         plt.ylabel("Time")
-        if RAMObjectGlobal.geneExecutionFile == True:
-            plt.savefig(RAMObjectGlobal.executionFile)
+        
+        plt.savefig(RAMObjectGlobal.executionFile)
         self.printExceptions()
         exit(0)
     def printExceptions(self):
