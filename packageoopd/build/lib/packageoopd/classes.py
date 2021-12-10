@@ -242,7 +242,7 @@ class ALU(ABC): # This is an abstract class
         """ The ALU base class initializer."""
         print("ALU Object created")
         @abstractmethod
-        def performAction(self): # This is an abstract method
+        def performOperation(self): # This is an abstract method
             pass
 class Add(ALU): # All ADD ADA (Add to acc ) can create a single object 
     # this defines the type of operation
