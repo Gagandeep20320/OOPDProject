@@ -1,0 +1,108 @@
+\hypertarget{class8085_assembler_1_1_m_u_l}{}\doxysection{8085Assembler.\+MUL Class Reference}
+\label{class8085_assembler_1_1_m_u_l}\index{8085Assembler.MUL@{8085Assembler.MUL}}
+Inheritance diagram for 8085Assembler.\+MUL\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class8085_assembler_1_1_m_u_l}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_m_u_l_a2d01281582003fece31def1737ea61ff}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, ins\+String)
+\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_m_u_l_ad08aefc58b50a868e8d1d8c3b9ad918f}{multiplication}} (self, reg1, reg2)
+\begin{DoxyCompactList}\small\item\em The multiplication of contents of two registers. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_m_u_l_aad1715fe3f4483f03c1e1e18f2aa86e7}{multiplication}} (self, reg1)
+\begin{DoxyCompactList}\small\item\em The multiplication between contents of two registers. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_m_u_l_a1fdb7d064e46e223ba83a2266d6cf7c1}{perform\+Operation}} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_m_u_l_aa1d015098953ca6a6091d82152c33fa9}\label{class8085_assembler_1_1_m_u_l_aa1d015098953ca6a6091d82152c33fa9}} 
+{\bfseries opcode}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_m_u_l_a882e4e4a19cf1cbf2cd7cc48134d3a46}\label{class8085_assembler_1_1_m_u_l_a882e4e4a19cf1cbf2cd7cc48134d3a46}} 
+{\bfseries num\+Operands}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_m_u_l_a55a3a906b1f115be275f4a6de96f43c6}\label{class8085_assembler_1_1_m_u_l_a55a3a906b1f115be275f4a6de96f43c6}} 
+{\bfseries reg1}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_m_u_l_ab4f257e524393c3cb62a6f55a2029f01}\label{class8085_assembler_1_1_m_u_l_ab4f257e524393c3cb62a6f55a2029f01}} 
+{\bfseries reg2}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb} The MUL class.
+    The multiplication operations taking place are : 
+    1) Multiplication of contents of two registers
+    2) Multiplication of content of a register with the accumulator \end{DoxyVerb}
+ 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class8085_assembler_1_1_m_u_l_a2d01281582003fece31def1737ea61ff}\label{class8085_assembler_1_1_m_u_l_a2d01281582003fece31def1737ea61ff}} 
+\index{8085Assembler.MUL@{8085Assembler.MUL}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!8085Assembler.MUL@{8085Assembler.MUL}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def 8085Assembler.\+MUL.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{ins\+String }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb} The ALU base class initializer.\end{DoxyVerb}
+ 
+
+Reimplemented from \mbox{\hyperlink{class8085_assembler_1_1_a_l_u_adb6ae053e538666ed39032daaf81436c}{8085\+Assembler.\+ALU}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class8085_assembler_1_1_m_u_l_aad1715fe3f4483f03c1e1e18f2aa86e7}\label{class8085_assembler_1_1_m_u_l_aad1715fe3f4483f03c1e1e18f2aa86e7}} 
+\index{8085Assembler.MUL@{8085Assembler.MUL}!multiplication@{multiplication}}
+\index{multiplication@{multiplication}!8085Assembler.MUL@{8085Assembler.MUL}}
+\doxysubsubsection{\texorpdfstring{multiplication()}{multiplication()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily def 8085Assembler.\+MUL.\+multiplication (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{reg1 }\end{DoxyParamCaption})}
+
+
+
+The multiplication between contents of two registers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg1} & The content in Register 1 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The product value of the register content and the accumulator 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class8085_assembler_1_1_m_u_l_ad08aefc58b50a868e8d1d8c3b9ad918f}\label{class8085_assembler_1_1_m_u_l_ad08aefc58b50a868e8d1d8c3b9ad918f}} 
+\index{8085Assembler.MUL@{8085Assembler.MUL}!multiplication@{multiplication}}
+\index{multiplication@{multiplication}!8085Assembler.MUL@{8085Assembler.MUL}}
+\doxysubsubsection{\texorpdfstring{multiplication()}{multiplication()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily def 8085Assembler.\+MUL.\+multiplication (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{reg1,  }\item[{}]{reg2 }\end{DoxyParamCaption})}
+
+
+
+The multiplication of contents of two registers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg1} & The content in Register 1 \\
+\hline
+{\em reg2} & The content in Register 2 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The product value of the contents of the two registers 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class8085_assembler_1_1_m_u_l_a1fdb7d064e46e223ba83a2266d6cf7c1}\label{class8085_assembler_1_1_m_u_l_a1fdb7d064e46e223ba83a2266d6cf7c1}} 
+\index{8085Assembler.MUL@{8085Assembler.MUL}!performOperation@{performOperation}}
+\index{performOperation@{performOperation}!8085Assembler.MUL@{8085Assembler.MUL}}
+\doxysubsubsection{\texorpdfstring{performOperation()}{performOperation()}}
+{\footnotesize\ttfamily def 8085Assembler.\+MUL.\+perform\+Operation (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}The calling of the multiplication method based on the number of operands in the instruction\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+8085\+Assembler.\+py\end{DoxyCompactItemize}

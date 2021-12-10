@@ -1,0 +1,199 @@
+\hypertarget{class8085_assembler_1_1_r_a_m}{}\doxysection{8085Assembler.\+RAM Class Reference}
+\label{class8085_assembler_1_1_r_a_m}\index{8085Assembler.RAM@{8085Assembler.RAM}}
+Inheritance diagram for 8085Assembler.\+RAM\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class8085_assembler_1_1_r_a_m}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_r_a_m_ab5208f9a47326e89046be3b966e5f8bb}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self)
+\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_r_a_m_a7c810363fb9a313ccaaadf3175077f2d}{set\+Register\+To\+Value}} (self, reg\+String, val)
+\begin{DoxyCompactList}\small\item\em Combined setter for all the register in the \mbox{\hyperlink{class8085_assembler_1_1_r_a_m}{RAM}}. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_r_a_m_a477067561be7e03037ca5cea1aa75b6b}{return\+Register\+Value}} (self, reg\+String)
+\begin{DoxyCompactList}\small\item\em Combined getter for all the register in the \mbox{\hyperlink{class8085_assembler_1_1_r_a_m}{RAM}}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_r_a_m_a601b6d3438b8f0af3e2b01c42b15233e}\label{class8085_assembler_1_1_r_a_m_a601b6d3438b8f0af3e2b01c42b15233e}} 
+def {\bfseries print\+Register\+Status} (self)
+\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_r_a_m_a6244e0cecd1bc09515d70baf60b13595}{set\+Accumulator}} (self, value)
+\begin{DoxyCompactList}\small\item\em Setter for the accumulator. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_r_a_m_a83d3584b3af4ddf992e9d8ac5219d3aa}\label{class8085_assembler_1_1_r_a_m_a83d3584b3af4ddf992e9d8ac5219d3aa}} 
+def {\bfseries add\+To\+Accumulator} (self, value)
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_r_a_m_a938db0acfa6b17c89b19397d35a96acc}\label{class8085_assembler_1_1_r_a_m_a938db0acfa6b17c89b19397d35a96acc}} 
+def {\bfseries get\+Accumulator} (self)
+\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_r_a_m_a632f3e36070b2c108344a3b2b5cce232}{multiply\+To\+Accumulator}} (self, value)
+\begin{DoxyCompactList}\small\item\em Multiplies the value to the accumulator. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_r_a_m_aceeaba18e23a668ba9573bfb5baba923}{or\+To\+Accumulator}} (self, value)
+\begin{DoxyCompactList}\small\item\em ORs the value to the accumulator. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_r_a_m_a6f709933e95468a97c6cdb91d9a7acd4}{and\+To\+Accumulator}} (self, value)
+\begin{DoxyCompactList}\small\item\em ANDs the value to the accumulator. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_r_a_m_a6c2513d28d25b7e85d6a1d6afc79bc71}{divide\+To\+Accumulator}} (self, value)
+\begin{DoxyCompactList}\small\item\em Divides accumulator by value. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_r_a_m_a4407682367f4b4782c659b723fce2c63}\label{class8085_assembler_1_1_r_a_m_a4407682367f4b4782c659b723fce2c63}} 
+def {\bfseries set\+RegA} (self, value)
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_r_a_m_a74e7070732aebdcf489949ff08aaefd2}\label{class8085_assembler_1_1_r_a_m_a74e7070732aebdcf489949ff08aaefd2}} 
+def {\bfseries get\+RegA} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_r_a_m_a5406c34d18e9e308061bf5950842fbc8}\label{class8085_assembler_1_1_r_a_m_a5406c34d18e9e308061bf5950842fbc8}} 
+{\bfseries execution\+File}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_r_a_m_a3ac4fd76b9be27914c6c06a2818cf3b5}\label{class8085_assembler_1_1_r_a_m_a3ac4fd76b9be27914c6c06a2818cf3b5}} 
+{\bfseries gene\+Execution\+File}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_r_a_m_a294cbf6b337468697400be8af3381984}\label{class8085_assembler_1_1_r_a_m_a294cbf6b337468697400be8af3381984}} 
+{\bfseries initial\+Location}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb} The RAM child class handling RAM related operations \end{DoxyVerb}
+ 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class8085_assembler_1_1_r_a_m_ab5208f9a47326e89046be3b966e5f8bb}\label{class8085_assembler_1_1_r_a_m_ab5208f9a47326e89046be3b966e5f8bb}} 
+\index{8085Assembler.RAM@{8085Assembler.RAM}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!8085Assembler.RAM@{8085Assembler.RAM}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def 8085Assembler.\+RAM.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb} The RAM child class initializer.\end{DoxyVerb}
+ 
+
+Reimplemented from \mbox{\hyperlink{class8085_assembler_1_1_memory}{8085\+Assembler.\+Memory}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{class8085_assembler_1_1_m_o_v_aa2c51d199d8f90b167b7e2acb546bd0d}{8085\+Assembler.\+MOV}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class8085_assembler_1_1_r_a_m_a6f709933e95468a97c6cdb91d9a7acd4}\label{class8085_assembler_1_1_r_a_m_a6f709933e95468a97c6cdb91d9a7acd4}} 
+\index{8085Assembler.RAM@{8085Assembler.RAM}!andToAccumulator@{andToAccumulator}}
+\index{andToAccumulator@{andToAccumulator}!8085Assembler.RAM@{8085Assembler.RAM}}
+\doxysubsubsection{\texorpdfstring{andToAccumulator()}{andToAccumulator()}}
+{\footnotesize\ttfamily def 8085Assembler.\+RAM.\+and\+To\+Accumulator (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{value }\end{DoxyParamCaption})}
+
+
+
+ANDs the value to the accumulator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Value to be ANDed with the accumulator. \mbox{]} ~\newline
+ \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class8085_assembler_1_1_r_a_m_a6c2513d28d25b7e85d6a1d6afc79bc71}\label{class8085_assembler_1_1_r_a_m_a6c2513d28d25b7e85d6a1d6afc79bc71}} 
+\index{8085Assembler.RAM@{8085Assembler.RAM}!divideToAccumulator@{divideToAccumulator}}
+\index{divideToAccumulator@{divideToAccumulator}!8085Assembler.RAM@{8085Assembler.RAM}}
+\doxysubsubsection{\texorpdfstring{divideToAccumulator()}{divideToAccumulator()}}
+{\footnotesize\ttfamily def 8085Assembler.\+RAM.\+divide\+To\+Accumulator (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{value }\end{DoxyParamCaption})}
+
+
+
+Divides accumulator by value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Value to be divide the accumulator with. \mbox{]} ~\newline
+ \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class8085_assembler_1_1_r_a_m_a632f3e36070b2c108344a3b2b5cce232}\label{class8085_assembler_1_1_r_a_m_a632f3e36070b2c108344a3b2b5cce232}} 
+\index{8085Assembler.RAM@{8085Assembler.RAM}!multiplyToAccumulator@{multiplyToAccumulator}}
+\index{multiplyToAccumulator@{multiplyToAccumulator}!8085Assembler.RAM@{8085Assembler.RAM}}
+\doxysubsubsection{\texorpdfstring{multiplyToAccumulator()}{multiplyToAccumulator()}}
+{\footnotesize\ttfamily def 8085Assembler.\+RAM.\+multiply\+To\+Accumulator (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{value }\end{DoxyParamCaption})}
+
+
+
+Multiplies the value to the accumulator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Value to be multiplied with the accumulator. \mbox{]} ~\newline
+ \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class8085_assembler_1_1_r_a_m_aceeaba18e23a668ba9573bfb5baba923}\label{class8085_assembler_1_1_r_a_m_aceeaba18e23a668ba9573bfb5baba923}} 
+\index{8085Assembler.RAM@{8085Assembler.RAM}!orToAccumulator@{orToAccumulator}}
+\index{orToAccumulator@{orToAccumulator}!8085Assembler.RAM@{8085Assembler.RAM}}
+\doxysubsubsection{\texorpdfstring{orToAccumulator()}{orToAccumulator()}}
+{\footnotesize\ttfamily def 8085Assembler.\+RAM.\+or\+To\+Accumulator (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{value }\end{DoxyParamCaption})}
+
+
+
+ORs the value to the accumulator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Value to be ORed with the accumulator. \mbox{]} ~\newline
+ \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class8085_assembler_1_1_r_a_m_a477067561be7e03037ca5cea1aa75b6b}\label{class8085_assembler_1_1_r_a_m_a477067561be7e03037ca5cea1aa75b6b}} 
+\index{8085Assembler.RAM@{8085Assembler.RAM}!returnRegisterValue@{returnRegisterValue}}
+\index{returnRegisterValue@{returnRegisterValue}!8085Assembler.RAM@{8085Assembler.RAM}}
+\doxysubsubsection{\texorpdfstring{returnRegisterValue()}{returnRegisterValue()}}
+{\footnotesize\ttfamily def 8085Assembler.\+RAM.\+return\+Register\+Value (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{reg\+String }\end{DoxyParamCaption})}
+
+
+
+Combined getter for all the register in the \mbox{\hyperlink{class8085_assembler_1_1_r_a_m}{RAM}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg\+String} & Register name passed as string. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Present value of the register. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class8085_assembler_1_1_r_a_m_a6244e0cecd1bc09515d70baf60b13595}\label{class8085_assembler_1_1_r_a_m_a6244e0cecd1bc09515d70baf60b13595}} 
+\index{8085Assembler.RAM@{8085Assembler.RAM}!setAccumulator@{setAccumulator}}
+\index{setAccumulator@{setAccumulator}!8085Assembler.RAM@{8085Assembler.RAM}}
+\doxysubsubsection{\texorpdfstring{setAccumulator()}{setAccumulator()}}
+{\footnotesize\ttfamily def 8085Assembler.\+RAM.\+set\+Accumulator (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{value }\end{DoxyParamCaption})}
+
+
+
+Setter for the accumulator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Value to be set to the accumulator. \mbox{]} ~\newline
+ \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class8085_assembler_1_1_r_a_m_a7c810363fb9a313ccaaadf3175077f2d}\label{class8085_assembler_1_1_r_a_m_a7c810363fb9a313ccaaadf3175077f2d}} 
+\index{8085Assembler.RAM@{8085Assembler.RAM}!setRegisterToValue@{setRegisterToValue}}
+\index{setRegisterToValue@{setRegisterToValue}!8085Assembler.RAM@{8085Assembler.RAM}}
+\doxysubsubsection{\texorpdfstring{setRegisterToValue()}{setRegisterToValue()}}
+{\footnotesize\ttfamily def 8085Assembler.\+RAM.\+set\+Register\+To\+Value (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{reg\+String,  }\item[{}]{val }\end{DoxyParamCaption})}
+
+
+
+Combined setter for all the register in the \mbox{\hyperlink{class8085_assembler_1_1_r_a_m}{RAM}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em val} & Value to be set to the register specified. \\
+\hline
+{\em reg\+String} & Register name passed as string. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+8085\+Assembler.\+py\end{DoxyCompactItemize}

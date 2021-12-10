@@ -1,0 +1,108 @@
+\hypertarget{class8085_assembler_1_1_o_r}{}\doxysection{8085Assembler.\+OR Class Reference}
+\label{class8085_assembler_1_1_o_r}\index{8085Assembler.OR@{8085Assembler.OR}}
+Inheritance diagram for 8085Assembler.\+OR\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class8085_assembler_1_1_o_r}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_o_r_a882038e3d8d3e5cced68b59b6d084102}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, ins\+String)
+\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_o_r_aeb88cc9657e1076b62bc2a71676a95c8}{logicalor}} (self, reg1, reg2)
+\begin{DoxyCompactList}\small\item\em The logical \mbox{\hyperlink{class8085_assembler_1_1_o_r}{OR}} of contents of two registers. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_o_r_a879a5beb223ce9e4cdc0171a75a3a57f}{logicalor}} (self, reg1)
+\begin{DoxyCompactList}\small\item\em The logical \mbox{\hyperlink{class8085_assembler_1_1_o_r}{OR}} of contents of two registers. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_o_r_adfced807b4b294284953ac6ab91ea52d}{perform\+Operation}} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_o_r_ae5232a4fa069c89920ed995345ead025}\label{class8085_assembler_1_1_o_r_ae5232a4fa069c89920ed995345ead025}} 
+{\bfseries opcode}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_o_r_ada30ca32a4b816de322ef2aaac9ef51b}\label{class8085_assembler_1_1_o_r_ada30ca32a4b816de322ef2aaac9ef51b}} 
+{\bfseries num\+Operands}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_o_r_ac76e1ee4682716cb2a0fa722ac0b76ec}\label{class8085_assembler_1_1_o_r_ac76e1ee4682716cb2a0fa722ac0b76ec}} 
+{\bfseries reg1}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_o_r_a8b8ebf79bf4a84945650cc1f310b033f}\label{class8085_assembler_1_1_o_r_a8b8ebf79bf4a84945650cc1f310b033f}} 
+{\bfseries reg2}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb} The OR class.
+    The logical OR operations taking place are : 
+    1) OR operation between of contents of two registers
+    2) OR operation between content of a register with the accumulator \end{DoxyVerb}
+ 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class8085_assembler_1_1_o_r_a882038e3d8d3e5cced68b59b6d084102}\label{class8085_assembler_1_1_o_r_a882038e3d8d3e5cced68b59b6d084102}} 
+\index{8085Assembler.OR@{8085Assembler.OR}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!8085Assembler.OR@{8085Assembler.OR}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def 8085Assembler.\+OR.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{ins\+String }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb} The ALU base class initializer.\end{DoxyVerb}
+ 
+
+Reimplemented from \mbox{\hyperlink{class8085_assembler_1_1_a_l_u_adb6ae053e538666ed39032daaf81436c}{8085\+Assembler.\+ALU}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class8085_assembler_1_1_o_r_a879a5beb223ce9e4cdc0171a75a3a57f}\label{class8085_assembler_1_1_o_r_a879a5beb223ce9e4cdc0171a75a3a57f}} 
+\index{8085Assembler.OR@{8085Assembler.OR}!logicalor@{logicalor}}
+\index{logicalor@{logicalor}!8085Assembler.OR@{8085Assembler.OR}}
+\doxysubsubsection{\texorpdfstring{logicalor()}{logicalor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily def 8085Assembler.\+OR.\+logicalor (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{reg1 }\end{DoxyParamCaption})}
+
+
+
+The logical \mbox{\hyperlink{class8085_assembler_1_1_o_r}{OR}} of contents of two registers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg1} & The content in Register 1 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The value after logical \mbox{\hyperlink{class8085_assembler_1_1_o_r}{OR}} between content of the register and accumulator 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class8085_assembler_1_1_o_r_aeb88cc9657e1076b62bc2a71676a95c8}\label{class8085_assembler_1_1_o_r_aeb88cc9657e1076b62bc2a71676a95c8}} 
+\index{8085Assembler.OR@{8085Assembler.OR}!logicalor@{logicalor}}
+\index{logicalor@{logicalor}!8085Assembler.OR@{8085Assembler.OR}}
+\doxysubsubsection{\texorpdfstring{logicalor()}{logicalor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily def 8085Assembler.\+OR.\+logicalor (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{reg1,  }\item[{}]{reg2 }\end{DoxyParamCaption})}
+
+
+
+The logical \mbox{\hyperlink{class8085_assembler_1_1_o_r}{OR}} of contents of two registers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg1} & The content in Register 1 \\
+\hline
+{\em reg2} & The content in Register 2 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The value after logical \mbox{\hyperlink{class8085_assembler_1_1_o_r}{OR}} between contents of the two registers 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class8085_assembler_1_1_o_r_adfced807b4b294284953ac6ab91ea52d}\label{class8085_assembler_1_1_o_r_adfced807b4b294284953ac6ab91ea52d}} 
+\index{8085Assembler.OR@{8085Assembler.OR}!performOperation@{performOperation}}
+\index{performOperation@{performOperation}!8085Assembler.OR@{8085Assembler.OR}}
+\doxysubsubsection{\texorpdfstring{performOperation()}{performOperation()}}
+{\footnotesize\ttfamily def 8085Assembler.\+OR.\+perform\+Operation (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}The calling of the logicalor method based on the number of operands in the instruction\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+8085\+Assembler.\+py\end{DoxyCompactItemize}

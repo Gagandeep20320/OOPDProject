@@ -1,0 +1,111 @@
+TODO yet\+:-\/
+\begin{DoxyEnumerate}
+\item Packaging
+\item UML 3 \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\# VIDEO \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
+\item Plan demo code
+\end{DoxyEnumerate}
+
+What all can this code do?
+\begin{DoxyEnumerate}
+\item Validate the passed command
+\item Create list of instructions.
+\item Execute all the commands along with fetching. We can extend this to executing all the command list together once fetching is complete.
+\end{DoxyEnumerate}
+
+Details of the code\+:-\/
+\begin{DoxyEnumerate}
+\item We have 6 registers available with us (R1-\/\+R6)
+\item There is one accumulator
+\end{DoxyEnumerate}
+\begin{DoxyItemize}
+\item The instructions are language insensitive. Instruction Set \+:-\/ ADD $<$\+Register\+Name$>$ $<$\+Register\+Name$>$ \+: Put sum of both registers into the accumulator ADA $<$\+Register\+Name$>$ \+: Sum register value and accumulator STR $<$\+Register\+Name$>$ \+: Copy the content of accumulator to the memory location LD $<$\+Register\+Name$>$ \+: Copy the content of location into accumulator OUT $<$\+Register\+Name$>$ \+: Display the valu of the register name mentioned to the standard output MOV $<$\+Register\+Name$>$ \#$<$\+Immediate\+Value$>$ \+: Moves the immediate value into the register specified // \+: This would mean comment Instructions to be added \+:-\/ ADD2 $<$\+Reg1$>$ $<$\+Reg2$>$ $<$\+Reg3$>$ \+: Add Reg1 and Reg2, and store value in Reg1 SUB2 $<$\+Reg1$>$ $<$\+Reg2$>$ $<$\+Reg3$>$ \+: Subtract Reg3 from Reg2 and store value in Reg1 SUB $<$\+Register\+Name$>$ $<$\+Register\+Name$>$ \+: Subtract first register from second and put into the accumulator SUBA $<$\+Register\+Name$>$ \+: Subtract register value from Acc and store into the accumulator MUL \+: All three types same as SUB/\+ADD DIV \+: All three types same as SUB/\+ADD
+\end{DoxyItemize}
+
+STR -\/\texorpdfstring{$>$}{>} RAM LD -\/\texorpdfstring{$>$}{>} ROM
+
+Memory\+:-\/ Using a list as an attribute of the Memory class and member functions perform the read and write action. First few memory locations are conserved as ROM memory. \hypertarget{md__c_o_d_e__d_e_t_a_i_l_s_autotoc_md0}{}\doxysection{Inplementing memory was required as stated in the problem statement}\label{md__c_o_d_e__d_e_t_a_i_l_s_autotoc_md0}
+\hypertarget{md__c_o_d_e__d_e_t_a_i_l_s_autotoc_md1}{}\doxysection{Implementing memory was also necessary to make statements like Load and Store work (\+Addressing schemes)}\label{md__c_o_d_e__d_e_t_a_i_l_s_autotoc_md1}
+Instruction\+Decoder\+:-\/
+\begin{DoxyItemize}
+\item This class as asked for in the problem desription is able to parse the file and do the decoding of the instructions.
+\item Also this class has all the functions related to validation of instruction fetched.
+\end{DoxyItemize}
+
+IMPORTANT \+: Instruction Validation ! Important part is the format in which we are storing the information (hard coded) related to acceptable syntax. ! With addition of each new command in the program, we would also need to update this one
+
+Features to be added later.
+\begin{DoxyEnumerate}
+\item Program counter
+\item We can also implement a very simple stack with Stack pointer in picture.
+\end{DoxyEnumerate}
+
+PARTITION FOR CHANGES TO BE MADE IN THE CODE\+:-\/ \{
+
+RAJAT \+:
+
+ADD2 $<$\+Reg1$>$ $<$\+Reg2$>$ $<$\+Reg3$>$ \+: Add Reg1 and Reg2, and store value in Reg1 SUB2 $<$\+Reg1$>$ $<$\+Reg2$>$ $<$\+Reg3$>$ \+: Subtract Reg3 from Reg2 and store value in Reg1 SUB $<$\+Register\+Name$>$ $<$\+Register\+Name$>$ \+: Subtract first register from second and put into the accumulator SUBA $<$\+Register\+Name$>$ \+: Subtract register value from Acc and store into the accumulator \textquotesingle{}mul\textquotesingle{} \+: \mbox{[}2, \char`\"{}0111\char`\"{}, \char`\"{}\+RR\char`\"{}\mbox{]}, \textquotesingle{}muli\textquotesingle{} \+: \mbox{[}1, \char`\"{}1000\char`\"{}, \char`\"{}\+R\char`\"{}\mbox{]}, \textquotesingle{}div\textquotesingle{} \+: \mbox{[}2, \char`\"{}1001\char`\"{}, \char`\"{}\+RR\char`\"{}\mbox{]}, \textquotesingle{}divi\textquotesingle{} \+: \mbox{[}1, \char`\"{}1010\char`\"{}, \char`\"{}\+R\char`\"{}\mbox{]}\} SOUMYA \+:
+
+MUL \+: All three types same as SUB/\+ADD --- Implemented This. Need some more here. Will do so-\/---required changes done DIV \+: All three types same as SUB/\+ADD -\/---Implemented This. Need to handle case of zero. Done using try catch block \doxysubparagraph*{\#\#\#\#\#\#\#\#\#\#\#\#\#\# Exception handling (Using try catch block)}
+
+Exception Handling for file and invalid instruction -\/-\/-\/---File handling done with try catch, need verification \textquotesingle{}ld\textquotesingle{} \+: \mbox{[}1, \char`\"{}0010\char`\"{}, \char`\"{}\+R\char`\"{}\mbox{]}, \textquotesingle{}str\textquotesingle{} \+: \mbox{[}1, \char`\"{}0011\char`\"{}, \char`\"{}\+R\char`\"{}\mbox{]},
+
+SINDHU \+: OR AND NOT We would need bits for this. We acan assume 8 bit register -\/\texorpdfstring{$>$}{>} internally dec -\/ 8 bit binary (predefined function to be used) \textquotesingle{}add\textquotesingle{} \+: \mbox{[}2, \char`\"{}0000\char`\"{}, \char`\"{}\+RR\char`\"{}\mbox{]}, \textquotesingle{}ada\textquotesingle{} \+: \mbox{[}1, \char`\"{}0001\char`\"{}, \char`\"{}\+R\char`\"{}\mbox{]}, ~\newline
+ \textquotesingle{}mov\textquotesingle{} \+: \mbox{[}2, \char`\"{}0101\char`\"{}, \char`\"{}\+R?\char`\"{}\mbox{]}, \textquotesingle{}in\textquotesingle{} \+: \mbox{[}1, \char`\"{}0110\char`\"{}, \char`\"{}?\char`\"{}\mbox{]},
+
+Doxygen? -\/\texorpdfstring{$>$}{>} Comments
+
+GAGANDEEP \+:
+
+
+\begin{DoxyItemize}
+\item Demo ? Input file ? Logical program \+: Loop
+\item Loop Implementation JZ -\/\texorpdfstring{$>$}{>} Pre req\+: PC, Memory -\/\texorpdfstring{$>$}{>} DONE JNZ also implemented Debug MOV -\/\texorpdfstring{$>$}{>} DONE LD and STR commands should not be individual class since they re-\/initiate the complete memory which means that we may lose data (Check if it does that or not)
+\end{DoxyItemize}
+
+See this error\+: File \char`\"{}d\+:\textbackslash{}\+IIITD\textbackslash{}\+Monsoon\+Semester2021\+Sem2\textbackslash{}\+OOPD\textbackslash{}\+OOPDProject\textbackslash{}classes.\+py\char`\"{}, line 261, in parse\+File\+Decode\+Instructions if(line\mbox{[}0\+:2\mbox{]} == \char`\"{}//\char`\"{})\+: \# ! Handles a comment Type\+Error\+: \textquotesingle{}int\textquotesingle{} object is not subscriptable RESOLVED \+: If you do not use HLT statement in the code then, this exception will show. Program has to be ended with HLT statement.
+
+Possible demo \href{file:-}{\texttt{ file\+:-\/}}
+\begin{DoxyEnumerate}
+\item mov r1 \#10 mov r2 \#1 mov r3 \#514 out r1 out \char`\"{}$\ast$\char`\"{} sub2 r1 r1 r2 jnz r1 r3 HLT
+\end{DoxyEnumerate}
+
+2. mov r1 \#5 mov r2 \#1 mov r3 \#5 mov r5 \#6 mov r4 r1 out \char`\"{}$\ast$\char`\"{} sub2 r4 r4 r2 jnz r4 r5 out \char`\"{}\+NEXTLINE\char`\"{} sub2 r1 r1 r2 jnz r1 r3 HLT
+
+TODO \+:
+\begin{DoxyEnumerate}
+\item One demo file per person. (Ensure all the basic commands are used) -\/\texorpdfstring{$>$}{>} Important functionalities to be shown through the demo files. a. Taking input from ports b. LD and STR instructions and ROM related read only exceptions. c. Exceptions for wrong syntax errors. d. Wrong memory location access errors.
+\end{DoxyEnumerate}
+
+Rajat\textquotesingle{}s Demo file\+: Soumya\textquotesingle{}s Demo File \+:
+
+mov r1 \#10 mov r2 \#1 mov r3 \#0 mov r4 \#4 mul r1 r4 muli r2 div r1 r6 out \char`\"{}\+Program\+\_\+is\+\_\+executing\char`\"{} divi r1 ml r1 r2 divi r1 r2 hlt
+
+Sindhu\textquotesingle{}s Demo file \+: mov r1 \#3 mov r2 \#1 mov r3 \#8 mov r4 \#4 or r1 r5 anda r2 not r3 ora r2 and r3 r4 out \char`\"{}\+Logical\+\_\+operations\+\_\+done\char`\"{} or r1 not r1 r6 an r4 r5 hlt
+
+
+\begin{DoxyEnumerate}
+\item Complete Doxygen comments \+: //done
+\item Profiling is done (we can run the command once code is final)
+\item Packaging remaining -\/-\/--- $\ast$$\ast$$\ast$$\ast$$\ast$$\ast$
+\item UML Class diagram -\/\texorpdfstring{$>$}{>} Soumya, Sindhu
+\item Use of abstract classes
+\end{DoxyEnumerate}
+
+All exceptions should be printed after execution
+
+
+\begin{DoxyEnumerate}
+\item Runtime and syntax errors are handled differently (show)
+\end{DoxyEnumerate}
+
+Points to be highlight in video
+
+
+\begin{DoxyEnumerate}
+\item Abs, Poly, Encap, Inheritance
+\item 2 Codes for exception handling
+\item 1 Code for looping
+\item RAM and ROM implementation (atleast the notion of ROM) -\/\texorpdfstring{$>$}{>} You cannot access(read) certain memory locations
+\item Program execution (PC, Memory storing the code for execution)
+\item IN command uses port. Show how to use port. 
+\end{DoxyEnumerate}

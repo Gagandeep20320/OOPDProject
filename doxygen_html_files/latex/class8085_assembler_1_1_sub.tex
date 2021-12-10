@@ -1,0 +1,144 @@
+\hypertarget{class8085_assembler_1_1_sub}{}\doxysection{8085Assembler.\+Sub Class Reference}
+\label{class8085_assembler_1_1_sub}\index{8085Assembler.Sub@{8085Assembler.Sub}}
+Inheritance diagram for 8085Assembler.\+Sub\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class8085_assembler_1_1_sub}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_sub_a8da3d820140a15b7bfd28b873ece741b}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, ins\+String)
+\begin{DoxyCompactList}\small\item\em The \mbox{\hyperlink{class8085_assembler_1_1_add}{Add}} class initializer. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_sub_a382d642c5c532279f8839e0b1483f069}{subtraction}} (self, reg1, reg2)
+\begin{DoxyCompactList}\small\item\em The subtraction between contents of two registers. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_sub_a386ddad5b715ba4f79fedb5765f80c43}{subtraction}} (self, reg1)
+\begin{DoxyCompactList}\small\item\em The subtraction of content of a register from the accumulator. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_sub_a0c47ab890f61c4ae1cc085614628b7a7}{subtraction}} (self, reg1, reg2, reg3)
+\begin{DoxyCompactList}\small\item\em The subtraction between contents of two registers and storing the difference value in another register. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_sub_a0c757b85a40ed9e516d347fef3b65024}{perform\+Operation}} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_sub_a3c3a914fb2b780fec6749ba0e864d9e1}\label{class8085_assembler_1_1_sub_a3c3a914fb2b780fec6749ba0e864d9e1}} 
+{\bfseries opcode}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_sub_a9d21c248ec0a273b88d26eb3e5eeec2a}\label{class8085_assembler_1_1_sub_a9d21c248ec0a273b88d26eb3e5eeec2a}} 
+{\bfseries num\+Operands}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_sub_a89344da4de66d139a00018ae7a80e744}\label{class8085_assembler_1_1_sub_a89344da4de66d139a00018ae7a80e744}} 
+{\bfseries reg1}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_sub_ad1101c0d125e1252f5d3328145398964}\label{class8085_assembler_1_1_sub_ad1101c0d125e1252f5d3328145398964}} 
+{\bfseries reg2}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_sub_ab8a594ae3054bfc9ff590418981e22fe}\label{class8085_assembler_1_1_sub_ab8a594ae3054bfc9ff590418981e22fe}} 
+{\bfseries reg3}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb} The Sub class.
+    The subtraction operations taking place are : 
+    1) Subtraction between contents of two registers
+    2) Subtraction of content of a register from the accumulator 
+    3) Subtraction between contents of two registers and storing it in another register\end{DoxyVerb}
+ 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class8085_assembler_1_1_sub_a8da3d820140a15b7bfd28b873ece741b}\label{class8085_assembler_1_1_sub_a8da3d820140a15b7bfd28b873ece741b}} 
+\index{8085Assembler.Sub@{8085Assembler.Sub}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!8085Assembler.Sub@{8085Assembler.Sub}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def 8085Assembler.\+Sub.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{ins\+String }\end{DoxyParamCaption})}
+
+
+
+The \mbox{\hyperlink{class8085_assembler_1_1_add}{Add}} class initializer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ins\+String} & The instruction containing the op code \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{class8085_assembler_1_1_a_l_u_adb6ae053e538666ed39032daaf81436c}{8085\+Assembler.\+ALU}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class8085_assembler_1_1_sub_a0c757b85a40ed9e516d347fef3b65024}\label{class8085_assembler_1_1_sub_a0c757b85a40ed9e516d347fef3b65024}} 
+\index{8085Assembler.Sub@{8085Assembler.Sub}!performOperation@{performOperation}}
+\index{performOperation@{performOperation}!8085Assembler.Sub@{8085Assembler.Sub}}
+\doxysubsubsection{\texorpdfstring{performOperation()}{performOperation()}}
+{\footnotesize\ttfamily def 8085Assembler.\+Sub.\+perform\+Operation (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}The calling of the subtraction method based on the number of operands in the instruction\end{DoxyVerb}
+ \mbox{\Hypertarget{class8085_assembler_1_1_sub_a386ddad5b715ba4f79fedb5765f80c43}\label{class8085_assembler_1_1_sub_a386ddad5b715ba4f79fedb5765f80c43}} 
+\index{8085Assembler.Sub@{8085Assembler.Sub}!subtraction@{subtraction}}
+\index{subtraction@{subtraction}!8085Assembler.Sub@{8085Assembler.Sub}}
+\doxysubsubsection{\texorpdfstring{subtraction()}{subtraction()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily def 8085Assembler.\+Sub.\+subtraction (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{reg1 }\end{DoxyParamCaption})}
+
+
+
+The subtraction of content of a register from the accumulator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg1} & The content in Register 1 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The differnce of the contents of the register and the accumulator 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class8085_assembler_1_1_sub_a382d642c5c532279f8839e0b1483f069}\label{class8085_assembler_1_1_sub_a382d642c5c532279f8839e0b1483f069}} 
+\index{8085Assembler.Sub@{8085Assembler.Sub}!subtraction@{subtraction}}
+\index{subtraction@{subtraction}!8085Assembler.Sub@{8085Assembler.Sub}}
+\doxysubsubsection{\texorpdfstring{subtraction()}{subtraction()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily def 8085Assembler.\+Sub.\+subtraction (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{reg1,  }\item[{}]{reg2 }\end{DoxyParamCaption})}
+
+
+
+The subtraction between contents of two registers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg1} & The content in Register 1 \\
+\hline
+{\em reg2} & The content in Register 2 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The differnce of the contents of the two registers 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class8085_assembler_1_1_sub_a0c47ab890f61c4ae1cc085614628b7a7}\label{class8085_assembler_1_1_sub_a0c47ab890f61c4ae1cc085614628b7a7}} 
+\index{8085Assembler.Sub@{8085Assembler.Sub}!subtraction@{subtraction}}
+\index{subtraction@{subtraction}!8085Assembler.Sub@{8085Assembler.Sub}}
+\doxysubsubsection{\texorpdfstring{subtraction()}{subtraction()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily def 8085Assembler.\+Sub.\+subtraction (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{reg1,  }\item[{}]{reg2,  }\item[{}]{reg3 }\end{DoxyParamCaption})}
+
+
+
+The subtraction between contents of two registers and storing the difference value in another register. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg1} & The difference is stored in reg1 \\
+\hline
+{\em reg2} & The content in Register 2 \\
+\hline
+{\em reg3} & The content in Register 3 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The difference of the contents of the two registers(reg2 and reg3) 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+8085\+Assembler.\+py\end{DoxyCompactItemize}

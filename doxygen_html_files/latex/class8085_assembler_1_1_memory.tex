@@ -1,0 +1,130 @@
+\hypertarget{class8085_assembler_1_1_memory}{}\doxysection{8085Assembler.\+Memory Class Reference}
+\label{class8085_assembler_1_1_memory}\index{8085Assembler.Memory@{8085Assembler.Memory}}
+Inheritance diagram for 8085Assembler.\+Memory\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class8085_assembler_1_1_memory}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_memory_a0dbd476de85910297156bb4221c01052}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self)
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_memory_a248090480e8e7f7d0d914056161aa5a1}\label{class8085_assembler_1_1_memory_a248090480e8e7f7d0d914056161aa5a1}} 
+def {\bfseries reset\+Program\+Counter} (self)
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_memory_a21fb88f0381a71bacaa4d4114693a420}\label{class8085_assembler_1_1_memory_a21fb88f0381a71bacaa4d4114693a420}} 
+def {\bfseries memory\+Booting} (self)
+\begin{DoxyCompactList}\small\item\em This boots up the memory or initializes the ROM content that is hard coded. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_memory_a40ed37adaa37268ec6f2101541961719}{get\+Data\+At\+Location}} (self, loc)
+\begin{DoxyCompactList}\small\item\em Getter for the memory. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_memory_a8025581491bf23cd830305f0b45979f1}{write\+At\+Location}} (self, loc, data, copying\+Code)
+\begin{DoxyCompactList}\small\item\em Setter for the memory. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_memory_a9180a3c3e04d09e1b24d4ecf1e1fff88}\label{class8085_assembler_1_1_memory_a9180a3c3e04d09e1b24d4ecf1e1fff88}} 
+def {\bfseries print\+Memory\+Status} (self)
+\begin{DoxyCompactList}\small\item\em Print the status of the memory. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_memory_ac5753c441a84771326d9f7d139d9dfa5}{set\+Program\+Counter\+To}} (self, val, executing)
+\begin{DoxyCompactList}\small\item\em Setter for the program counter. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_memory_aed6c12e50c246f1653d8808ca554a3d8}{get\+Program\+Counter}} (self)
+\begin{DoxyCompactList}\small\item\em Getter for the program counter. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_memory_a923c6cdcd6e2cd3faf84f7526e45704d}\label{class8085_assembler_1_1_memory_a923c6cdcd6e2cd3faf84f7526e45704d}} 
+{\bfseries time\+Instant}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_memory_af1df339b5acc4aa511f0be8fe8114f2b}\label{class8085_assembler_1_1_memory_af1df339b5acc4aa511f0be8fe8114f2b}} 
+{\bfseries exception\+List}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_memory_a3f3d72533c91a887268ddad0026ebcc0}\label{class8085_assembler_1_1_memory_a3f3d72533c91a887268ddad0026ebcc0}} 
+{\bfseries ROMContent}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb} The Memory base class for all the memory and storage operations \end{DoxyVerb}
+ 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class8085_assembler_1_1_memory_a0dbd476de85910297156bb4221c01052}\label{class8085_assembler_1_1_memory_a0dbd476de85910297156bb4221c01052}} 
+\index{8085Assembler.Memory@{8085Assembler.Memory}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!8085Assembler.Memory@{8085Assembler.Memory}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def 8085Assembler.\+Memory.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Reimplemented in \mbox{\hyperlink{class8085_assembler_1_1_r_a_m_ab5208f9a47326e89046be3b966e5f8bb}{8085\+Assembler.\+RAM}}, and \mbox{\hyperlink{class8085_assembler_1_1_m_o_v_aa2c51d199d8f90b167b7e2acb546bd0d}{8085\+Assembler.\+MOV}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class8085_assembler_1_1_memory_a40ed37adaa37268ec6f2101541961719}\label{class8085_assembler_1_1_memory_a40ed37adaa37268ec6f2101541961719}} 
+\index{8085Assembler.Memory@{8085Assembler.Memory}!getDataAtLocation@{getDataAtLocation}}
+\index{getDataAtLocation@{getDataAtLocation}!8085Assembler.Memory@{8085Assembler.Memory}}
+\doxysubsubsection{\texorpdfstring{getDataAtLocation()}{getDataAtLocation()}}
+{\footnotesize\ttfamily def 8085Assembler.\+Memory.\+get\+Data\+At\+Location (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{loc }\end{DoxyParamCaption})}
+
+
+
+Getter for the memory. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em loc} & Location that we want to read or get. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Content stored at the memory location passed. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class8085_assembler_1_1_memory_aed6c12e50c246f1653d8808ca554a3d8}\label{class8085_assembler_1_1_memory_aed6c12e50c246f1653d8808ca554a3d8}} 
+\index{8085Assembler.Memory@{8085Assembler.Memory}!getProgramCounter@{getProgramCounter}}
+\index{getProgramCounter@{getProgramCounter}!8085Assembler.Memory@{8085Assembler.Memory}}
+\doxysubsubsection{\texorpdfstring{getProgramCounter()}{getProgramCounter()}}
+{\footnotesize\ttfamily def 8085Assembler.\+Memory.\+get\+Program\+Counter (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Getter for the program counter. 
+
+\begin{DoxyReturn}{Returns}
+Program counter value. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class8085_assembler_1_1_memory_ac5753c441a84771326d9f7d139d9dfa5}\label{class8085_assembler_1_1_memory_ac5753c441a84771326d9f7d139d9dfa5}} 
+\index{8085Assembler.Memory@{8085Assembler.Memory}!setProgramCounterTo@{setProgramCounterTo}}
+\index{setProgramCounterTo@{setProgramCounterTo}!8085Assembler.Memory@{8085Assembler.Memory}}
+\doxysubsubsection{\texorpdfstring{setProgramCounterTo()}{setProgramCounterTo()}}
+{\footnotesize\ttfamily def 8085Assembler.\+Memory.\+set\+Program\+Counter\+To (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{val,  }\item[{}]{executing }\end{DoxyParamCaption})}
+
+
+
+Setter for the program counter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em val} & Value to be loaded into the program counter. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class8085_assembler_1_1_memory_a8025581491bf23cd830305f0b45979f1}\label{class8085_assembler_1_1_memory_a8025581491bf23cd830305f0b45979f1}} 
+\index{8085Assembler.Memory@{8085Assembler.Memory}!writeAtLocation@{writeAtLocation}}
+\index{writeAtLocation@{writeAtLocation}!8085Assembler.Memory@{8085Assembler.Memory}}
+\doxysubsubsection{\texorpdfstring{writeAtLocation()}{writeAtLocation()}}
+{\footnotesize\ttfamily def 8085Assembler.\+Memory.\+write\+At\+Location (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{loc,  }\item[{}]{data,  }\item[{}]{copying\+Code }\end{DoxyParamCaption})}
+
+
+
+Setter for the memory. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em loc} & Location that we want to set. \\
+\hline
+{\em data} & Value that we want to set the location to. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+8085\+Assembler.\+py\end{DoxyCompactItemize}

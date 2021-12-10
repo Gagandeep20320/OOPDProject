@@ -1,0 +1,86 @@
+\hypertarget{class8085_assembler_1_1_instruction_decoder}{}\doxysection{8085Assembler.\+Instruction\+Decoder Class Reference}
+\label{class8085_assembler_1_1_instruction_decoder}\index{8085Assembler.InstructionDecoder@{8085Assembler.InstructionDecoder}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_instruction_decoder_ae7eff243dc8e1ea977d2def23af9fe3b}\label{class8085_assembler_1_1_instruction_decoder_ae7eff243dc8e1ea977d2def23af9fe3b}} 
+def {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_instruction_decoder_a37bed460795f28b1bd15bd22291cf1e0}\label{class8085_assembler_1_1_instruction_decoder_a37bed460795f28b1bd15bd22291cf1e0}} 
+def {\bfseries parse\+File\+Decode\+Instructions} (self, input\+File, execution\+File\+Name)
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_instruction_decoder_a6893e110bdbe2d5563710d116dd7a82f}\label{class8085_assembler_1_1_instruction_decoder_a6893e110bdbe2d5563710d116dd7a82f}} 
+def {\bfseries truncate\+To16\+Bit\+Decimal} (self, number)
+\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_instruction_decoder_a22d1a374f370093edf380135856aa2cb}{parse\+File\+Store\+To\+Memory}} (self, input\+File)
+\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_instruction_decoder_abddc9a4cd2cfda5be3ccaf6f1a780b88}{create\+Instruction\+Object}} (self, instruction\+String)
+\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_instruction_decoder_af4a487be3c8693d5544deb87463df9ef}{validate\+Instruction}} (self, instruction\+String, line\+Number)
+\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_instruction_decoder_aebb917521f55aaba844c816505303e72}{is\+Immediate\+Valid}} (self, input\+String, line\+Number)
+\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_instruction_decoder_a54a59b647ec228cb38b5307900cee718}{is\+Instruction\+Length\+Correct}} (self, instruction\+String, ins\+Length)
+\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_instruction_decoder_ac07b16df2f9b3407460f2b4d46944420}{is\+Register\+Valid}} (self, input\+String, line\+Number)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_instruction_decoder_afa1fa7a97083b772f7821c6509545f00}\label{class8085_assembler_1_1_instruction_decoder_afa1fa7a97083b772f7821c6509545f00}} 
+{\bfseries temp}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}InstructionDecoder class to take instructions given by user through and validate them and then copying it to the memory.\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class8085_assembler_1_1_instruction_decoder_abddc9a4cd2cfda5be3ccaf6f1a780b88}\label{class8085_assembler_1_1_instruction_decoder_abddc9a4cd2cfda5be3ccaf6f1a780b88}} 
+\index{8085Assembler.InstructionDecoder@{8085Assembler.InstructionDecoder}!createInstructionObject@{createInstructionObject}}
+\index{createInstructionObject@{createInstructionObject}!8085Assembler.InstructionDecoder@{8085Assembler.InstructionDecoder}}
+\doxysubsubsection{\texorpdfstring{createInstructionObject()}{createInstructionObject()}}
+{\footnotesize\ttfamily def 8085Assembler.\+Instruction\+Decoder.\+create\+Instruction\+Object (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{instruction\+String }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Function to extract the opcode for the instruction and then call the respective function for the execution\end{DoxyVerb}
+ \mbox{\Hypertarget{class8085_assembler_1_1_instruction_decoder_aebb917521f55aaba844c816505303e72}\label{class8085_assembler_1_1_instruction_decoder_aebb917521f55aaba844c816505303e72}} 
+\index{8085Assembler.InstructionDecoder@{8085Assembler.InstructionDecoder}!isImmediateValid@{isImmediateValid}}
+\index{isImmediateValid@{isImmediateValid}!8085Assembler.InstructionDecoder@{8085Assembler.InstructionDecoder}}
+\doxysubsubsection{\texorpdfstring{isImmediateValid()}{isImmediateValid()}}
+{\footnotesize\ttfamily def 8085Assembler.\+Instruction\+Decoder.\+is\+Immediate\+Valid (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{input\+String,  }\item[{}]{line\+Number }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}To check any immediate value entered by the user\end{DoxyVerb}
+ \mbox{\Hypertarget{class8085_assembler_1_1_instruction_decoder_a54a59b647ec228cb38b5307900cee718}\label{class8085_assembler_1_1_instruction_decoder_a54a59b647ec228cb38b5307900cee718}} 
+\index{8085Assembler.InstructionDecoder@{8085Assembler.InstructionDecoder}!isInstructionLengthCorrect@{isInstructionLengthCorrect}}
+\index{isInstructionLengthCorrect@{isInstructionLengthCorrect}!8085Assembler.InstructionDecoder@{8085Assembler.InstructionDecoder}}
+\doxysubsubsection{\texorpdfstring{isInstructionLengthCorrect()}{isInstructionLengthCorrect()}}
+{\footnotesize\ttfamily def 8085Assembler.\+Instruction\+Decoder.\+is\+Instruction\+Length\+Correct (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{instruction\+String,  }\item[{}]{ins\+Length }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}To check the length of the instruction\end{DoxyVerb}
+ \mbox{\Hypertarget{class8085_assembler_1_1_instruction_decoder_ac07b16df2f9b3407460f2b4d46944420}\label{class8085_assembler_1_1_instruction_decoder_ac07b16df2f9b3407460f2b4d46944420}} 
+\index{8085Assembler.InstructionDecoder@{8085Assembler.InstructionDecoder}!isRegisterValid@{isRegisterValid}}
+\index{isRegisterValid@{isRegisterValid}!8085Assembler.InstructionDecoder@{8085Assembler.InstructionDecoder}}
+\doxysubsubsection{\texorpdfstring{isRegisterValid()}{isRegisterValid()}}
+{\footnotesize\ttfamily def 8085Assembler.\+Instruction\+Decoder.\+is\+Register\+Valid (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{input\+String,  }\item[{}]{line\+Number }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}TAo check whether the register  entered by the user is valid or not\end{DoxyVerb}
+ \mbox{\Hypertarget{class8085_assembler_1_1_instruction_decoder_a22d1a374f370093edf380135856aa2cb}\label{class8085_assembler_1_1_instruction_decoder_a22d1a374f370093edf380135856aa2cb}} 
+\index{8085Assembler.InstructionDecoder@{8085Assembler.InstructionDecoder}!parseFileStoreToMemory@{parseFileStoreToMemory}}
+\index{parseFileStoreToMemory@{parseFileStoreToMemory}!8085Assembler.InstructionDecoder@{8085Assembler.InstructionDecoder}}
+\doxysubsubsection{\texorpdfstring{parseFileStoreToMemory()}{parseFileStoreToMemory()}}
+{\footnotesize\ttfamily def 8085Assembler.\+Instruction\+Decoder.\+parse\+File\+Store\+To\+Memory (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{input\+File }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb} function to copy code into the memory\end{DoxyVerb}
+ \mbox{\Hypertarget{class8085_assembler_1_1_instruction_decoder_af4a487be3c8693d5544deb87463df9ef}\label{class8085_assembler_1_1_instruction_decoder_af4a487be3c8693d5544deb87463df9ef}} 
+\index{8085Assembler.InstructionDecoder@{8085Assembler.InstructionDecoder}!validateInstruction@{validateInstruction}}
+\index{validateInstruction@{validateInstruction}!8085Assembler.InstructionDecoder@{8085Assembler.InstructionDecoder}}
+\doxysubsubsection{\texorpdfstring{validateInstruction()}{validateInstruction()}}
+{\footnotesize\ttfamily def 8085Assembler.\+Instruction\+Decoder.\+validate\+Instruction (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{instruction\+String,  }\item[{}]{line\+Number }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}To validate the instruction given by the user with the standard format \end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+8085\+Assembler.\+py\end{DoxyCompactItemize}

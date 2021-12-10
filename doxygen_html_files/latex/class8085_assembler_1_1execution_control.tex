@@ -1,0 +1,67 @@
+\hypertarget{class8085_assembler_1_1execution_control}{}\doxysection{8085Assembler.\+execution\+Control Class Reference}
+\label{class8085_assembler_1_1execution_control}\index{8085Assembler.executionControl@{8085Assembler.executionControl}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1execution_control_a4f90a7334ca55c419f1e47aea8570f31}\label{class8085_assembler_1_1execution_control_a4f90a7334ca55c419f1e47aea8570f31}} 
+def {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, ins\+String)
+\item 
+def \mbox{\hyperlink{class8085_assembler_1_1execution_control_aea91e8886515a9380c005a1547e410e4}{jump\+To}} (self, location)
+\begin{DoxyCompactList}\small\item\em Sets the program counter to the passed location value. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{class8085_assembler_1_1execution_control_ab643072e45ed43c57909a674ae13c03b}{perform\+Operation}} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1execution_control_a7254094f7176a39e82599d289bdbcab2}\label{class8085_assembler_1_1execution_control_a7254094f7176a39e82599d289bdbcab2}} 
+{\bfseries opcode}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1execution_control_a4590753cda09efc613507331c2088e9e}\label{class8085_assembler_1_1execution_control_a4590753cda09efc613507331c2088e9e}} 
+{\bfseries reg1}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1execution_control_a6af13b68ed0d44e4b3884c1c84a7fa8b}\label{class8085_assembler_1_1execution_control_a6af13b68ed0d44e4b3884c1c84a7fa8b}} 
+{\bfseries reg2}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1execution_control_ac8766e01be5d6c1253daf72c1fcfc74f}\label{class8085_assembler_1_1execution_control_ac8766e01be5d6c1253daf72c1fcfc74f}} 
+{\bfseries reg1\+Val}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1execution_control_a74049bb731faa7f28749d65641c557ee}\label{class8085_assembler_1_1execution_control_a74049bb731faa7f28749d65641c557ee}} 
+{\bfseries reg2val}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb} The Execution Control class.
+    1) Uses the jump statements, JZ(Jump if Zero) and JNZ(Jump if not Zero)\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class8085_assembler_1_1execution_control_aea91e8886515a9380c005a1547e410e4}\label{class8085_assembler_1_1execution_control_aea91e8886515a9380c005a1547e410e4}} 
+\index{8085Assembler.executionControl@{8085Assembler.executionControl}!jumpTo@{jumpTo}}
+\index{jumpTo@{jumpTo}!8085Assembler.executionControl@{8085Assembler.executionControl}}
+\doxysubsubsection{\texorpdfstring{jumpTo()}{jumpTo()}}
+{\footnotesize\ttfamily def 8085Assembler.\+execution\+Control.\+jump\+To (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{location }\end{DoxyParamCaption})}
+
+
+
+Sets the program counter to the passed location value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em location} & The location of the register \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class8085_assembler_1_1execution_control_ab643072e45ed43c57909a674ae13c03b}\label{class8085_assembler_1_1execution_control_ab643072e45ed43c57909a674ae13c03b}} 
+\index{8085Assembler.executionControl@{8085Assembler.executionControl}!performOperation@{performOperation}}
+\index{performOperation@{performOperation}!8085Assembler.executionControl@{8085Assembler.executionControl}}
+\doxysubsubsection{\texorpdfstring{performOperation()}{performOperation()}}
+{\footnotesize\ttfamily def 8085Assembler.\+execution\+Control.\+perform\+Operation (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}The calling of the jumpTo method based on the opcode in the instruction
+1) If the opcode is JZ, then, jumpTo method is called when register value is 0
+2) If the opcode is JNZ, then, jumpTo method is called when register value is not 0\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+8085\+Assembler.\+py\end{DoxyCompactItemize}

@@ -1,0 +1,108 @@
+\hypertarget{class8085_assembler_1_1_d_i_v}{}\doxysection{8085Assembler.\+DIV Class Reference}
+\label{class8085_assembler_1_1_d_i_v}\index{8085Assembler.DIV@{8085Assembler.DIV}}
+Inheritance diagram for 8085Assembler.\+DIV\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class8085_assembler_1_1_d_i_v}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_d_i_v_a48de8a57ac995d9be1d24ccae7e77f27}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, ins\+String)
+\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_d_i_v_a602dcdec852808f5644d8c9044d5eba7}{division}} (self, reg1, reg2)
+\begin{DoxyCompactList}\small\item\em The division of contents of two registers. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_d_i_v_a793acd46748d3d5e58fb96ab136375ea}{division}} (self, reg1)
+\begin{DoxyCompactList}\small\item\em The division between contents of two registers. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{class8085_assembler_1_1_d_i_v_a3a91b0436473f7beb97ca3d2be84cadb}{perform\+Operation}} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_d_i_v_a2d9c5b678f7ce42564bd439308c86126}\label{class8085_assembler_1_1_d_i_v_a2d9c5b678f7ce42564bd439308c86126}} 
+{\bfseries opcode}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_d_i_v_aa117b13eb688ec4497ab18255339937e}\label{class8085_assembler_1_1_d_i_v_aa117b13eb688ec4497ab18255339937e}} 
+{\bfseries num\+Operands}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_d_i_v_a27a656aedd5ef022f41140c2f620bfeb}\label{class8085_assembler_1_1_d_i_v_a27a656aedd5ef022f41140c2f620bfeb}} 
+{\bfseries reg1}
+\item 
+\mbox{\Hypertarget{class8085_assembler_1_1_d_i_v_a2727975c688687ac60ddd84d72ffe708}\label{class8085_assembler_1_1_d_i_v_a2727975c688687ac60ddd84d72ffe708}} 
+{\bfseries reg2}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb} The DIV class.
+    The division operations taking place are : 
+    1) Division of contents of two registers
+    2) Division of content of a register with the accumulator \end{DoxyVerb}
+ 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class8085_assembler_1_1_d_i_v_a48de8a57ac995d9be1d24ccae7e77f27}\label{class8085_assembler_1_1_d_i_v_a48de8a57ac995d9be1d24ccae7e77f27}} 
+\index{8085Assembler.DIV@{8085Assembler.DIV}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!8085Assembler.DIV@{8085Assembler.DIV}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def 8085Assembler.\+DIV.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{ins\+String }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb} The ALU base class initializer.\end{DoxyVerb}
+ 
+
+Reimplemented from \mbox{\hyperlink{class8085_assembler_1_1_a_l_u_adb6ae053e538666ed39032daaf81436c}{8085\+Assembler.\+ALU}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class8085_assembler_1_1_d_i_v_a793acd46748d3d5e58fb96ab136375ea}\label{class8085_assembler_1_1_d_i_v_a793acd46748d3d5e58fb96ab136375ea}} 
+\index{8085Assembler.DIV@{8085Assembler.DIV}!division@{division}}
+\index{division@{division}!8085Assembler.DIV@{8085Assembler.DIV}}
+\doxysubsubsection{\texorpdfstring{division()}{division()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily def 8085Assembler.\+DIV.\+division (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{reg1 }\end{DoxyParamCaption})}
+
+
+
+The division between contents of two registers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg1} & The content in Register 1 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The division value of the register content and the accumulator 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class8085_assembler_1_1_d_i_v_a602dcdec852808f5644d8c9044d5eba7}\label{class8085_assembler_1_1_d_i_v_a602dcdec852808f5644d8c9044d5eba7}} 
+\index{8085Assembler.DIV@{8085Assembler.DIV}!division@{division}}
+\index{division@{division}!8085Assembler.DIV@{8085Assembler.DIV}}
+\doxysubsubsection{\texorpdfstring{division()}{division()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily def 8085Assembler.\+DIV.\+division (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{reg1,  }\item[{}]{reg2 }\end{DoxyParamCaption})}
+
+
+
+The division of contents of two registers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg1} & The content in Register 1 \\
+\hline
+{\em reg2} & The content in Register 2 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The division value of the contents of the two registers 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class8085_assembler_1_1_d_i_v_a3a91b0436473f7beb97ca3d2be84cadb}\label{class8085_assembler_1_1_d_i_v_a3a91b0436473f7beb97ca3d2be84cadb}} 
+\index{8085Assembler.DIV@{8085Assembler.DIV}!performOperation@{performOperation}}
+\index{performOperation@{performOperation}!8085Assembler.DIV@{8085Assembler.DIV}}
+\doxysubsubsection{\texorpdfstring{performOperation()}{performOperation()}}
+{\footnotesize\ttfamily def 8085Assembler.\+DIV.\+perform\+Operation (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}The calling of the division method based on the number of operands in the instruction\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+8085\+Assembler.\+py\end{DoxyCompactItemize}
